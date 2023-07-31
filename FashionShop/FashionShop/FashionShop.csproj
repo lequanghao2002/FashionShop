@@ -20,9 +20,9 @@
     <Folder Include="Assets\Admin\" />
     <Folder Include="Assets\User\" />
     <Folder Include="Controllers\" />
-    <Folder Include="Models\" />
     <Folder Include="Data\" />
     <Folder Include="Api\" />
+    <Folder Include="Models\DTO\" />
     <Folder Include="Views\" />
   </ItemGroup>
 
