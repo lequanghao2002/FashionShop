@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FashionShop.Migrations
 {
     [DbContext(typeof(FashionShopDBContext))]
-    [Migration("20230801033023_CreateDatabase")]
-    partial class CreateDatabase
+    [Migration("20230801093100_Update Database")]
+    partial class UpdateDatabase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

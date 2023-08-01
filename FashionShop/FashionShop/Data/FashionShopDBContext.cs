@@ -37,7 +37,7 @@ namespace FashionShop.Data
                 }
             }
 
-            // Tạo phân quyền admin và user
+            // Tạo sẵn quyền quản trị viên, nhân viên và khách hàng
             var adminRoleId = "25d9875c-878d-414e-8e6f-b4c28815f739";
             var memberRoleId = "3195156e-ef20-4c3d-9406-7bc7e87fd6f6";
             var userRoleId = "9cd0f7a2-741d-405a-a8a3-a34b22da200c";
