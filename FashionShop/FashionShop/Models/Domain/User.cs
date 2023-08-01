@@ -1,6 +1,11 @@
-﻿namespace FashionShop.Models.Domain
+﻿using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace FashionShop.Models.Domain
 {
-    public class User
+    [Table("Users")]
+    public class User : IdentityUser
     {
+        public IEnumerable<Order> Orders { get; set; }
     }
 }
