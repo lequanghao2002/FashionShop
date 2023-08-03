@@ -1,8 +1,9 @@
-﻿using FashionShop.Data;
-using FashionShop.Models.Domain;
 using FashionShop.Repositories;
+using FashionShop.Data;
+using FashionShop.Models.Domain;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
+
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
@@ -25,6 +26,7 @@ builder.Services.AddDbContext<FashionShopDBContext>(options =>
 // Register Controller
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<ITokenRepository, TokenRepository>();
+builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 
 //Register service authentication
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(option =>
