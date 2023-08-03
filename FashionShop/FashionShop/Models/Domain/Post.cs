@@ -19,5 +19,6 @@ namespace FashionShop.Models.Domain
         [Required]
         public string Content { get; set; }
         public bool Status { get; set; }
+        public int PublisherID { get; internal set; }
     }
 }
