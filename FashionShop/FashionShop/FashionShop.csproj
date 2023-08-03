@@ -22,7 +22,6 @@
     <Folder Include="Assets\User\" />
     <Folder Include="Controllers\" />
     <Folder Include="Api\" />
-    <Folder Include="Models\DTO\" />
     <Folder Include="Views\" />
   </ItemGroup>
 
