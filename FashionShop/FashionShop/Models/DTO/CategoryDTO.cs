@@ -19,8 +19,4 @@ namespace FashionShop.Models.DTO
     {
         public string Name { get; set; }
     }
-    public class DeleteCategoryDTO
-    {
-        public int ID { get; set; }
-    }
 }

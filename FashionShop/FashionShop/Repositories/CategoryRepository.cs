@@ -13,7 +13,7 @@ namespace FashionShop.Repositories
         CategoryByIdDTO GetCategoryById(int id);
         AddCategoryRequestDTO AddCategory(AddCategoryRequestDTO addCategoryRequestDTO);
         AddCategoryRequestDTO? UpdateCategoryById(int id, AddCategoryRequestDTO CategoryDTO);
-        DeleteCategoryDTO DeleteCategoryById(int id, DeleteCategoryDTO categoryDomain);
+        Category DeleteCategoryById(int id);
     }
     public class CategoryRepository : ICategoryRepository
     {
@@ -60,7 +60,7 @@ namespace FashionShop.Repositories
             }
             return CategoryDTO;
         }
-        public DeleteCategoryDTO DeleteCategoryById(int id, DeleteCategoryDTO categoryDomain)
+        public Category DeleteCategoryById(int id)
         {
             var CategoryDomain = _IdentityDbContext.Categories.FirstOrDefault(n => n.ID == id);
             if(CategoryDomain != null)
@@ -68,7 +68,7 @@ namespace FashionShop.Repositories
                 _IdentityDbContext.Categories.Remove(CategoryDomain);
                 _IdentityDbContext.SaveChanges();
             }
-            return categoryDomain;
+            return CategoryDomain;
         }
     }
 }

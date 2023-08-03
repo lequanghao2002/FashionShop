@@ -18,7 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Assets\Admin\" />
+    <Folder Include="assets\admin\" />
     <Folder Include="Assets\User\" />
     <Folder Include="Controllers\" />
     <Folder Include="Api\" />

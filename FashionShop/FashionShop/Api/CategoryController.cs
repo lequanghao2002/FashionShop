@@ -33,7 +33,7 @@ namespace FashionShop.Api
             var CategoryWithIdDTO = _iCategoryRepository.GetCategoryById(id);
             return Ok(CategoryWithIdDTO);
         }
-        [HttpPost("add - category")]
+        [HttpPost("add-category")]
         public IActionResult AddCategory([FromBody] AddCategoryRequestDTO addCategoryRequestDTO)
         {
             var CategoryAdd = _iCategoryRepository.AddCategory(addCategoryRequestDTO);
@@ -46,9 +46,9 @@ namespace FashionShop.Api
             return Ok(updateCategory);
         }
         [HttpDelete("delete-category-by-id/{id}")]
-        public IActionResult DeleteCategoryById(int id, DeleteCategoryDTO categoryDomain)
+        public IActionResult DeleteCategoryById(int id)
         {
-            var deleteCategory = _iCategoryRepository.DeleteCategoryById(id, categoryDomain);
+            var deleteCategory = _iCategoryRepository.DeleteCategoryById(id);
             return Ok(deleteCategory);
         }
 
