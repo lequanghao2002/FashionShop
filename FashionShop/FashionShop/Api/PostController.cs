@@ -60,7 +60,6 @@ namespace FashionShop.Api
                 Image = addPostRequestDTO.Image,
                 Content = addPostRequestDTO.Content,
                 Status = addPostRequestDTO.Status,
-                PublisherID = addPostRequestDTO.PublisherID,
             };
             _dbContext.Posts.Add(postDomainModel);
             _dbContext.SaveChanges();
@@ -78,10 +77,14 @@ namespace FashionShop.Api
                 postDomain.Image = postDTO.Image;
                 postDomain.Content = postDTO.Content;
                 postDomain.Status = postDTO.Status;
-                postDomain.PublisherID = postDTO.PublisherID;
                 _dbContext.SaveChanges();
+
+                return Ok(postDTO);
             }
-            return Ok(postDTO);
+            else
+            {
+                return BadRequest();
+            }
         }
 
         [HttpDelete("delete-post-by-id/{id}")]
@@ -92,8 +95,12 @@ namespace FashionShop.Api
             {
                 _dbContext.Posts.Remove(postDomain);
                 _dbContext.SaveChanges();
+                return Ok("Xóa bài viết thành công");
             }
-            return Ok();
+            else
+            {
+                return BadRequest();
+            }
         }
     }
 }
