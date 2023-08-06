@@ -21,11 +21,19 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="assets\admin\" />
-    <Folder Include="Assets\User\" />
+    <Folder Include="app\shared\directives\" />
+    <Folder Include="app\shared\filter\" />
+    <Folder Include="app\shared\modules\" />
+    <Folder Include="app\shared\views\" />
+    <Folder Include="app\shared\services\" />
+    <Folder Include="assets\admin\css\" />
+    <Folder Include="assets\admin\img\" />
+    <Folder Include="assets\admin\js\" />
+    <Folder Include="assets\admin\libs\" />
+    <Folder Include="assets\User\" />
     <Folder Include="Controllers\" />
     <Folder Include="Api\" />
-    <Folder Include="Views\" />
+    <Folder Include="Views\Admin\" />
   </ItemGroup>
 
 </Project>
