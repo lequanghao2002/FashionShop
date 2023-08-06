@@ -11,12 +11,8 @@ namespace FashionShop.Models.DTO
         public string FullName { get; set; }
         public string Email { get; set; }
         public string PhoneNumber { get; set; }
-    }
-    public class FindByPhoneDTO
-    {
-        public string FullName { get; set; }
-        public string Email { get; set; }
-        public int ID { get; set; }
+        public string Content { get; set; }
+        public bool Status { get; set; }
     }
     public class AddContactDTO
     {
@@ -24,8 +20,8 @@ namespace FashionShop.Models.DTO
         public string Email { get; set; }
         public string PhoneNumber { get; set; }
         public string Content { get; set; }
-        public bool Status { get; set; }
     }
+
     public class UpdateContactDTO
     {
         public string FullName { get; set; }

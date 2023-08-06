@@ -21,38 +21,31 @@ namespace FashionShop.Api
         }
 
         [HttpGet("get-all-contact")]
-        public IActionResult GetAll()
+        public IActionResult GetAll(string? searchByPhoneNumber)
         {
-            var allcontacts = _icontactRepository.GetAllContact();
+            var allcontacts = _icontactRepository.GetAllContact(searchByPhoneNumber);
             return Ok(allcontacts);
         }
 
-        [HttpPut("update-contact-by-id/{id}")]
-        public IActionResult UpdateContactById(int id, [FromBody] UpdateContactDTO updatecontactDTO)
-        {
-            var updatContact = _icontactRepository.UpdateContactById(id, updatecontactDTO);
-            return Ok(updatContact);
-        }
+        //[HttpPut("update-contact-by-id/{id}")]
+        //public IActionResult UpdateContactById(int id, [FromBody] UpdateContactDTO updatecontactDTO)
+        //{
+        //    var updatContact = _icontactRepository.UpdateContactById(id, updatecontactDTO);
+        //    return Ok(updatContact);
+        //}
 
-        [HttpPost("add-contact")]
-        public IActionResult AddContact([FromBody] AddContactDTO addContactDTO)
-        {
-            var addcontact = _icontactRepository.AddContact(addContactDTO);
-            return Ok(addcontact);
-        }
+        //[HttpPost("add-contact")]
+        //public IActionResult AddContact([FromBody] AddContactDTO addContactDTO)
+        //{
+        //    var addcontact = _icontactRepository.AddContact(addContactDTO);
+        //    return Ok(addcontact);
+        //}
 
-        [HttpDelete("delete-category-by-id/{id}")]
-        public IActionResult DeleteContact(int id)
-        {
-            var deletecontact = _icontactRepository.DeleteContact(id);
-            return Ok(deletecontact);
-        }
-
-        [HttpGet("find-by-phonenumber/{phonenumber}")]
-        public IActionResult FindContact(string Phonenumber)
-        {
-            var FindUser = _icontactRepository.FindContact(Phonenumber);
-            return Ok(FindUser);
-        }
+        //[HttpDelete("delete-category-by-id/{id}")]
+        //public IActionResult DeleteContact(int id)
+        //{
+        //    var deletecontact = _icontactRepository.DeleteContact(id);
+        //    return Ok(deletecontact);
+        //}
     }
 }
