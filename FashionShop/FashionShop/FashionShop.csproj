@@ -24,7 +24,6 @@
     <Folder Include="assets\admin\" />
     <Folder Include="Assets\User\" />
     <Folder Include="Controllers\" />
-    <Folder Include="Api\" />
     <Folder Include="Views\" />
   </ItemGroup>
 
