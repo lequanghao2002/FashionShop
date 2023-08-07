@@ -7,8 +7,8 @@
             <li class="nav-item">
                 <a class="nav-link" data-widget="pushmenu" href="" role="button"><i class="fas fa-bars"></i></a>
             </li>
-            <li class="nav-item d-none d-sm-inline-block">
-                <a ui-sref="/admin" class="nav-link">Trang chủ</a>
+            <li class="nav-item">
+                <a ui-sref="admin" class="nav-link">Trang chủ</a>
             </li>
         </ul>
 
@@ -48,39 +48,6 @@
                 <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                     <!-- Add icons to the links using the .nav-icon class
     with font-awesome or any other icon font library -->
-                    <li class="nav-header">MANAGE</li>
-
-                    <li class="nav-item">
-                        <a href="javascript:void(0)" class="nav-link">
-                            <i class=""></i>
-                            <p>
-                                Quản lý người dùng
-                                <i class="fas fa-angle-left right"></i>
-                                <span class="badge badge-info right">3</span>
-                            </p>
-                        </a>
-                        <ul class="nav nav-treeview">
-                            <li class="nav-item">
-                                <a ui-sref="admin_list" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Quản trị viên</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a ui-sref="member_list" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Nhân viên</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a ui-sref="customer_list" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Khách hàng</p>
-                                </a>
-                            </li>
-
-                        </ul>
-                    </li>
 
                     <li class="nav-item">
                         <a ui-sref="role_list" class="nav-link">
@@ -88,6 +55,24 @@
                             <p>
                                 Quản lý vai trò
                             </p>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a ui-sref="admin_list" class="nav-link">
+                            <p>Quản lý quản trị viên</p>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a ui-sref="member_list" class="nav-link">
+                            <p>Quản lý nhân viên</p>
+                        </a>
+                    </li>
+
+                    <li class="nav-item" style="border-bottom: 1px solid #4f5962;">
+                        <a ui-sref="customer_list" class="nav-link">
+                            <p>Quản lý khách hàng</p>
                         </a>
                     </li>
 
@@ -104,10 +89,20 @@
                         <a ui-sref="category_list" class="nav-link">
                             <i class="fa-solid fa-shirt"></i>
                             <p>
-                                Quản lý danh mục
+                                Quản lý danh mục sản phẩm
                             </p>
                         </a>
                     </li>
+
+                    <li class="nav-item" style="border-bottom: 1px solid #4f5962;">
+                        <a ui-sref="post_list" class="nav-link">
+                            <i class="fa-solid fa-shirt"></i>
+                            <p>
+                                Quản lý bài viết
+                            </p>
+                        </a>
+                    </li>
+
 
                     <li class="nav-item">
                         <a ui-sref="order_list" class="nav-link">
@@ -118,16 +113,8 @@
                         </a>
                     </li>
 
-                    <li class="nav-item">
-                        <a ui-sref="post_list" class="nav-link">
-                            <i class="fa-solid fa-shirt"></i>
-                            <p>
-                                Quản lý bài viết
-                            </p>
-                        </a>
-                    </li>
 
-                    <li class="nav-item">
+                    <li class="nav-item" style="border-bottom: 1px solid #4f5962;">
                         <a ui-sref="contact_list" class="nav-link">
                             <i class="fa-solid fa-shirt"></i>
                             <p>
