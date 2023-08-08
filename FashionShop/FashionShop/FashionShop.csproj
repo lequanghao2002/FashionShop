@@ -27,7 +27,6 @@
     <Folder Include="assets\admin\css\" />
     <Folder Include="assets\admin\img\" />
     <Folder Include="assets\admin\js\" />
-    <Folder Include="assets\admin\libs\" />
     <Folder Include="assets\User\" />
     <Folder Include="Api\" />
   </ItemGroup>
