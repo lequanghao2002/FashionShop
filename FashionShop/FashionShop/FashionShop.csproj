@@ -22,10 +22,14 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Assets\Admin\" />
-    <Folder Include="Assets\User\" />
-    <Folder Include="Controllers\" />
-    <Folder Include="Views\" />
+    <Folder Include="app\shared\directives\" />
+    <Folder Include="app\shared\filter\" />
+    <Folder Include="app\shared\services\" />
+    <Folder Include="assets\admin\css\" />
+    <Folder Include="assets\admin\img\" />
+    <Folder Include="assets\admin\js\" />
+    <Folder Include="assets\User\" />
+    <Folder Include="Api\" />
   </ItemGroup>
 
 </Project>
