@@ -29,7 +29,6 @@
     <Folder Include="assets\admin\js\" />
     <Folder Include="assets\admin\libs\" />
     <Folder Include="assets\User\" />
-    <Folder Include="Api\" />
   </ItemGroup>
 
 </Project>
