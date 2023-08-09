@@ -16,6 +16,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="6.32.1" />
+    <PackageReference Include="MongoDB.Driver.Core" Version="2.20.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.32.1" />
   </ItemGroup>
@@ -27,7 +28,6 @@
     <Folder Include="assets\admin\css\" />
     <Folder Include="assets\admin\img\" />
     <Folder Include="assets\admin\js\" />
-    <Folder Include="assets\admin\libs\" />
     <Folder Include="assets\User\" />
   </ItemGroup>
 
