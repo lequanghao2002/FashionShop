@@ -24,7 +24,6 @@
   <ItemGroup>
     <Folder Include="app\shared\directives\" />
     <Folder Include="app\shared\filter\" />
-    <Folder Include="app\shared\services\" />
     <Folder Include="assets\admin\css\" />
     <Folder Include="assets\admin\img\" />
     <Folder Include="assets\admin\js\" />
