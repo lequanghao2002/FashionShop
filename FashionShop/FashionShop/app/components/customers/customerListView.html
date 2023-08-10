@@ -1,1 +1,55 @@
-﻿
+﻿<div class="card">
+    <div class="card-header">
+        <h3 class="card-title" style="font-size:30px">Danh sách khách hàng</h3>
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body">
+        <div class="row">
+            <div class="col col-md-5">
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" placeholder="Nhập tên khách hàng..." aria-label="Recipient's title" aria-describedby="basic-addon2">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="button">Tìm kiếm</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <table class="table table-bordered table-striped text-center">
+            <thead>
+                <tr class="bg-gradient-dark">
+                    <th style="width: 10%">ID</th>
+                    <th style="width: 30%">Họ tên</th>
+                    <th style="width: 20%">Email</th>
+                    <th style="width: 10%">Số điện thoại</th>
+                    <th style="width: 15%">Trạng thái</th>
+                    <th style="width: 15%">Thao tác</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>Test</td>
+                    <td>test@gmail.com</td>
+                    <td>TestPhone</td>
+                    <td>
+                        <span class="badge badge-success">Hoạt động</span>
+                    </td>
+                    <td>
+                        <button class="btn btn-sm btn-primary">
+                            Thêm
+                        </button>
+                        <button class="btn btn-sm btn-primary">
+                            Sửa
+                        </button>
+                        <button class="btn btn-sm btn-danger">
+                            Xóa
+                        </button>
+                        <button class="btn btn-sm btn-warning">
+                            Khóa
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
