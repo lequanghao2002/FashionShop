@@ -98,6 +98,13 @@ app.UseStaticFiles(new StaticFileOptions
     RequestPath = "/app"
 });
 
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(
+        Path.Combine(builder.Environment.ContentRootPath, "UploadFiles")),
+    RequestPath = "/UploadFiles"
+});
+
 app.UseRouting();
 app.MapControllerRoute(
     name: "default",

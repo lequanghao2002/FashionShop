@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics.CodeAnalysis;
 
 namespace FashionShop.Models.Domain
 {
@@ -13,7 +14,7 @@ namespace FashionShop.Models.Domain
 
         [Required]
         public string Name { get; set; }
-        public int CatetoryID { get; set; }
+        public int CategoryID { get; set; }
         [ForeignKey("CategoryID")]
         public Category Category { get; set; }  
 
@@ -27,24 +28,20 @@ namespace FashionShop.Models.Domain
         public string Image { get; set; }
 
         [Column(TypeName = "xml")]
-        public string ListImages { get; set; }
+        public string? ListImages { get; set; }
 
         [Required]
         public double Price { get; set; }
 
         public double Discount { get; set; }
 
-        [Column(TypeName = "datetime")]
         public DateTime CreatedDate { get; set; }
 
-        [Column(TypeName = "datetime")]
-        public DateTime CreatedBy { get; set; }
+        public string CreatedBy { get; set; }
 
-        [Column(TypeName = "datetime")]
-        public DateTime UpdatedDate { get; set; }
+        public DateTime? UpdatedDate { get; set; }
 
-        [Column(TypeName = "datetime")]
-        public DateTime UpdatedBy { get; set; }
+        public string? UpdatedBy { get; set; }
 
         public bool Status { get; set; }
 
