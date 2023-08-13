@@ -17,7 +17,7 @@ namespace FashionShop.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.15")
+                .HasAnnotation("ProductVersion", "6.0.21")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -92,7 +92,6 @@ namespace FashionShop.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Note")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("OrderDate")
@@ -176,14 +175,12 @@ namespace FashionShop.Migrations
                     b.Property<int>("CategoryID")
                         .HasColumnType("int");
 
-                    b.Property<int>("CatetoryID")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("CreatedBy")
-                        .HasColumnType("datetime");
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime");
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Describe")
                         .IsRequired()
@@ -197,7 +194,6 @@ namespace FashionShop.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ListImages")
-                        .IsRequired()
                         .HasColumnType("xml");
 
                     b.Property<string>("Name")
@@ -213,11 +209,11 @@ namespace FashionShop.Migrations
                     b.Property<bool>("Status")
                         .HasColumnType("bit");
 
-                    b.Property<DateTime>("UpdatedBy")
-                        .HasColumnType("datetime");
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("UpdatedDate")
-                        .HasColumnType("datetime");
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("ID");
 

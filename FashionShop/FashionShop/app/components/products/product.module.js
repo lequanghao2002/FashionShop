@@ -20,13 +20,13 @@
                 controller: 'productAddController'
             })
             .state('product_edit', {
-                url: '/product_edit',
+                url: '/product_edit/:id',
                 parent: 'base',
                 templateUrl: '/app/components/products/productEditView.html',
                 controller: 'productEditController'
             })
             .state('product_detail', {
-                url: '/product_detail',
+                url: '/product_detail/:id',
                 parent: 'base',
                 templateUrl: '/app/components/products/productDetailView.html',
                 controller: 'productDetailController'

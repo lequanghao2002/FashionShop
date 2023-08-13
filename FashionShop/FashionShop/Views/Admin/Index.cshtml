@@ -9,8 +9,8 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
 
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="~/assets/Admin/libs/fontawesome-free/css/all.min.css">
-
+    <link href="~/assets/admin/libs/fontawesome-free-6.4.2-web/css/all.css" rel="stylesheet" />
+    
     <!-- Theme style -->
     <link rel="stylesheet" href="~/assets/Admin/css/adminlte.min.css">
 
@@ -41,9 +41,25 @@
     <!-- Toast js -->
     <script src="~/assets/admin/libs/toastr/toastr.js"></script>
 
+    <!-- CkEditor -->
+    <script src="~/assets/admin/libs/ckeditor4-releases/ckeditor.js"></script>
+
+    <!-- ng - CkEditor -->
+    <script src="~/assets/admin/libs/ng-ckeditor/ng-ckeditor.js"></script>
+
+    <!-- Bootbox -->
+    <script src="~/assets/admin/libs/bootbox/bootbox.js"></script>
+
+    <!-- ng - Bootbox -->
+    <script src="~/assets/admin/libs/ngbootbox/ngbootbox.js"></script>
+
     <!-- Module Common -->
     <script src="~/app/shared/modules/fashionShop.common.js"></script>
     <script src="~/app/shared/services/apiservice.js"></script>
+    <script src="~/app/shared/services/notificationService.js"></script>
+    <script src="~/app/shared/directives/paginationdirective.js"></script>
+    <script src="~/app/shared/filter/pulishedfilter.js"></script>
+    <script src="~/app/shared/filter/formatCurrencyVND.js"></script>
 
     <!-- Module components -->
     <script src="~/app/components/products/product.module.js"></script>
@@ -62,7 +78,7 @@
     <!-- Controller -->
     <script src="~/app/components/home/homeController.js"></script>
 
-    <script src="~/app/components/products/productaddcontroller.js"></script>
+    <script src="~/app/components/products/productAddController.js"></script>
     <script src="~/app/components/products/productdetailcontroller.js"></script>
     <script src="~/app/components/products/producteditcontroller.js"></script>
     <script src="~/app/components/products/productlistcontroller.js"></script>
@@ -93,6 +109,7 @@
     <script src="~/app/components/members/memberlistcontroller.js"></script>
 
     <script src="~/app/components/customers/customerlistcontroller.js"></script>
+
 </body>
 </html>
 

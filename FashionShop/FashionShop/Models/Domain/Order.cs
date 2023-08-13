@@ -22,8 +22,7 @@ namespace FashionShop.Models.Domain
         [Required]
         public string Address { get; set; }
 
-        [Required]
-        public string Note { get; set; }
+        public string? Note { get; set; }
 
         [Column(TypeName = "datetime")]
         public DateTime OrderDate { get; set; }
