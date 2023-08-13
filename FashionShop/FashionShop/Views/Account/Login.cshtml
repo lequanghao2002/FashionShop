@@ -1,0 +1,47 @@
+﻿
+@{
+    ViewData["Title"] = "Login";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="main-content">
+    <div class="container">
+        <ul class="breadcrumb">
+            <li><a href="home.html"><i class="fa fa-home"></i></a></li>
+            <li><a>Login</a></li>
+        </ul>
+        <div class="row login-page">
+            <div class="col-sm-12" id="content">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="well">
+                            <h3>New Customer</h3>
+                            <p><strong>Register Account</strong></p>
+                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+                            <a class="btn btn-primary" href="register.html">Continue</a>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="well">
+                            <h3>Returning Customer</h3>
+                            <p><strong>I am a returning customer</strong></p>
+                            <form method="post">
+                                <div class="form-group">
+                                    <label for="input-email" class="control-label">E-Mail Address</label>
+                                    <input type="text" class="form-control" id="input-email" placeholder="E-Mail Address" value="" name="email">
+                                </div>
+                                <div class="form-group">
+                                    <label for="input-password" class="control-label">Password</label>
+                                    <input type="password" class="form-control" id="input-password" placeholder="Password" value="" name="password">
+                                    <a>Forgot Password</a>
+                                </div>
+                                <input type="submit" class="btn btn-primary" value="Login">
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

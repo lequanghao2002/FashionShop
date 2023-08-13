@@ -28,6 +28,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="6.32.1" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.16" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.32.1" />
   </ItemGroup>
@@ -40,7 +41,6 @@
     <Folder Include="assets\admin\libs\bootbox\.git\refs\tags\" />
     <Folder Include="assets\admin\libs\ngBootbox\.git\objects\info\" />
     <Folder Include="assets\admin\libs\ngBootbox\.git\refs\tags\" />
-    <Folder Include="assets\User\" />
     <Folder Include="UploadFiles\" />
   </ItemGroup>
 
