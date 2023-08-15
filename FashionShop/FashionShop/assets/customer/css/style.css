@@ -185,6 +185,7 @@ button {
 .main-nav-block {
     background: rgba(255, 255, 255, 1) none repeat scroll 0 0;
     position: relative;
+    box-shadow: 0px 0px 5px 2px rgba(0,0,0,0.3);
 }
 .main-nav-block .col-md-7{
     padding: 0px;
@@ -231,7 +232,7 @@ button {
     position: fixed;
     width: 100%;
     animation:slide-down 0.9s;
-    box-shadow: 0px 15px 15px rgba(0,0,0,0.1);
+    box-shadow: 0px 15px 15px rgba(0,0,0,0.1) !important;
     background: #fff;
 }
 .navbar-fixed .cart-fix{
@@ -822,10 +823,10 @@ ul{
     list-style: none;
 }
 .product_img{
-    height: 300px;
+    height: 380px;
 }
 .product_img a img{
-    max-height: 300px;
+    max-height: 380px;
 }
 .product_img a.thumbnail {
     border: medium none;
@@ -837,7 +838,7 @@ ul{
 /*    height: 100px;*/
     overflow: hidden;
 }
-.thumbnail a>img, .thumbnail>img {
+.thumbnail a > img, .thumbnail > img {
     max-height: 95px;
     overflow: hidden;
 }
@@ -995,13 +996,18 @@ button {
     height: 200px;
 }
 .well p {
-    border-bottom: 1px solid #babcce;
     padding: 20px 0;
 }
 .well a {
     display: inline-block;
     margin-top: 20px;
 }
+
+.login-page {
+    display: flex;
+    justify-content: center;
+}
+
 .login-page .well {
     background: transparent none repeat scroll 0 0;
     border-radius: 0;

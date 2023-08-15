@@ -1,19 +1,22 @@
-﻿@{
-    ViewData["Title"] = "Trang chủ";
+﻿
+@{
+    ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
-
-    var categoryVB = @ViewBag.Category;
 }
 
-<div class="full-banner">
-    <img src="~/assets/customer/images/imgTrangChu2.jpg" style="max-width: 100%" />
+<div class="full-banner" style="height: 135px">
 </div>
 
 <div class="main-content">
     <div class="container">
+        <ul class="breadcrumb">
+            <li><a href="~/Home"><i class="fa fa-home"></i></a></li>
+            <li><a>Áo khoác</a></li>
+        </ul>
+
         <div class="row featured-block">
-            <div class="main-head-block">
-                <h2>Danh sách sản phẩm</h2>
+            <div class="main-head-block" style="margin-top: 0">
+                <h2>Danh sách áo khoác</h2>
             </div>
             <div class="col-md-2 col-sm-6 col-xs-6 mb-30 width-100">
                 <div class="product-thumb transition">
@@ -56,3 +59,4 @@
         </div>
     </div>
 </div>
+

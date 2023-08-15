@@ -1,0 +1,127 @@
+﻿@{
+    ViewData["Title"] = "CheckOut";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="full-banner" style="height: 135px">
+</div>
+
+<div class="main-content">
+    <div class="container">
+        <ul class="breadcrumb">
+            <li><a href="~/Home"><i class="fa fa-home"></i></a></li>
+            <li><a>Thanh toán</a></li>
+        </ul>
+        <div class="row login-page">
+            <div class="col-sm-12" id="content">
+                <div class="row">
+                    <div class="col-sm-8">
+                        <div class="well">
+                            <h3>Vui lòng điền thông tin giao hàng</h3>
+                            <form method="post">
+                                <div class="form-group">
+                                    <label for="input-fullname" class="control-label">Họ và tên</label>
+                                    <input type="text" class="form-control" id="input-fullname" placeholder="Nhập họ và tên" value="" name="fullname">
+                                </div>
+                                <div class="form-group">
+                                    <label for="input-email" class="control-label">E-Mail</label>
+                                    <input type="text" class="form-control" id="input-email" value="haolq2002@gmail.com" name="email" disabled>
+                                </div>
+                                <div class="form-group">
+                                    <label for="input-phonenumber" class="control-label">Số điện thoại</label>
+                                    <input type="number" class="form-control" id="input-phonenumber" placeholder="Nhập số điện thoại" value="" name="phonenumber">
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-sm-4">
+                                        <label for="input-shipping-country" class="control-label">Tỉnh / thành</label>
+                                        <select class="form-control" id="input-shipping-country" name="country_id">
+                                            <option value=""> --- Chọn tỉnh / thành --- </option>
+                                            <option value="1">Hồ Chí Minh</option>
+                                            <option value="2">Hà Nội</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <label for="input-shipping-country" class=" control-label">Quận / huyện</label>
+                                        <select class="form-control" id="input-shipping-country" name="country_id">
+                                            <option value=""> --- Chọn quận / huyện --- </option>
+                                            <option value="1">India</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <label for="input-shipping-country" class="control-label">Phường / xã</label>
+                                        <select class="form-control" id="input-shipping-country" name="country_id">
+                                            <option value=""> --- Chọn phường / xã --- </option>
+                                            <option value="1">India</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="input-address" class="control-label">Địa chỉ giao hàng</label>
+                                    <input type="text" class="form-control" id="input-address" placeholder="Nhập địa chỉ giao hàng" value="" name="address">
+                                </div>
+                                <div class="form-group">
+                                    <label for="input-content" class="control-label">Nội dung đơn hàng</label>
+                                    <textarea class="form-control" id="input-content" placeholder="Nhập nội dung đơn hàng" value="" name="content" style="height: 100px;"></textarea>
+                                </div>
+                                <div class="form-group" style="text-align: end;">
+                                    <input type="submit" class="btn btn-primary" value="Đặt hàng" style="width:100%; ">
+                                    <a href="~/ShoppingCart/Index">Quay lại giỏ hàng</a>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-4">
+                        <div class="panel-group" id="accordion">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a aria-expanded="false" href="#collapse-coupon" class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion">
+                                            Sử dụng mã giảm giá <i class="fa fa-caret-down"></i>
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div style="height: 0px;" aria-expanded="false" id="collapse-coupon" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                        <div class="input-group">
+                                            <input type="text" name="coupon" value="" placeholder="Nhập mã giảm giá ở đây" id="input-coupon" class="form-control">
+                                            <span class="input-group-btn">
+                                                <input type="button" value="Sử dụng" id="button-coupon" class="btn btn-primary">
+                                            </span>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="well">
+                            <h3>Thông tin đơn hàng</h3>
+
+                            <table class="table">
+                                <tbody>
+                                    <tr>
+                                        <td class="cart-table-total-label"><strong>Tạm tính: </strong></td>
+                                        <td class="text-right cart-table-total">300.000đ</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="cart-table-total-label"><strong>Giảm giá: </strong></td>
+                                        <td class="text-right cart-table-total">20.000đ</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="cart-table-total-label"><strong>Phí vận chuyển: </strong></td>
+                                        <td class="text-right cart-table-total">20.000đ</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="cart-table-total-label"><strong>Tổng cộng:</strong></td>
+                                        <td class="text-right cart-table-total">300.000đ</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                   
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

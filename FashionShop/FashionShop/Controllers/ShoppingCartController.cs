@@ -2,13 +2,14 @@
 
 namespace FashionShop.Controllers
 {
-    public class ProductController : Controller
+    public class ShoppingCartController : Controller
     {
         public IActionResult Index()
         {
             return View();
         }
-        public IActionResult Detail()
+
+        public IActionResult CheckOut()
         {
             return View();
         }

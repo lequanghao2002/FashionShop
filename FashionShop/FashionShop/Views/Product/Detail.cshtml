@@ -4,32 +4,51 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<div class="full-banner" style="height: 135px">
+</div>
+
 <div class="container">
     <ul class="breadcrumb">
-        <li><a href="home.html"><i class="fa fa-home"></i></a></li>
-        <li><a href="single-product.html">Single Product</a></li>
+        <li><a href="~/Home"><i class="fa fa-home"></i></a></li>
+        <li><a href="single-product.html">Chi tiết sản phẩm</a></li>
     </ul>
     <div class="row">
         <div class="col-sm-12" id="content">
             <div class="row">
                 <div class="col-sm-7">
                     <ul class="thumbnails main-front-image">
-                        <li class="product_img"><a class="thumbnail"><img src="images/img11.jpg" class="changeimg"></a></li>
-                        <li class="image-additional"><a class="thumbnail"> <img class="galleryimg" src="images/img11.jpg" width="93" height="133"></a></li>
-                        <li class="image-additional"><a class="thumbnail"> <img class="galleryimg" src="images/img12.jpg" width="93" height="133"></a></li>
-                        <li class="image-additional"><a class="thumbnail"> <img class="galleryimg" src="images/img13.jpg" width="93" height="133"></a></li>
-                        <li class="image-additional"><a class="thumbnail"> <img class="galleryimg" src="images/img14.jpg" width="93" height="133"></a></li>
-                        <li class="image-additional"><a class="thumbnail"> <img class="galleryimg" src="images/img15.jpg" width="93" height="133"></a></li>
+                        <li class="product_img">
+                            <a class="thumbnail">
+                                <img src="~/UploadFiles/Images/Áo Khoác Bomber Basketball Vibe/img_7607_6f49eef2d183480e83e830c679c06b91_master.jpg" class="changeimg">
+                            </a>
+                        </li>
+                        <li class="image-additional">
+                            <a class="thumbnail">
+                                <img class="galleryimg" src="~/UploadFiles/Images/Áo Khoác Bomber Basketball Vibe/img_7607_6f49eef2d183480e83e830c679c06b91_master.jpg" width="93" height="133">
+                            </a>
+                        </li>
+                        <li class="image-additional">
+                            <a class="thumbnail"> 
+                                <img class="galleryimg" src="~/UploadFiles/Images/Áo Khoác Bomber Basketball Vibe/img_8563_921a2152a873435e8cf46bd49be7a44f_master.jpg" width="93" height="133">
+                            </a>
+                        </li>
+                        <li class="image-additional">
+                            <a class="thumbnail"> 
+                                <img class="galleryimg" src="~/UploadFiles/Images/Áo Khoác Bomber Basketball Vibe/img_8564_174abd77993d4dcc895acbdbd8f55332_master.jpg" width="93" height="133">
+                            </a>
+                        </li>
+                        <li class="image-additional">
+                            <a class="thumbnail">
+                                <img class="galleryimg" src="~/UploadFiles/Images/Áo Khoác Bomber Basketball Vibe//img_8571_2485600ff94f436a84306f25bf3bd92b_master.jpg" width="93" height="133">
+                            </a>
+                        </li>
+                        
+                       
+
                     </ul>
                 </div>
                 <div class="col-sm-5 col-xs-12 product-desc">
-                    <!--  <div class="btn-group">
-                        <button type="button" data-toggle="tooltip" class="btn btn-default" title="Add to Wish List" onclick="wishlist.add('49');"><i class="fa fa-heart"></i></button>
-                        <button type="button" data-toggle="tooltip" class="btn btn-default" title="Compare this Product" onclick="compare.add('49');"><i class="fa fa-exchange"></i></button>
-                      </div> -->
-                    <h1>Girls Top</h1>
-                    <div class="rating-section product-rating-status">
-
+                    @*<div class="rating-section product-rating-status">
                         <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-1x"></i></span>
                         <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-1x"></i></span>
                         <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-1x"></i></span>
@@ -37,75 +56,71 @@
                         <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-1x"></i></span>
                         <a class="review-link review-link-show">0 reviews</a>
                         <a class="review-link review-link-show">Write a review</a>
+                    </div>*@
 
-                    </div>
+                    <h1>Tên sản phẩm</h1>
 
                     <div class="price-section">
+                        
+                        <span class="price-p" style="text-decoration: line-through; font-size: 20px; margin-right: 10px; color: #929292;">
+                            300.000đ
+                        </span>
 
-                        <h2 class="price-p">$35</h2>
+                        <span class="price-p" style="font-size: 25px">
+                            270.000đ
+                        </span>
 
-                        <span> </span>
+                        <span class="price-left">Giảm 10%</span>
+
                     </div>
-                    <ul class="list-unstyled product-section">
-                        <li><span>Product Code:</span> P10</li>
-                        <li><span>Reward Points:</span> 600</li>
-                        <li><span>Availability:</span> <span class="check-stock">Pre-Orders</span></li>
+                    <ul class="list-unstyled product-section" style="font-size: 25px">
+                        <li><span>Số lượng có sẵn:</span> 10</li>
                     </ul>
 
                     <div id="product">
                         <div class="row">
                             <div class="form-group">
-                                <label for="input-quantity" class="control-label col-sm-2">Qty</label>
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="input-quantity" size="2" value="1" name="quantity">
-
+                                <div class ="col-sm-3">
+                                    <label for="input-quantity" class="control-label">Số lượng</label>
+                                </div>
+                                <div class="col-sm-9">
+                                    <input type="number" class="form-control" id="input-quantity" size="2" value="1" min="1" name="quantity">
                                 </div>
                                 <input type="hidden" value="49" name="product_id">
-
                             </div>
                             <div class="form-group">
-                                <div class="col-sm-4 margin-top product-button">
+                                <div class="col-sm-3 margin-top product-button">
                                     <button class="" type="button"><i class="fa fa-heart"></i></button>
-                                    <button class="" type="button"><i class="fa fa-refresh"></i></button>
                                 </div>
-                                <div class="col-sm-8">
-                                    <a class="margin-top btn btn-primary btn-lg btn-block btn-5 btn-5a icon-cart" id="button-cart" href="cart.html"><span>Add to Cart</span></a>
+                                <div class="col-sm-9">
+                                    <a class="margin-top btn btn-primary btn-lg btn-block btn-5 btn-5a icon-cart" id="button-cart" href="cart.html"><span>Thêm vào giỏ hàng</span></a>
                                 </div>
                             </div>
                         </div>
                         <div class="clearfix margin-top"></div>
-
-                        <!--    <div class="form-group">
-                             <label class="control-label" for="input-quantity">Qty</label>
-                             <input type="text" name="quantity" value="1" size="2" id="input-quantity" class="form-control" />
-                             <input type="hidden" name="product_id" value="49" />
-                             <br />
-                             <button type="button" id="button-cart" data-loading-text="Loading..." class="btn btn-primary btn-lg btn-block">Add to Cart</button>
-                           </div> -->
-                    </div>
-                    <div class="rating">
-                        <!--    <p>
-                                                          <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-1x"></i></span>
-                                                                        <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-1x"></i></span>
-                                                                        <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-1x"></i></span>
-                                                                        <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-1x"></i></span>
-                                                                        <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-1x"></i></span>
-                                                          <a href="" onclick="$('a[href=\'#tab-review\']').trigger('click'); return false;">0 reviews</a> / <a href="" onclick="$('a[href=\'#tab-review\']').trigger('click'); return false;">Write a review</a>
-                            </p> -->
-                        <hr>
 
                     </div>
                 </div>
             </div>
             <div class="product-tab-part">
                 <ul class="nav nav-tabs">
-                    <li class="active"><a data-toggle="tab" href="#tab-description">Description</a></li>
-                    <li><a data-toggle="tab" href="#tab-review">Reviews (0)</a></li>
+                    <li class="active"><a data-toggle="tab" href="#tab-description">Mô tả</a></li>
+                    <li><a data-toggle="tab" href="#tab-review">Bình luận (0)</a></li>
                 </ul>
                 <div class="tab-content">
                     <div id="tab-description" class="tab-pane active">
-                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took </p><p>a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+                        <p>
+                            - Chất Liệu: Kaki Dù
+                            - Độ Co Giãn: Không
+                            - Form Áo: Slim Fit
+                            - Cổ Áo: Bomber
+                            - Tay Áo: Dài
+                            - Phong Cách: Basic
+                            - Chi Tiết: Phối Túi
+                        </p>
+                        <p>
+                            a
+                        </p>
                     </div>
                     <div id="tab-review" class="tab-pane">
                         <form id="form-review" class="form-horizontal">
@@ -154,5 +169,62 @@
 
         </div>
     </div>
+
+    <div class="row featured-block">
+        <div class="main-head-block">
+            <h3>Danh sách sản phẩm tương tự</h3>
+        </div>
+        <div class="col-md-2 col-sm-6 col-xs-6 mb-30 width-100">
+            <div class="product-thumb transition">
+                <div class="product-view-block">
+                    <div class="button-block">
+                        @*<a> <i class="fa fa-heart"></i></a>*@
+                        @*<a><i class="fa fa-random" aria-hidden="true"></i></a>*@
+                        <a href="#"><i class="fa fa-shopping-cart"></i></a>
+                    </div>
+                    <div class="price-view-block">
+                        <span class="price-left">10%</span>
+                    </div>
+
+                    <div class="image-block">
+                        <a href="single-product.html" style="cursor: pointer">
+                            <img class="img-responsive" alt="i" src="~/UploadFiles/Images/Áo Khoác Bomber Basketball Vibe/img_7607_6f49eef2d183480e83e830c679c06b91_master.jpg">
+                        </a>
+                    </div>
+
+                    <div style="margin: 0px 5px;text-align: center;">
+                        <p class="m-0">
+                            Áo Khoác Bomber Basketball Vibe
+                        </p>
+
+                        <span>
+                            270.000đ
+                        </span>
+
+                        <span style="text-decoration: line-through; font-size: 80%">
+                            300.000đ
+                        </span>
+
+                    </div>
+                    <div class="effect-shadow">
+                        <a href="~/Product/Detail" style="display: block; width: 100%; height: 100%;"></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
+
+@section script{
+    <script>
+        $("document").ready(function () {
+
+            $(".galleryimg").on("click", function () {
+                var src = $(this).attr('src');
+                $(".changeimg").attr('src', src);
+            });
+        });
+    </script>
+}
 
