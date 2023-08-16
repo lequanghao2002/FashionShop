@@ -2,16 +2,17 @@
 using FashionShop.Models.Domain;
 using FashionShop.Models.DTO;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FashionShop.Api
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PostController : ControllerBase
+    public class PostsController : ControllerBase
     {
         private readonly FashionShopDBContext _dbContext;
-        public PostController(FashionShopDBContext dbContext)
+        public PostsController(FashionShopDBContext dbContext)
         {
             _dbContext = dbContext;
         }
@@ -47,7 +48,7 @@ namespace FashionShop.Api
                 Image = Post.Image,
                 Content = Post.Content,
                 Status = Post.Status,
-            });
+            }).FirstOrDefault();
             return Ok(postWithIDDTO);
         }
 
