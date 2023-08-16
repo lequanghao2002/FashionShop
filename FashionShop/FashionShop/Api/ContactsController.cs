@@ -10,21 +10,30 @@ namespace FashionShop.Api
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ContactController : ControllerBase
+    public class ContactsController : ControllerBase
     {
-        private readonly FashionShopDBContext _identityDbContext;
         private readonly IContactRepository _icontactRepository;
-        public ContactController(FashionShopDBContext identityDbContext, IContactRepository icontactRepository)
+        public ContactsController(IContactRepository icontactRepository)
         {
-            _identityDbContext = identityDbContext;
             _icontactRepository = icontactRepository;
         }
 
         [HttpGet("get-all-contact")]
-        public IActionResult GetAll(string? searchByPhoneNumber)
+        public IActionResult GetAll(int page = 0, int pageSize = 6, string? searchByPhoneNumber = null)
         {
-            var allcontacts = _icontactRepository.GetAllContact(searchByPhoneNumber);
+            var allcontacts = _icontactRepository.GetAllContact(page, pageSize, searchByPhoneNumber);
             return Ok(allcontacts);
+        }
+
+        [HttpPut("cofirm-contact/{id}")]
+        public IActionResult CofirmContact(int id)
+        {
+            var check = _icontactRepository.Cofirm(id);
+            if(check == true)
+            {
+                return Ok();
+            }
+            return BadRequest();
         }
 
         //[HttpPut("update-contact-by-id/{id}")]
