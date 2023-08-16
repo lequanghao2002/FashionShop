@@ -5,12 +5,15 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
 using Microsoft.IdentityModel.Tokens;
+using FashionShop.Helper;
+using FashionShop.Models.DTO.ProductDTO;
 
 namespace FashionShop.Repositories
 {
     public interface IContactRepository
     {
-        List<ContactDTO> GetAllContact(string? searchByPhoneNumber);
+        AdminPaginationSet<ContactDTO> GetAllContact(int page, int pageSize, string? searchByPhoneNumber);
+        bool Cofirm(int id);
         //AddContactDTO AddContact(AddContactDTO addContactDTO);
         //UpdateContactDTO UpdateContactById(int id, UpdateContactDTO updatecontactDTO);
         //Contact DeleteContact(int id);
@@ -22,7 +25,7 @@ namespace FashionShop.Repositories
         {
             _identityDbContext = identityDbContext;
         }
-        public List<ContactDTO> GetAllContact(string? searchByPhoneNumber)
+        public AdminPaginationSet<ContactDTO> GetAllContact(int page, int pageSize, string? searchByPhoneNumber)
         {
             var allContact = _identityDbContext.Contacts.AsQueryable();
 
@@ -42,8 +45,35 @@ namespace FashionShop.Repositories
 
             }).OrderByDescending(c => c.ID).ToList();
 
-            return allContactDomain;
+            var totalCount = allContactDomain.Count();
+            var listContactPagination = allContactDomain.Skip(page * pageSize).Take(pageSize);
+
+            AdminPaginationSet<ContactDTO> contactPaginationSet = new AdminPaginationSet<ContactDTO>()
+            {
+                List = listContactPagination,
+                Page = page,
+                TotalCount = totalCount,
+                PagesCount = (int)Math.Ceiling((decimal)totalCount / pageSize),
+            };
+
+            return contactPaginationSet;
         }
+        
+        public bool Cofirm(int id)
+        {
+            var cofirmContact = _identityDbContext.Contacts.FirstOrDefault(c => c.ID == id);
+            
+            if(cofirmContact != null)
+            {
+                cofirmContact.Status = true;
+
+                _identityDbContext.SaveChanges();
+                return true;
+            }
+
+            return false;
+        }
+
         //public AddContactDTO AddContact(AddContactDTO addContactDTO)
         //{
         //    var ContactDM = new Contact

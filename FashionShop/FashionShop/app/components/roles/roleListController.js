@@ -12,7 +12,6 @@
         function getListRoles() {
             apiService.get('/api/Roles/get-list-roles', null, (result) => {
                 $scope.listRoles = result.data;
-                console.log('a');
             }, () => {
                 alert('Get list roles failed');
             });
