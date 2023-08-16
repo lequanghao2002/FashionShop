@@ -20,7 +20,7 @@
                 controller: 'categoryAddController'
             })
             .state('category_edit', {
-                url: '/category_edit',
+                url: '/category_edit/:id',
                 parent: 'base',
                 templateUrl: '/app/components/categories/categoryEditView.html',
                 controller: 'categoryEditController'
