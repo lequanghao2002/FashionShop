@@ -2,7 +2,7 @@
     <div class="card-header">
         <h3 class="card-title" style="font-size:30px">Danh sách bài viết</h3>
 
-        <button type="button" class="btn btn-success float-right">Thêm bài viết</button>
+        <button type="button" class="btn btn-success float-right" ui-sref="post_add">Thêm bài viết</button>
     </div>
     <!-- /.card-header -->
     <div class="card-body">
@@ -20,92 +20,37 @@
                 <thead>
                     <tr class="bg-gradient-dark">
                         <th style="width: 5%">ID</th>
-                        <th style="width: 25%">Tiêu đề bài viết</th>
-                        <th style="width: 20%">Hình ảnh</th>
-                        <th style="width: 25%">Nội dung</th>
+                        <th style="width: 15%">Tiêu đề bài viết</th>
+                        <th style="width: 10%">Hình ảnh</th>
+                        <th style="width: 50%">Nội dung</th>
                         <th style="width: 10%">Trạng thái</th>
-                        <th style="width: 15%">Thao tác</th>
+                        <th style="width: 10%">Thao tác</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>Test</td>
-                        <td>Test</td>
-                        <td>Test</td>
-                        <td>Test</td>
+                    <tr ng-repeat="post in listPosts">
+                        <td>{{post.id}}</td>
+                        <td>{{post.title}}</td>
+                        <td><img src="{{post.image}}" style="width: 100px; height: 50px" alt="Error Image" /></td>
+                        <td>{{post.content}}</td>
                         <td>
-                            <button class="btn btn-sm btn-primary">
+                            <span ng-class="{'badge bg-gradient-green': post.status == true, 'badge bg-gradient-red': post.status == false}" style="font-size: 14px">{{post.status | statusFilter}}</span>
+                        </td>
+                        <td>
+                            <button class="btn btn-sm btn-primary mr-3" ui-sref="post_edit({id:post.id})">
                                 <i class="fa fa-pen"></i>
                             </button>
-                            <button class="btn btn-sm btn-danger">
+                            <button class="btn btn-sm btn-danger" ng-click="deletePost(post.id)">
                                 <i class="fa fa-trash"></i>
                             </button>
                         </td>
                     </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>Test</td>
-                        <td>Test</td>
-                        <td>Test</td>
-                        <td>Test</td>
-                        <td>
-                            <button class="btn btn-sm btn-primary">
-                                <i class="fa fa-pen"></i>
-                            </button>
-                            <button class="btn btn-sm btn-danger">
-                                <i class="fa fa-trash"></i>
-                            </button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>Test</td>
-                        <td>Test</td>
-                        <td>Test</td>
-                        <td>Test</td>
-                        <td>
-                            <button class="btn btn-sm btn-primary">
-                                <i class="fa fa-pen"></i>
-                            </button>
-                            <button class="btn btn-sm btn-danger">
-                                <i class="fa fa-trash"></i>
-                            </button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>Test</td>
-                        <td>Test</td>
-                        <td>Test</td>
-                        <td>Test</td>
-                        <td>
-                            <button class="btn btn-sm btn-primary">
-                                <i class="fa fa-pen"></i>
-                            </button>
-                            <button class="btn btn-sm btn-danger">
-                                <i class="fa fa-trash"></i>
-                            </button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>Test</td>
-                        <td>Test</td>
-                        <td>Test</td>
-                        <td>Test</td>
-                        <td>
-                            <button class="btn btn-sm btn-primary">
-                                <i class="fa fa-pen"></i>
-                            </button>
-                            <button class="btn btn-sm btn-danger">
-                                <i class="fa fa-trash"></i>
-                            </button>
-                        </td>
-                    </tr>
+
                 </tbody>
             </table>
         </div>
+
     </div>
+</div>
 
 
