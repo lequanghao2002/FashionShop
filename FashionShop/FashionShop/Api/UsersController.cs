@@ -35,23 +35,38 @@ namespace FashionShop.Api
             }
         }
 
-        [HttpPost("register-admin")]
-        public async Task<IActionResult> RegisterAdmin (RegisterRequestDTO registerRequestDTO)
+        [HttpGet("get-user-by-id/{id}")]
+        public async Task<IActionResult> GetUserById(string id)
         {
             try
             {
-                var checkEmail = await _userManager.FindByEmailAsync(registerRequestDTO.Email);
+                var user = await _userRepository.GetUserById(id);
+
+                return Ok(user);
+            }
+            catch
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpPost("register-admin")]
+        public async Task<IActionResult> RegisterAdmin (RegisterAdminRequestDTO registerAdminRequestDTO)
+        {
+            try
+            {
+                var checkEmail = await _userManager.FindByEmailAsync(registerAdminRequestDTO.Email);
                 if(checkEmail != null)
                 {
                     return BadRequest("Email đã tồn tại, vui lòng nhập email khác");
                 }
 
-                if (registerRequestDTO.Password != registerRequestDTO.RePassword)
+                if (registerAdminRequestDTO.Password != registerAdminRequestDTO.RePassword)
                 {
                     return BadRequest("Mật khẩu và nhập lại mật khẩu không khớp");
                 }
 
-                var accountAdmin = await _userRepository.RegisterAccountAdmin(registerRequestDTO);
+                var accountAdmin = await _userRepository.RegisterAccountAdmin(registerAdminRequestDTO);
                 if (accountAdmin == true)
                 {
                     return Ok("Tạo tài khoản admin thành công");
@@ -68,22 +83,22 @@ namespace FashionShop.Api
         }
 
         [HttpPost("register-member")]
-        public async Task<IActionResult> RegisterMember(RegisterRequestDTO registerRequestDTO)
+        public async Task<IActionResult> RegisterMember(RegisterAdminRequestDTO registerAdminRequestDTO)
         {
             try
             {
-                var checkEmail = await _userManager.FindByEmailAsync(registerRequestDTO.Email);
+                var checkEmail = await _userManager.FindByEmailAsync(registerAdminRequestDTO.Email);
                 if (checkEmail != null)
                 {
                     return BadRequest("Email đã tồn tại, vui lòng nhập email khác");
                 }
 
-                if (registerRequestDTO.Password != registerRequestDTO.RePassword)
+                if (registerAdminRequestDTO.Password != registerAdminRequestDTO.RePassword)
                 {
                     return BadRequest("Mật khẩu và nhập lại mật khẩu không khớp");
                 }
 
-                var accountMember = await _userRepository.RegisterAccountMember(registerRequestDTO);
+                var accountMember = await _userRepository.RegisterAccountMember(registerAdminRequestDTO);
                 if (accountMember == true)
                 {
                     return Ok("Tạo tài khoản nhân viên thành công");
@@ -160,6 +175,57 @@ namespace FashionShop.Api
             catch
             {
                 return BadRequest("Thực hiện mở khóa không thành công");
+            }
+        }
+
+        [HttpPut("update-user/{id}")]
+        public async Task<IActionResult> UpdateUser(UpdateUserDTO updateUserDTO, string id)
+        {
+            try
+            {
+                var userById = await _userManager.FindByIdAsync(id);
+                var checkEmail = await _userManager.FindByEmailAsync(updateUserDTO.Email);
+                
+                if (checkEmail != null && checkEmail.Email != userById.Email)
+                {
+                    return BadRequest("Email đã tồn tại, vui lòng nhập email khác");
+                }
+
+                var updateUser = await _userRepository.Update(updateUserDTO, id);
+                if (updateUser != null)
+                {
+                    return Ok("Chỉnh sửa tài khoản thành công");
+                }
+                else
+                {
+                    return BadRequest("Chỉnh sửa tài khoản không thành công");
+                }
+            }
+            catch
+            {
+                return BadRequest("Chỉnh sửa tài khoản không thành công");
+
+            }
+        }
+
+        [HttpDelete("delete-user/{id}")]
+        public async Task<IActionResult> DeleleUser(string id)
+        {
+            try
+            {
+                var user = await _userRepository.Delete(id);
+                if (user == true)
+                {
+                    return Ok("Xóa người dùng thành công");
+                }
+                else
+                {
+                    return BadRequest("Không tìm thấy id của người dùng");
+                }
+            }
+            catch
+            {
+                return BadRequest("Xóa người dùng không thành công");
             }
         }
     }
