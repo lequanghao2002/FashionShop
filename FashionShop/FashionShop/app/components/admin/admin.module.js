@@ -20,7 +20,7 @@
                 controller: 'adminAddController'
             })
             .state('admin_edit', {
-                url: '/admin_edit',
+                url: '/admin_edit/:id',
                 parent: 'base',
                 templateUrl: '/app/components/admin/adminEditView.html',
                 controller: 'adminEditController'

@@ -1,19 +1,22 @@
 ﻿using FashionShop.Data;
 using FashionShop.Models.Domain;
+using FashionShop.Models.DTO.ProductDTO;
 using FashionShop.Models.DTO.UserDTO;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using System.Security.Cryptography.X509Certificates;
 
 namespace FashionShop.Repositories
 {
     public interface IUserRepository
     {
         public Task<List<GetUserDTO>> GetAllUser(string? searchByName, string? filterRole);
-        public Task<bool> RegisterAccountAdmin(RegisterRequestDTO registerRequestDTO);
+        public Task<GetUserDTO> GetUserById(string id);
+        public Task<bool> RegisterAccountAdmin(RegisterAdminRequestDTO registerAdminRequestDTO);
 
-        public Task<bool> RegisterAccountMember(RegisterRequestDTO registerRequestDTO);
+        public Task<bool> RegisterAccountMember(RegisterAdminRequestDTO registerAdminRequestDTO);
 
         public Task<bool> RegisterAccountCustomer(RegisterRequestDTO registerRequestDTO);
 
@@ -21,7 +24,8 @@ namespace FashionShop.Repositories
 
         public Task<bool> AccountLock(string idAccount);
         public Task<bool> AccountUnlock(string idAccount);
-
+        public Task<UpdateUserDTO> Update(UpdateUserDTO updateUserDTO, string id);
+        public Task<bool> Delete(string id);
     }
     public class UserRepository : IUserRepository
     {
@@ -58,6 +62,7 @@ namespace FashionShop.Repositories
                 ID = user.Id,
                 FullName = user.FullName,
                 Email = user.Email,
+                PhoneNumber = user.PhoneNumber,
                 Role = _fashionShopDBContext.UserRoles
                 .Where(ur => ur.UserId == user.Id)
                 .Join(_fashionShopDBContext.Roles, ur => ur.RoleId, r => r.Id, (ur, r) => r.Name)
@@ -68,40 +73,64 @@ namespace FashionShop.Repositories
             return listUsersDTO;
         }
 
-        public async Task<bool> RegisterAccountAdmin(RegisterRequestDTO registerRequestDTO)
+        public async Task<GetUserDTO> GetUserById (string id)
+        {
+            var userDomain = await _userManager.FindByIdAsync(id);
+
+            if(userDomain != null)
+            {
+                var userDTO = new GetUserDTO
+                {
+                    ID = userDomain.Id,
+                    FullName = userDomain.FullName,
+                    Email = userDomain.Email,
+                    PhoneNumber = userDomain.PhoneNumber,
+                };
+
+                return userDTO;
+            }
+
+            return null;
+        }
+
+        public async Task<bool> RegisterAccountAdmin(RegisterAdminRequestDTO registerAdminRequestDTO)
         {
             var admin = new User
             {
-                FullName = registerRequestDTO.FullName,
-                UserName = registerRequestDTO.Email,
-                Email = registerRequestDTO.Email,
-                LockoutEnabled = false,
+                FullName = registerAdminRequestDTO.FullName,
+                UserName = registerAdminRequestDTO.Email,
+                Email = registerAdminRequestDTO.Email,
+                PhoneNumber = registerAdminRequestDTO.PhoneNumber,
             };
 
-            var result = await _userManager.CreateAsync(admin, registerRequestDTO.Password);
+            var result = await _userManager.CreateAsync(admin, registerAdminRequestDTO.Password);
+
 
             if(result.Succeeded) {
                 result = await _userManager.AddToRoleAsync(admin, "Quản trị viên");
             
                 if(result.Succeeded)
                 {
+                    admin.LockoutEnabled = false;
+                    await _fashionShopDBContext.SaveChangesAsync();
+
                     return true;
                 }
             }
             return false;
         }
 
-        public async Task<bool> RegisterAccountMember(RegisterRequestDTO registerRequestDTO)
+        public async Task<bool> RegisterAccountMember(RegisterAdminRequestDTO registerAdminRequestDTO)
         {
             var admin = new User
             {
-                FullName = registerRequestDTO.FullName,
-                UserName = registerRequestDTO.Email,
-                Email = registerRequestDTO.Email,
-                LockoutEnabled = false,
+                FullName = registerAdminRequestDTO.FullName,
+                UserName = registerAdminRequestDTO.Email,
+                Email = registerAdminRequestDTO.Email,
+                PhoneNumber = registerAdminRequestDTO.PhoneNumber,
             };
 
-            var result = await _userManager.CreateAsync(admin, registerRequestDTO.Password);
+            var result = await _userManager.CreateAsync(admin, registerAdminRequestDTO.Password);
 
             if (result.Succeeded)
             {
@@ -109,6 +138,9 @@ namespace FashionShop.Repositories
 
                 if (result.Succeeded)
                 {
+                    admin.LockoutEnabled = false;
+                    await _fashionShopDBContext.SaveChangesAsync();
+
                     return true;
                 }
             }
@@ -122,7 +154,6 @@ namespace FashionShop.Repositories
                 FullName = registerRequestDTO.FullName,
                 UserName = registerRequestDTO.Email,
                 Email = registerRequestDTO.Email,
-                LockoutEnabled = false,
             };
 
             var result = await _userManager.CreateAsync(admin, registerRequestDTO.Password);
@@ -133,6 +164,9 @@ namespace FashionShop.Repositories
 
                 if (result.Succeeded)
                 {
+                    admin.LockoutEnabled = false;
+                    await _fashionShopDBContext.SaveChangesAsync();
+
                     return true;
                 }
             }
@@ -190,6 +224,42 @@ namespace FashionShop.Repositories
             }
 
             return false;
+        }
+
+        public async Task<UpdateUserDTO> Update(UpdateUserDTO updateUserDTO, string id)
+        {
+            var userDomain = await _fashionShopDBContext.Users.FirstOrDefaultAsync(u => u.Id == id);
+
+            if (userDomain != null)
+            {
+                userDomain.FullName = updateUserDTO.FullName;
+                userDomain.Email = updateUserDTO.Email;
+                userDomain.PhoneNumber = updateUserDTO.PhoneNumber;
+
+                await _fashionShopDBContext.SaveChangesAsync();
+                return updateUserDTO;
+            }
+            else
+            {
+                return null!;
+            }
+        }
+
+        public async Task<bool> Delete(string id)
+        {
+            var userDomain = await _fashionShopDBContext.Users.FirstOrDefaultAsync(p => p.Id == id);
+
+            if (userDomain != null)
+            {
+                _fashionShopDBContext.Remove(userDomain);
+                await _fashionShopDBContext.SaveChangesAsync();
+
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }
