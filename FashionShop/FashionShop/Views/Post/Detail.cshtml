@@ -1,0 +1,44 @@
+﻿
+@{
+    ViewData["Title"] = "Detail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="full-banner" style="height: 135px">
+</div>
+
+<div class="container">
+    <ul class="breadcrumb">
+        <li><a href="~/Home"><i class="fa fa-home"></i></a></li>
+        <li><a href="single-post.html">Chi tiết sản phẩm</a></li>
+    </ul>
+     <div class="row featured-block">
+            <div class="main-head-block" style="margin-top: 0">
+                <h2>Top 5 chất liệu may áo sơ mi phổ biến nhất hiện nay</h2>
+            </div>
+               
+                <div class="post-content">
+                    <p>1. Chất liệu may áo sơ mi - Vải kate</p>
+                    <p>2. Chất liệu may áo sơ mi - Vải Kaki</p>
+                    <p>3. Chất liệu may áo sơ mi - Vải sợi nona</p>
+                    <p>4. Chất liệu may áo sơ mi - Vải Poplin</p>
+                    <p>5. Chất liệu may áo sơ mi - Vải voan</p>
+                </div>
+                <div class="image-block">
+                    <a href="single-post.html" style="cursor: pointer">
+                    <img class="post-image" alt="i" src="~/UploadFiles/Posts/chat-lieu-ao-so-mi-1.jpg" />
+                    </a>
+                </div>
+            </div>
+
+    @section script{
+        <script>
+            $("document").ready(function () {
+
+                $(".galleryimg").on("click", function () {
+                    var src = $(this).attr('src');
+                    $(".changeimg").attr('src', src);
+                });
+            });
+        </script>
+}
