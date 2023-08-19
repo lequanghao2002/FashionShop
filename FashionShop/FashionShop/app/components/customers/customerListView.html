@@ -4,6 +4,17 @@
     </div>
     <!-- /.card-header -->
     <div class="card-body">
+        <div class="row">
+            <div class="col col-md-5">
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" ng-model="searchByName" placeholder="Nhập tên khách hàng..." aria-label="Recipient's title" aria-describedby="basic-addon2">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="button" ng-click="getlistCustomers()">Tìm kiếm</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <table class="table table-bordered table-striped text-center">
             <thead>
                 <tr class="bg-gradient-dark">
@@ -24,8 +35,8 @@
                     </td>
                     <td>
                         <!--<button class="btn btn-sm btn-primary mr-2" ui-sref="customer_edit({id:customer.id})">
-                            Sửa
-                        </button>-->
+                        Sửa
+                    </button>-->
                         <button class="btn btn-sm btn-warning" ng-click="lockCustomer(customer.id)" ng-if="customer.lockoutEnabled == false">
                             Khóa
                         </button>

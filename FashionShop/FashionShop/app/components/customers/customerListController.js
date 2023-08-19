@@ -7,12 +7,14 @@
 
     function customerListController($scope, apiService, notificationService, $ngBootbox) {
         $scope.listCustomers = [];
+        $scope.searchByName;
 
         $scope.getlistCustomers = getlistCustomers;
         function getlistCustomers() {
             var config = {
                 params: {
-                    filterRole: "9cd0f7a2-741d-405a-a8a3-a34b22da200c"
+                    filterRole: "9cd0f7a2-741d-405a-a8a3-a34b22da200c",
+                    searchByName: $scope.searchByName,
                 }
             };
 
