@@ -32,6 +32,11 @@ namespace FashionShop.Data
                 entity.HasKey(e => new { e.OrderID, e.ProductID });
             });
 
+            modelBuilder.Entity<Voucher>(entity =>
+            {
+                entity.HasIndex(v => v.DiscountCode).IsUnique();
+            });
+
             foreach (var entityType in modelBuilder.Model.GetEntityTypes())
             {
                 var tableName = entityType.GetTableName();

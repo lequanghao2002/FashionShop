@@ -4,6 +4,7 @@ using FashionShop.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FashionShop.Migrations
 {
     [DbContext(typeof(FashionShopDBContext))]
-    partial class FashionShopDBContextModelSnapshot : ModelSnapshot
+    [Migration("20230820050936_update domain voucher v2")]
+    partial class updatedomainvoucherv2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -277,15 +279,13 @@ namespace FashionShop.Migrations
                     b.Property<string>("Describe")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("DiscountAmount")
-                        .HasColumnType("bit");
-
                     b.Property<string>("DiscountCode")
                         .IsRequired()
                         .HasColumnType("varchar(50)");
 
-                    b.Property<bool>("DiscountPercentage")
-                        .HasColumnType("bit");
+                    b.Property<string>("DiscountType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<double>("DiscountValue")
                         .HasColumnType("float");
@@ -296,6 +296,10 @@ namespace FashionShop.Migrations
                     b.Property<double>("MinimumValue")
                         .HasColumnType("float");
 
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
@@ -305,16 +309,7 @@ namespace FashionShop.Migrations
                     b.Property<bool>("Status")
                         .HasColumnType("bit");
 
-                    b.Property<string>("UpdatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("UpdatedDate")
-                        .HasColumnType("datetime2");
-
                     b.HasKey("ID");
-
-                    b.HasIndex("DiscountCode")
-                        .IsUnique();
 
                     b.ToTable("Vouchers");
                 });
