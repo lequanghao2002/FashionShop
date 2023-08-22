@@ -21,7 +21,8 @@
                         <h3>Liên hệ</h3>
                         <p><strong>Vui lòng điền đầy đủ thông tin để được phản hồi nhanh nhất</strong></p>
                         @*<form method="post">*@
-                        <form asp-action="Index">
+                        <form asp-controller="Contact" asp-action="Index" method="post" >
+                            
                             <div class="form-group">
                                 <label for="input-fullname" class="control-label">Họ và tên</label>
                                 <input type="text" class="form-control" id="input-fullname" placeholder="Nhập họ và tên" value="" name="fullname">
@@ -34,8 +35,8 @@
                                 @*<label for="input-phonenumber" class="control-label">Số điện thoại</label>
                                 <input type="tel" asp-for="PhoneNumber" class="form-control" id="input-phonenumber" placeholder="Nhập số điện thoại" value="" name="phonenumber">*@
                                 <label for="input-phonenumber" class="control-label">Số điện thoại</label>
-                                <input type="tel" asp-for="PhoneNumber" class="form-control" id="input-phonenumber" placeholder="Nhập số điện thoại"> 
-                                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                                <input type="number" asp-for="PhoneNumber" class="form-control" id="input-phonenumber" value="" name="phonenumber" placeholder="Nhập số điện thoại">
+                                <span asp-validation-for="PhoneNumber" ></span>
                             </div>
                             <div class="form-group">
                                 <label for="input-content" class="control-label">Nội dung</label>
@@ -43,6 +44,7 @@
                             </div>
                             <div class="form-group">
                                 <input type="submit" class="btn btn-primary" value="Gửi" style="width:100%;">
+                               
                             </div>
                         </form>
                     </div>

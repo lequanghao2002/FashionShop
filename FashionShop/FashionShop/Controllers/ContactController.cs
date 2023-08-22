@@ -1,5 +1,6 @@
 ﻿using FashionShop.Data;
 using FashionShop.Models.Domain;
+using FashionShop.Models.DTO;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -35,6 +36,7 @@ namespace FashionShop.Controllers
                         PhoneNumber = contact.PhoneNumber,
                         Content = contact.Content,
                         Status = true
+                        
                     };
                     try
                     {
