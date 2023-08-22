@@ -74,6 +74,7 @@ builder.Services.Configure<IdentityOptions>(option =>
     option.Password.RequireUppercase = false; // Không bắt buộc chữ in
     option.Password.RequiredLength = 3; // Số ký tự tối thiểu của password
     option.Password.RequiredUniqueChars = 0; // Số ký tự riêng biệt
+   
 });
 
 

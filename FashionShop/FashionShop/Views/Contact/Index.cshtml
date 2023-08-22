@@ -1,4 +1,4 @@
-﻿
+﻿@model FashionShop.Models.Domain.Contact
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -16,21 +16,26 @@
         <div class="row login-page" >
             <div class="col-sm-6" id="content">
                 <div class="row">
+                    
                     <div class="well">
                         <h3>Liên hệ</h3>
                         <p><strong>Vui lòng điền đầy đủ thông tin để được phản hồi nhanh nhất</strong></p>
-                        <form method="post">
+                        @*<form method="post">*@
+                        <form asp-action="Index">
                             <div class="form-group">
                                 <label for="input-fullname" class="control-label">Họ và tên</label>
                                 <input type="text" class="form-control" id="input-fullname" placeholder="Nhập họ và tên" value="" name="fullname">
                             </div>
                             <div class="form-group">
                                 <label for="input-email" class="control-label">E-Mail</label>
-                                <input type="text" class="form-control" id="input-email" placeholder="Nhập E-Mail" value="" name="email">
+                                <input type="email" class="form-control" id="input-email" placeholder="Nhập E-Mail" value="" name="email">
                             </div>
                             <div class="form-group">
+                                @*<label for="input-phonenumber" class="control-label">Số điện thoại</label>
+                                <input type="tel" asp-for="PhoneNumber" class="form-control" id="input-phonenumber" placeholder="Nhập số điện thoại" value="" name="phonenumber">*@
                                 <label for="input-phonenumber" class="control-label">Số điện thoại</label>
-                                <input type="number" class="form-control" id="input-phonenumber" placeholder="Nhập số điện thoại" value="" name="phonenumber">
+                                <input type="tel" asp-for="PhoneNumber" class="form-control" id="input-phonenumber" placeholder="Nhập số điện thoại"> 
+                                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
                             </div>
                             <div class="form-group">
                                 <label for="input-content" class="control-label">Nội dung</label>
