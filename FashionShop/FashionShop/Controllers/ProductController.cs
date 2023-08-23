@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using FashionShop.Models;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Razor.Language.Intermediate;
 
 namespace FashionShop.Controllers
 {
@@ -6,11 +8,17 @@ namespace FashionShop.Controllers
     {
         public IActionResult Index()
         {
+
             return View();
         }
         public IActionResult Detail()
         {
             return View();
+        }
+        public IActionResult IPro(int id)
+        {
+            var product = ProductModel.list_product(id);
+            return View(product);
         }
     }
 }

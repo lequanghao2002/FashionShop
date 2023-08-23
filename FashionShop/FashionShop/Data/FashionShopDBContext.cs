@@ -7,6 +7,10 @@ namespace FashionShop.Data
 {
     public class FashionShopDBContext : IdentityDbContext
     {
+        public FashionShopDBContext()
+        {
+        }
+
         public FashionShopDBContext(DbContextOptions<FashionShopDBContext> options) : base(options) 
         {
 
