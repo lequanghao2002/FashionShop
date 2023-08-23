@@ -18,14 +18,16 @@
         <div class="main-head-block" style="margin-top: 0">
             <h2>@Model.Title</h2>
         </div>
-
+        <div class="image-block">
+            <a href="single-post.html" style="cursor: pointer">
+                <center><img class="post-image" alt="i" src="~/@Model.Image"/></center>
+                
+            </a>
+        </div>
+        <div class="spacer" style="height: 20px"></div>
         <div class="post-content">
             <p>@Model.Content</p>
         </div>
-        <div class="image-block">
-            <a href="single-post.html" style="cursor: pointer">
-                <img class="post-image" alt="i" src="@Model.Image"/>
-            </a>
-        </div>
+        
     </div>
 </div>
