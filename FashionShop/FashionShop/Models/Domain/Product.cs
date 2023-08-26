@@ -46,5 +46,6 @@ namespace FashionShop.Models.Domain
         public bool Status { get; set; }
 
         public IEnumerable<OrderDetail> OrderDetails { get; set; }
+        public IEnumerable<Comment> Comments { get; set; }
     }
 }

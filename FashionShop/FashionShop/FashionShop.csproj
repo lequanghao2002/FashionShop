@@ -7,17 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="assets\admin\libs\ngBootbox\bower_components\font-awesome\.bower.json" />
-    <Content Include="assets\admin\libs\ngBootbox\bower_components\font-awesome\bower.json" />
-    <Content Include="assets\admin\libs\ngBootbox\bower_components\font-awesome\css\font-awesome.css" />
-    <Content Include="assets\admin\libs\ngBootbox\bower_components\font-awesome\css\font-awesome.min.css" />
-    <Content Include="assets\admin\libs\ngBootbox\bower_components\font-awesome\fonts\fontawesome-webfont.eot" />
-    <Content Include="assets\admin\libs\ngBootbox\bower_components\font-awesome\fonts\fontawesome-webfont.ttf" />
-    <Content Include="assets\admin\libs\ngBootbox\bower_components\font-awesome\fonts\fontawesome-webfont.woff" />
-    <Content Include="assets\admin\libs\ngBootbox\bower_components\font-awesome\fonts\FontAwesome.otf" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="elFinder.NetCore" Version="1.3.6" />
     <PackageReference Include="Grpc.Core" Version="2.46.6" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.21" />
@@ -41,8 +30,6 @@
     <Folder Include="assets\admin\js\" />
     <Folder Include="assets\admin\libs\bootbox\.git\objects\info\" />
     <Folder Include="assets\admin\libs\bootbox\.git\refs\tags\" />
-    <Folder Include="assets\admin\libs\ngBootbox\.git\objects\info\" />
-    <Folder Include="assets\admin\libs\ngBootbox\.git\refs\tags\" />
     <Folder Include="UploadFiles\" />
   </ItemGroup>
 
@@ -74,59 +61,6 @@
     <None Include="assets\admin\libs\bootbox\.git\packed-refs" />
     <None Include="assets\admin\libs\bootbox\.git\refs\heads\master" />
     <None Include="assets\admin\libs\bootbox\.git\refs\remotes\origin\HEAD" />
-    <None Include="assets\admin\libs\ngBootbox\.git\config" />
-    <None Include="assets\admin\libs\ngBootbox\.git\description" />
-    <None Include="assets\admin\libs\ngBootbox\.git\HEAD" />
-    <None Include="assets\admin\libs\ngBootbox\.git\hooks\applypatch-msg.sample" />
-    <None Include="assets\admin\libs\ngBootbox\.git\hooks\commit-msg.sample" />
-    <None Include="assets\admin\libs\ngBootbox\.git\hooks\fsmonitor-watchman.sample" />
-    <None Include="assets\admin\libs\ngBootbox\.git\hooks\post-update.sample" />
-    <None Include="assets\admin\libs\ngBootbox\.git\hooks\pre-applypatch.sample" />
-    <None Include="assets\admin\libs\ngBootbox\.git\hooks\pre-commit.sample" />
-    <None Include="assets\admin\libs\ngBootbox\.git\hooks\pre-merge-commit.sample" />
-    <None Include="assets\admin\libs\ngBootbox\.git\hooks\pre-push.sample" />
-    <None Include="assets\admin\libs\ngBootbox\.git\hooks\pre-rebase.sample" />
-    <None Include="assets\admin\libs\ngBootbox\.git\hooks\pre-receive.sample" />
-    <None Include="assets\admin\libs\ngBootbox\.git\hooks\prepare-commit-msg.sample" />
-    <None Include="assets\admin\libs\ngBootbox\.git\hooks\push-to-checkout.sample" />
-    <None Include="assets\admin\libs\ngBootbox\.git\hooks\update.sample" />
-    <None Include="assets\admin\libs\ngBootbox\.git\index" />
-    <None Include="assets\admin\libs\ngBootbox\.git\info\exclude" />
-    <None Include="assets\admin\libs\ngBootbox\.git\logs\HEAD" />
-    <None Include="assets\admin\libs\ngBootbox\.git\logs\refs\heads\master" />
-    <None Include="assets\admin\libs\ngBootbox\.git\logs\refs\remotes\origin\HEAD" />
-    <None Include="assets\admin\libs\ngBootbox\.git\objects\pack\pack-5e43445c7d2137bc1715c83df490f0e1bfac95a6.idx" />
-    <None Include="assets\admin\libs\ngBootbox\.git\objects\pack\pack-5e43445c7d2137bc1715c83df490f0e1bfac95a6.pack" />
-    <None Include="assets\admin\libs\ngBootbox\.git\packed-refs" />
-    <None Include="assets\admin\libs\ngBootbox\.git\refs\heads\master" />
-    <None Include="assets\admin\libs\ngBootbox\.git\refs\remotes\origin\HEAD" />
-    <None Include="assets\admin\libs\ngBootbox\bower_components\font-awesome\.gitignore" />
-    <None Include="assets\admin\libs\ngBootbox\bower_components\font-awesome\.npmignore" />
-    <None Include="assets\admin\libs\ngBootbox\bower_components\font-awesome\fonts\fontawesome-webfont.svg" />
-    <None Include="assets\admin\libs\ngBootbox\bower_components\font-awesome\less\bordered-pulled.less" />
-    <None Include="assets\admin\libs\ngBootbox\bower_components\font-awesome\less\core.less" />
-    <None Include="assets\admin\libs\ngBootbox\bower_components\font-awesome\less\fixed-width.less" />
-    <None Include="assets\admin\libs\ngBootbox\bower_components\font-awesome\less\font-awesome.less" />
-    <None Include="assets\admin\libs\ngBootbox\bower_components\font-awesome\less\icons.less" />
-    <None Include="assets\admin\libs\ngBootbox\bower_components\font-awesome\less\larger.less" />
-    <None Include="assets\admin\libs\ngBootbox\bower_components\font-awesome\less\list.less" />
-    <None Include="assets\admin\libs\ngBootbox\bower_components\font-awesome\less\mixins.less" />
-    <None Include="assets\admin\libs\ngBootbox\bower_components\font-awesome\less\path.less" />
-    <None Include="assets\admin\libs\ngBootbox\bower_components\font-awesome\less\rotated-flipped.less" />
-    <None Include="assets\admin\libs\ngBootbox\bower_components\font-awesome\less\stacked.less" />
-    <None Include="assets\admin\libs\ngBootbox\bower_components\font-awesome\less\variables.less" />
-    <None Include="assets\admin\libs\ngBootbox\bower_components\font-awesome\scss\font-awesome.scss" />
-    <None Include="assets\admin\libs\ngBootbox\bower_components\font-awesome\scss\_bordered-pulled.scss" />
-    <None Include="assets\admin\libs\ngBootbox\bower_components\font-awesome\scss\_core.scss" />
-    <None Include="assets\admin\libs\ngBootbox\bower_components\font-awesome\scss\_fixed-width.scss" />
-    <None Include="assets\admin\libs\ngBootbox\bower_components\font-awesome\scss\_icons.scss" />
-    <None Include="assets\admin\libs\ngBootbox\bower_components\font-awesome\scss\_larger.scss" />
-    <None Include="assets\admin\libs\ngBootbox\bower_components\font-awesome\scss\_list.scss" />
-    <None Include="assets\admin\libs\ngBootbox\bower_components\font-awesome\scss\_mixins.scss" />
-    <None Include="assets\admin\libs\ngBootbox\bower_components\font-awesome\scss\_path.scss" />
-    <None Include="assets\admin\libs\ngBootbox\bower_components\font-awesome\scss\_rotated-flipped.scss" />
-    <None Include="assets\admin\libs\ngBootbox\bower_components\font-awesome\scss\_stacked.scss" />
-    <None Include="assets\admin\libs\ngBootbox\bower_components\font-awesome\scss\_variables.scss" />
   </ItemGroup>
 
 </Project>

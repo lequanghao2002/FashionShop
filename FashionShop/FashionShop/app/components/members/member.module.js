@@ -20,7 +20,7 @@
                 controller: 'memberAddController'
             })
             .state('member_edit', {
-                url: '/member_edit',
+                url: '/member_edit/:id',
                 parent: 'base',
                 templateUrl: '/app/components/members/memberEditView.html',
                 controller: 'memberEditController'

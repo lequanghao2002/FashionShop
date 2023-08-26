@@ -19,6 +19,8 @@ namespace FashionShop.Data
         public DbSet<OrderDetail> OrderDetails { get; set; }
         public DbSet<Contact> Contacts { get; set; }
         public DbSet<Post> Posts { get; set; }
+        public DbSet<Comment> Comments { get; set; }
+        public DbSet<Voucher> Vouchers { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<IdentityRole> Roles { get; set; }
 
@@ -33,6 +35,11 @@ namespace FashionShop.Data
             modelBuilder.Entity<OrderDetail>(entity =>
             {
                 entity.HasKey(e => new { e.OrderID, e.ProductID });
+            });
+
+            modelBuilder.Entity<Voucher>(entity =>
+            {
+                entity.HasIndex(v => v.DiscountCode).IsUnique();
             });
 
             foreach (var entityType in modelBuilder.Model.GetEntityTypes())
