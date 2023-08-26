@@ -21,13 +21,12 @@ namespace FashionShop.Controllers
     public class AccountController : Controller
     {
         private readonly UserManager<User> _userManager;
-        private readonly FashionShopDBContext _fashionShopDBContext;
-       
+        private readonly IUserRepository _userRepository;
 
-        public AccountController(UserManager<User> userManager, FashionShopDBContext fashionShopDBContext)
+        public AccountController(UserManager<User> userManager, IUserRepository userRepository )
         {
-           this._fashionShopDBContext = fashionShopDBContext;
             this._userManager = userManager;
+            _userRepository = userRepository;
         }
 
         public ActionResult Login( string returnUrl)
@@ -84,38 +83,50 @@ namespace FashionShop.Controllers
 
 
         [HttpPost]
-        public async Task<ActionResult> Register(RegisterRequestDTO registerRequestDTO)
+        public async Task<ActionResult> Register(RegisterAdminRequestDTO registerAdminRequestDTO)
         {
             if (ModelState.IsValid)
             {
-                var customerByEmail = await _userManager.FindByEmailAsync(registerRequestDTO.Email);
+                var customerByEmail = await _userManager.FindByEmailAsync(registerAdminRequestDTO.Email);
                 if (customerByEmail != null)
                 {
                     ModelState.AddModelError("Email", "Email này đã tồn tại");
                     return View();
                 }
                 
-                if (registerRequestDTO.Password != registerRequestDTO.RePassword)
+                if (registerAdminRequestDTO.Password != registerAdminRequestDTO.RePassword)
                 {
                     ModelState.AddModelError("Password", "Mat khau khong giong nhau");
                     return View();
                 }
 
-                var CustomerRegister = new User
-                {
-                    FullName = registerRequestDTO.FullName,
-                    UserName = registerRequestDTO.Email,
-                    Email = registerRequestDTO.Email,
-                    PhoneNumber = registerRequestDTO.PhoneNumber,
-                };
+                var CustomerRegister = await _userRepository.RegisterAccountCustomer(registerAdminRequestDTO);
 
-                var result = await _userManager.CreateAsync(CustomerRegister, registerRequestDTO.Password);
-
-                if (result.Succeeded)
+                if(CustomerRegister == true)
                 {
-                    await _userManager.AddToRoleAsync(CustomerRegister, "khách hàng");
+                    ViewData["SuccessMsg"] = " Đăng ký thành công";
                 }
-                ViewData["SuccessMsg"] = " Đăng ký thành công";
+                else
+                {
+
+                }
+                //var CustomerRegister = new User
+                //{
+                //    FullName = registerRequestDTO.FullName,
+                //    UserName = registerRequestDTO.Email,
+                //    Email = registerRequestDTO.Email,
+                //    PhoneNumber = registerRequestDTO.PhoneNumber,
+                //};
+
+                //var result = await _userManager.CreateAsync(CustomerRegister, registerRequestDTO.Password);
+
+                //if (result.Succeeded)
+                //{
+                //    await _userManager.AddToRoleAsync(CustomerRegister, "khách hàng");
+                //}
+                //ViewData["SuccessMsg"] = " Đăng ký thành công";
+
+
             }
             return View();
         }
