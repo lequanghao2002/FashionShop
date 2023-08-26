@@ -11,5 +11,6 @@ namespace FashionShop.Models.DTO.UserDTO
         [Required(ErrorMessage = "Vui lòng nhập mật khẩu")]
         [DataType(DataType.Password)]
         public string Password { get; set; }
+
     }
 }
