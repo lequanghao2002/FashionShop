@@ -15,10 +15,6 @@ namespace FashionShop.Controllers
         {
             return View();
         }
-        public IActionResult IPro(int id)
-        {
-            var product = ProductModel.list_product(id);
-            return View(product);
-        }
+        
     }
 }
