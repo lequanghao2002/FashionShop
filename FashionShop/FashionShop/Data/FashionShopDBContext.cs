@@ -1,4 +1,5 @@
 ﻿using FashionShop.Models.Domain;
+using FashionShop.Models.DTO.ProductDTO;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -7,6 +8,10 @@ namespace FashionShop.Data
 {
     public class FashionShopDBContext : IdentityDbContext
     {
+        public FashionShopDBContext()
+        {
+        }
+
         public FashionShopDBContext(DbContextOptions<FashionShopDBContext> options) : base(options) 
         {
 
