@@ -46,11 +46,11 @@
                                         @pro.Name
                                     </p>
                                     <span>
-                                        @pro.Price
+                                      @Html.Raw(@pro.Price - (@pro.Price * @pro.Discount/100))
                                     </span>
 
                                     <span style="text-decoration: line-through; font-size: 80%">
-                                        300.000đ
+                                        @pro.Price
                                     </span>
 
                                 </div>
