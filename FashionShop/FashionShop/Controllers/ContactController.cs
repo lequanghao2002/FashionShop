@@ -1,4 +1,5 @@
-﻿using FashionShop.Data;
+﻿using AspNetCoreHero.ToastNotification.Abstractions;
+using FashionShop.Data;
 using FashionShop.Models.Domain;
 using FashionShop.Models.DTO;
 using Microsoft.AspNetCore.Authorization;
@@ -10,23 +11,28 @@ namespace FashionShop.Controllers
     public class ContactController : Controller
     {
         private readonly FashionShopDBContext _context;
-        public ContactController(FashionShopDBContext context)
+        public INotyfService _notifyServic { get; }
+        public ContactController(FashionShopDBContext context, INotyfService notifyService)
         {
             _context = context;
+            _notifyServic = notifyService;
         }
         [HttpGet]
-        //[AllowAnonymous]
+        ////[AllowAnonymous]
         //[Route("lien-he.html", Name = "LienHe")]
         public IActionResult Index()
         {
+            
             return View();
         }
 
         [HttpPost]
+        [AllowAnonymous]
         public async Task<IActionResult> Index(Contact contact)
         {
             try
             {
+              
                 if (ModelState.IsValid)
                 {
                     Contact contact1 = new Contact
@@ -35,22 +41,28 @@ namespace FashionShop.Controllers
                         Email = contact.Email,
                         PhoneNumber = contact.PhoneNumber,
                         Content = contact.Content,
-                        Status = true
-                        
+                        Status = false
+
                     };
                     try
                     {
                         _context.Add(contact1);
                         await _context.SaveChangesAsync();
+                        _notifyServic.Success("Gửi thành công");
+                        return View(contact);
                     }
                     catch
                     {
 
                         return RedirectToAction("Index");
                     }
+                    
                 }
+
                 else
                 {
+
+                    //_notifyServic.Error("Gửi không thành công");
                     return View(contact);
                 }
             }
@@ -59,13 +71,13 @@ namespace FashionShop.Controllers
 
                 return View(contact);
             }
-            return View(contact);
+            //return View(contact);
 
         }
 
         [HttpGet]
         [AllowAnonymous]
-        public IActionResult ValidatePhone(string Phone)
+        public IActionResult checkPhone(string Phone)
         {
             try
             {
