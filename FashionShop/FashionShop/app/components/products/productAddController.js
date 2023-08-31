@@ -3,14 +3,16 @@
 (function (app) {
     app.controller('productAddController', productAddController);
 
-    productAddController.$inject = ['$scope', 'apiService', 'notificationService', '$state']
+    productAddController.$inject = ['$scope', 'apiService', 'notificationService', '$state', '$timeout']
 
-    function productAddController($scope, apiService, notificationService, $state) {
+    function productAddController($scope, apiService, notificationService, $state, $timeout) {
         $scope.product = {
             createdBy: "Quang Hào",
             status: true,
             discount: 0,
         };
+
+        $scope.category = {};
         
         $scope.chooseImage = function() {
             window.fileSelected = function (data) {
@@ -61,6 +63,17 @@
 
             }, (error) => {
                 notificationService.displayError('Không thêm được sản phẩm');
+            });
+        };
+
+        $scope.addCategory = function () {
+            apiService.post('/api/Categories/add-category', $scope.category, (result) => {
+                notificationService.displaySuccess('Thêm danh mục thành công');
+                
+                $scope.getCategory();
+                $scope.product.categoryID = result.data.id;
+            }, (error) => {
+                notificationService.displayError('Chưa điền tên danh mục');
             });
         };
     };

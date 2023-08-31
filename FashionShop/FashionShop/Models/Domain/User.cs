@@ -10,5 +10,6 @@ namespace FashionShop.Models.Domain
         [Required]
         public string FullName { get; set; }
         public IEnumerable<Order> Orders { get; set; }
+        public IEnumerable<Comment> Comments { get; set; }
     }
 }

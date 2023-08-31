@@ -19,7 +19,7 @@ public interface IProductRepository
     public Task<AdminPaginationSet<GetProductDTO>> GetAll(int page, int pageSize, int? searchByCategory, string? searchByName);
 
     public List<GetProductDTO> GetAll();
-
+    public Task<GetProductByIdDTO> GetById(int idProduct);
     public Task<GetProductByIdDTO> GetById(int idProduct);
     public GetProductByIdDTO GetId(int id);
     public Task<CreateProductDTO> Create(CreateProductDTO createProductDTO);

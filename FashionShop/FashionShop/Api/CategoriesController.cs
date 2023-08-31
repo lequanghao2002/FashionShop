@@ -34,7 +34,7 @@ namespace FashionShop.Api
             return Ok(CategoryWithIdDTO);
         }
         [HttpPost("add-category")]
-        public IActionResult AddCategory([FromBody] AddCategoryRequestDTO addCategoryRequestDTO)
+        public IActionResult AddCategory(AddCategoryRequestDTO addCategoryRequestDTO)
         {
             var CategoryAdd = _iCategoryRepository.AddCategory(addCategoryRequestDTO);
             return Ok(CategoryAdd);

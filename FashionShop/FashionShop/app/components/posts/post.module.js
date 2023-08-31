@@ -20,7 +20,7 @@
                 controller: 'postAddController'
             })
             .state('post_edit', {
-                url: '/post_edit',
+                url: '/post_edit/:id',
                 parent: 'base',
                 templateUrl: '/app/components/posts/postEditView.html',
                 controller: 'postEditController'

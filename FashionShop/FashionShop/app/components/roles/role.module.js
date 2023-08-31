@@ -20,7 +20,7 @@
                 controller: 'roleAddController'
             })
             .state('role_edit', {
-                url: '/role_edit',
+                url: '/role_edit/:id',
                 parent: 'base',
                 templateUrl: '/app/components/roles/roleEditView.html',
                 controller: 'roleEditController'

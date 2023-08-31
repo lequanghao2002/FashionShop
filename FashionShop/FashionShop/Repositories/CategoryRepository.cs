@@ -11,7 +11,7 @@ namespace FashionShop.Repositories
     {
         List<CategoryDTO> GetAllCategory();
         CategoryByIdDTO GetCategoryById(int id);
-        AddCategoryRequestDTO AddCategory(AddCategoryRequestDTO addCategoryRequestDTO);
+        Category AddCategory(AddCategoryRequestDTO addCategoryRequestDTO);
         AddCategoryRequestDTO? UpdateCategoryById(int id, AddCategoryRequestDTO CategoryDTO);
         Category DeleteCategoryById(int id);
     }
@@ -40,7 +40,7 @@ namespace FashionShop.Repositories
             }).FirstOrDefault();
             return CategoryWithIdDTO;
         }
-        public AddCategoryRequestDTO AddCategory(AddCategoryRequestDTO addCategoryRequestDTO)
+        public Category AddCategory(AddCategoryRequestDTO addCategoryRequestDTO)
         {
             var CategoryDomainModel = new Category
             {
@@ -48,7 +48,7 @@ namespace FashionShop.Repositories
             };
             _IdentityDbContext.Categories.Add(CategoryDomainModel);
             _IdentityDbContext.SaveChanges();
-            return addCategoryRequestDTO;
+            return CategoryDomainModel;
         }
         public AddCategoryRequestDTO? UpdateCategoryById(int id, AddCategoryRequestDTO CategoryDTO)
         {
