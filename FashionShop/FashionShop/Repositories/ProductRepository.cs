@@ -2,9 +2,13 @@
 using FashionShop.Helper;
 using FashionShop.Models.Domain;
 using FashionShop.Models.DTO.ProductDTO;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System;
+using System.Collections.Generic;
+using System.Drawing.Printing;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
@@ -14,8 +18,10 @@ public interface IProductRepository
 {
     public Task<AdminPaginationSet<GetProductDTO>> GetAll(int page, int pageSize, int? searchByCategory, string? searchByName);
 
+    public List<GetProductDTO> GetAll();
     public Task<GetProductByIdDTO> GetById(int idProduct);
-
+    public Task<GetProductByIdDTO> GetById(int idProduct);
+    public GetProductByIdDTO GetId(int id);
     public Task<CreateProductDTO> Create(CreateProductDTO createProductDTO);
 
     public Task<UpdateProductDTO> Update(UpdateProductDTO updateProductDTO, int id);
@@ -25,6 +31,9 @@ public interface IProductRepository
 public class ProductRepository : IProductRepository
 {
     private readonly FashionShopDBContext _fashionShopDBContext;
+    private readonly IEnumerable<object> listProductDomain;
+    private readonly IEnumerable<object> _IdentityDbContext;
+
     public ProductRepository(FashionShopDBContext fashionShopDBContext)
     {
         _fashionShopDBContext = fashionShopDBContext;
@@ -75,7 +84,22 @@ public class ProductRepository : IProductRepository
 
         return productPaginationSet;
     }
+    public  List<GetProductDTO> GetAll()
+    {
 
+        var listProductDTO = _fashionShopDBContext.Products.Select(pro => new GetProductDTO
+        {
+            ID = pro.ID,
+            Name = pro.Name,
+            Describe = pro.Describe,
+            Image = pro.Image,
+            Price = pro.Price,
+            Discount = pro.Discount,
+            CreatedDate= pro.CreatedDate,
+            Status = pro.Status,
+        }).OrderByDescending(p => p.CreatedDate).Where(p => p.Status == true).ToList();
+        return listProductDTO;
+    }
     public async Task<GetProductByIdDTO> GetById(int idProduct)
     {
         var productDomain = await _fashionShopDBContext.Products.Select(product => new GetProductByIdDTO
@@ -99,6 +123,30 @@ public class ProductRepository : IProductRepository
 
         return productDomain;
     }
+    public  GetProductByIdDTO GetId(int id) 
+    {
+        var productDomain = _fashionShopDBContext.Products.Select(product => new GetProductByIdDTO
+        {
+            ID = product.ID,
+            Name = product.Name,
+            CategoryID = product.CategoryID,
+            CategoryName = product.Category.Name,
+            Quantity = product.Quantity,
+            Describe = product.Describe,
+            Image = product.Image,
+            ListImages = product.ListImages,
+            Price = product.Price,
+            Discount = product.Discount,
+            CreatedDate = product.CreatedDate,
+            CreatedBy = product.CreatedBy,
+            UpdatedDate = product.UpdatedDate,
+            UpdatedBy = product.UpdatedBy,
+            Status = product.Status,
+        }).FirstOrDefault(p => p.ID == id);
+
+        return productDomain;
+    }
+
 
     public async Task<CreateProductDTO> Create(CreateProductDTO createProductDTO)
     {

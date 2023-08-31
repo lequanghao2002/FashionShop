@@ -1,10 +1,10 @@
-﻿@*@using System.Security.Claims*@
 @using Microsoft.AspNetCore.Http;
 @inject IHttpContextAccessor HttpContextAccessor
 @{
     Layout = null;
     string userName = HttpContextAccessor.HttpContext.Session.GetString("UserName");
 }
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -107,7 +107,18 @@
                                                     <li>
                                                         <a href="~/Product">Áo Thun</a>
                                                     </li>
-
+                                                    <li>
+                                                        <a href="~/Product">Áo Sơ Mi</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="~/Product">Quần Short</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="~/Product">Quần Tây</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="~/Product">Quần Jean</a>
+                                                    </li>
                                                 </ul>
                                              </li>
                                             <li><a href="~/Post">Bài viết</a></li>
@@ -142,6 +153,7 @@
         <!--main content--->
 
         @RenderBody()
+        
 
         <div class="divider"></div>
         <!--footer--->
@@ -212,5 +224,6 @@
     <script src="~/assets/customer/js/custom.js" type="text/javascript"></script>
 
     @RenderSection("script", false)
+    @await Component.InvokeAsync("Notyf")
 </body>
 </html>

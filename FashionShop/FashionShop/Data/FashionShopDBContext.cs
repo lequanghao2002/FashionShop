@@ -1,5 +1,6 @@
-﻿using FashionShop.Models.Domain;
+using FashionShop.Models.Domain;
 using FashionShop.Models.DTO.UserDTO;
+using FashionShop.Models.DTO.ProductDTO;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
