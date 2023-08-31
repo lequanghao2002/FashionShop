@@ -5,6 +5,9 @@ using FashionShop.Repositories;
 using Grpc.Core;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using FashionShop.Models;
 using Microsoft.Owin.Security;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -36,7 +39,7 @@ namespace FashionShop.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Login(LoginRequestDTO loginRequestDTO, string returnUrl)
+        public async Task<ActionResult> Login(LoginRequestDTO loginRequestDTO)
         {
            if(ModelState.IsValid)
             {
@@ -51,10 +54,11 @@ namespace FashionShop.Controllers
                     var checkPassword = await _userManager.CheckPasswordAsync(checkUser, loginRequestDTO.Password);
                     if (checkPassword)
                     {
-                        // var roles = await _userManager.GetRolesAsync(checkUser);
                         if (checkUser.LockoutEnabled == false)
                         {
+                            HttpContext.Session.SetString("UserName", checkUser.Email);
                             ViewData["mssLogin"] = "Đăng nhập thành công!";
+                            return RedirectToAction("Index", "Home");
                         }
                         else
                         {
@@ -71,9 +75,18 @@ namespace FashionShop.Controllers
                     ModelState.AddModelError("", "Hãy điền đầy đủ thông tin email và mật khẩu!!");
                 }
             }
-           ViewBag.ReturnUrl = returnUrl;
+           //ViewBag.ReturnUrl = returnUrl;
             return View();
         }
+
+        
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Remove("UserName");
+            return RedirectToAction("Index", "Home");
+        }
+        
+ 
 
         [HttpGet]
         public ActionResult Register()
