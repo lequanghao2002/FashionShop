@@ -19,9 +19,9 @@ public interface IProductRepository
     public Task<AdminPaginationSet<GetProductDTO>> GetAll(int page, int pageSize, int? searchByCategory, string? searchByName);
 
     public List<GetProductDTO> GetAll();
-
     public Task<GetProductByIdDTO> GetById(int idProduct);
-
+    public Task<GetProductByIdDTO> GetById(int idProduct);
+    public GetProductByIdDTO GetId(int id);
     public Task<CreateProductDTO> Create(CreateProductDTO createProductDTO);
 
     public Task<UpdateProductDTO> Update(UpdateProductDTO updateProductDTO, int id);
@@ -123,6 +123,30 @@ public class ProductRepository : IProductRepository
 
         return productDomain;
     }
+    public  GetProductByIdDTO GetId(int id) 
+    {
+        var productDomain = _fashionShopDBContext.Products.Select(product => new GetProductByIdDTO
+        {
+            ID = product.ID,
+            Name = product.Name,
+            CategoryID = product.CategoryID,
+            CategoryName = product.Category.Name,
+            Quantity = product.Quantity,
+            Describe = product.Describe,
+            Image = product.Image,
+            ListImages = product.ListImages,
+            Price = product.Price,
+            Discount = product.Discount,
+            CreatedDate = product.CreatedDate,
+            CreatedBy = product.CreatedBy,
+            UpdatedDate = product.UpdatedDate,
+            UpdatedBy = product.UpdatedBy,
+            Status = product.Status,
+        }).FirstOrDefault(p => p.ID == id);
+
+        return productDomain;
+    }
+
 
     public async Task<CreateProductDTO> Create(CreateProductDTO createProductDTO)
     {
