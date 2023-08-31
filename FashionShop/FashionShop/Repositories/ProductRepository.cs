@@ -20,7 +20,6 @@ public interface IProductRepository
 
     public List<GetProductDTO> GetAll();
     public Task<GetProductByIdDTO> GetById(int idProduct);
-    public Task<GetProductByIdDTO> GetById(int idProduct);
     public GetProductByIdDTO GetId(int id);
     public Task<CreateProductDTO> Create(CreateProductDTO createProductDTO);
 
