@@ -81,7 +81,8 @@ builder.Services.Configure<IdentityOptions>(option =>
     option.Password.RequiredUniqueChars = 0; // Số ký tự riêng biệt
    
 });
-
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddSession();
 
 var app = builder.Build();
 
@@ -115,6 +116,7 @@ app.UseStaticFiles(new StaticFileOptions
     RequestPath = "/UploadFiles"
 });
 
+app.UseSession();
 app.UseRouting();
 app.MapControllerRoute(
     name: "default",

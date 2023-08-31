@@ -18,7 +18,7 @@ namespace FashionShop.Repositories
 
         public Task<bool> RegisterAccountMember(RegisterAdminRequestDTO registerAdminRequestDTO);
 
-        public Task<bool> RegisterAccountCustomer(RegisterRequestDTO registerRequestDTO);
+        public Task<bool> RegisterAccountCustomer(RegisterAdminRequestDTO registerAdminRequestDTO);
 
         public Task<string> Login(LoginRequestDTO loginRequestDTO);
 
@@ -147,16 +147,17 @@ namespace FashionShop.Repositories
             return false;
         }
 
-        public async Task<bool> RegisterAccountCustomer(RegisterRequestDTO registerRequestDTO)
+        public async Task<bool> RegisterAccountCustomer(RegisterAdminRequestDTO registerAdminRequestDTO)
         {
             var admin = new User
             {
-                FullName = registerRequestDTO.FullName,
-                UserName = registerRequestDTO.Email,
-                Email = registerRequestDTO.Email,
+                FullName = registerAdminRequestDTO.FullName,
+                UserName = registerAdminRequestDTO.Email,
+                Email = registerAdminRequestDTO.Email,
+                PhoneNumber = registerAdminRequestDTO.PhoneNumber,
             };
 
-            var result = await _userManager.CreateAsync(admin, registerRequestDTO.Password);
+            var result = await _userManager.CreateAsync(admin, registerAdminRequestDTO.Password);
 
             if (result.Succeeded)
             {
