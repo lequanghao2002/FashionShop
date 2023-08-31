@@ -9,6 +9,8 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.Extensions.FileProviders;
 using static FashionShop.Repositories.RoleRepository;
+using AspNetCoreHero.ToastNotification;
+using AspNetCoreHero.ToastNotification.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -37,6 +39,9 @@ builder.Services.AddScoped<IContactRepository, ContactRepository>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<IRoleRepository, RoleRepository>();
 builder.Services.AddScoped<IVoucherRepository, VoucherRepository>();
+
+builder.Services.AddNotyf(config => { config.DurationInSeconds = 10; config.IsDismissable = true; config.Position = NotyfPosition.TopCenter; });
+
 
 //Register service authentication
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(option =>
@@ -74,6 +79,7 @@ builder.Services.Configure<IdentityOptions>(option =>
     option.Password.RequireUppercase = false; // Không bắt buộc chữ in
     option.Password.RequiredLength = 3; // Số ký tự tối thiểu của password
     option.Password.RequiredUniqueChars = 0; // Số ký tự riêng biệt
+   
 });
 
 
@@ -86,6 +92,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseNotyf();
 app.UseStaticFiles();
 app.UseStaticFiles(new StaticFileOptions
 {
