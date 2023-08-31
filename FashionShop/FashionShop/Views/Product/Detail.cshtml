@@ -48,24 +48,41 @@
                     <a class="review-link review-link-show">Write a review</a>
                     </div>*@
 
-                        <h1>Tên sản phẩm</h1>
+                    @if (@Model.Discount >0)
+                    {
+                        <h1>@Model.Name</h1>
 
                         <div class="price-section">
 
                             <span class="price-p" style="text-decoration: line-through; font-size: 20px; margin-right: 10px; color: #929292;">
-                                300.000đ
+                                @Model.Price
                             </span>
 
                             <span class="price-p" style="font-size: 25px">
-                                270.000đ
+                            @Html.Raw(Model.Price - (Model.Price * Model.Discount/100))
                             </span>
 
-                            <span class="price-left">Giảm 10%</span>
+                            <span class="price-left">@Model.Discount %</span>
 
                         </div>
                         <ul class="list-unstyled product-section" style="font-size: 25px">
-                            <li><span>Số lượng có sẵn:</span> 10</li>
+                            <li><span>Số lượng có sẵn:</span> @Model.Quantity</li>
                         </ul>
+                    }
+                    else
+                    {
+                    <h1>@Model.Name</h1>
+
+                    <div class="price-section">
+
+                        <span class="price-p" style="font-size: 25px">
+                            @Model.Price
+                        </span>
+                    </div>
+                    <ul class="list-unstyled product-section" style="font-size: 25px">
+                        <li><span>Số lượng có sẵn:</span> @Model.Quantity</li>
+                    </ul>
+                    }
 
                         <div id="product">
                             <div class="row">
@@ -99,18 +116,7 @@
                     </ul>
                     <div class="tab-content">
                         <div id="tab-description" class="tab-pane active">
-                            <p>
-                                - Chất Liệu: Kaki Dù
-                                - Độ Co Giãn: Không
-                                - Form Áo: Slim Fit
-                                - Cổ Áo: Bomber
-                                - Tay Áo: Dài
-                                - Phong Cách: Basic
-                                - Chi Tiết: Phối Túi
-                            </p>
-                            <p>
-                                a
-                            </p>
+                                @Model.Describe
                         </div>
                         <div id="tab-review" class="tab-pane">
                             <form id="form-review" class="form-horizontal">
