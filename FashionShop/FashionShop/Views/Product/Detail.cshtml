@@ -1,4 +1,5 @@
-﻿
+﻿@using FashionShop.Models.DTO.ProductDTO;
+@model GetProductByIdDTO
 @{
     ViewData["Title"] = "Detail";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -12,163 +13,152 @@
         <li><a href="~/Home"><i class="fa fa-home"></i></a></li>
         <li><a href="single-product.html">Chi tiết sản phẩm</a></li>
     </ul>
-    <div class="row">
-        <div class="col-sm-12" id="content">
-            <div class="row">
-                <div class="col-sm-7">
-                    <ul class="thumbnails main-front-image">
-                        <li class="product_img">
-                            <a class="thumbnail">
-                                <img src="~/UploadFiles/Images/Áo Khoác Bomber Basketball Vibe/img_7607_6f49eef2d183480e83e830c679c06b91_master.jpg" class="changeimg">
-                            </a>
-                        </li>
-                        <li class="image-additional">
-                            <a class="thumbnail">
-                                <img class="galleryimg" src="~/UploadFiles/Images/Áo Khoác Bomber Basketball Vibe/img_7607_6f49eef2d183480e83e830c679c06b91_master.jpg" width="93" height="133">
-                            </a>
-                        </li>
-                        <li class="image-additional">
-                            <a class="thumbnail"> 
-                                <img class="galleryimg" src="~/UploadFiles/Images/Áo Khoác Bomber Basketball Vibe/img_8563_921a2152a873435e8cf46bd49be7a44f_master.jpg" width="93" height="133">
-                            </a>
-                        </li>
-                        <li class="image-additional">
-                            <a class="thumbnail"> 
-                                <img class="galleryimg" src="~/UploadFiles/Images/Áo Khoác Bomber Basketball Vibe/img_8564_174abd77993d4dcc895acbdbd8f55332_master.jpg" width="93" height="133">
-                            </a>
-                        </li>
-                        <li class="image-additional">
-                            <a class="thumbnail">
-                                <img class="galleryimg" src="~/UploadFiles/Images/Áo Khoác Bomber Basketball Vibe//img_8571_2485600ff94f436a84306f25bf3bd92b_master.jpg" width="93" height="133">
-                            </a>
-                        </li>
-                        
-                       
+        <div class="row">
+            <div class="col-sm-12" id="content">
+                <div class="row">
+                    <div class="col-sm-7">
+                        <ul class="thumbnails main-front-image">
+                            <li class="product_img">
+                                <a class="thumbnail">
+                                    <img src="~/@Model.Image" class="changeimg">
+                                </a>
+                            </li>
+                        @foreach (var img in @ViewBag.listImg)
+                        {
+                            <li class="image-additional">
+                                <a class="thumbnail">
+                                    <img class="galleryimg" src="~/@img" width="93" height="133">
+                                </a>
+                            </li>
 
-                    </ul>
-                </div>
-                <div class="col-sm-5 col-xs-12 product-desc">
-                    @*<div class="rating-section product-rating-status">
-                        <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-1x"></i></span>
-                        <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-1x"></i></span>
-                        <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-1x"></i></span>
-                        <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-1x"></i></span>
-                        <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-1x"></i></span>
-                        <a class="review-link review-link-show">0 reviews</a>
-                        <a class="review-link review-link-show">Write a review</a>
+                        }
+
+
+
+                        </ul>
+                    </div>
+                    <div class="col-sm-5 col-xs-12 product-desc">
+                        @*<div class="rating-section product-rating-status">
+                    <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-1x"></i></span>
+                    <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-1x"></i></span>
+                    <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-1x"></i></span>
+                    <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-1x"></i></span>
+                    <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-1x"></i></span>
+                    <a class="review-link review-link-show">0 reviews</a>
+                    <a class="review-link review-link-show">Write a review</a>
                     </div>*@
 
-                    <h1>Tên sản phẩm</h1>
+                        <h1>Tên sản phẩm</h1>
 
-                    <div class="price-section">
-                        
-                        <span class="price-p" style="text-decoration: line-through; font-size: 20px; margin-right: 10px; color: #929292;">
-                            300.000đ
-                        </span>
+                        <div class="price-section">
 
-                        <span class="price-p" style="font-size: 25px">
-                            270.000đ
-                        </span>
+                            <span class="price-p" style="text-decoration: line-through; font-size: 20px; margin-right: 10px; color: #929292;">
+                                300.000đ
+                            </span>
 
-                        <span class="price-left">Giảm 10%</span>
+                            <span class="price-p" style="font-size: 25px">
+                                270.000đ
+                            </span>
 
-                    </div>
-                    <ul class="list-unstyled product-section" style="font-size: 25px">
-                        <li><span>Số lượng có sẵn:</span> 10</li>
-                    </ul>
+                            <span class="price-left">Giảm 10%</span>
 
-                    <div id="product">
-                        <div class="row">
-                            <div class="form-group">
-                                <div class ="col-sm-3">
-                                    <label for="input-quantity" class="control-label">Số lượng</label>
-                                </div>
-                                <div class="col-sm-9">
-                                    <input type="number" class="form-control" id="input-quantity" size="2" value="1" min="1" name="quantity">
-                                </div>
-                                <input type="hidden" value="49" name="product_id">
-                            </div>
-                            <div class="form-group">
-                                <div class="col-sm-3 margin-top product-button">
-                                    <button class="" type="button"><i class="fa fa-heart"></i></button>
-                                </div>
-                                <div class="col-sm-9">
-                                    <a class="margin-top btn btn-primary btn-lg btn-block btn-5 btn-5a icon-cart" id="button-cart" href="cart.html"><span>Thêm vào giỏ hàng</span></a>
-                                </div>
-                            </div>
                         </div>
-                        <div class="clearfix margin-top"></div>
+                        <ul class="list-unstyled product-section" style="font-size: 25px">
+                            <li><span>Số lượng có sẵn:</span> 10</li>
+                        </ul>
 
+                        <div id="product">
+                            <div class="row">
+                                <div class="form-group">
+                                    <div class="col-sm-3">
+                                        <label for="input-quantity" class="control-label">Số lượng</label>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <input type="number" class="form-control" id="input-quantity" size="2" value="1" min="1" name="quantity">
+                                    </div>
+                                    <input type="hidden" value="49" name="product_id">
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-3 margin-top product-button">
+                                        <button class="" type="button"><i class="fa fa-heart"></i></button>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <a class="margin-top btn btn-primary btn-lg btn-block btn-5 btn-5a icon-cart" id="button-cart" href="cart.html"><span>Thêm vào giỏ hàng</span></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="clearfix margin-top"></div>
+
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="product-tab-part">
-                <ul class="nav nav-tabs">
-                    <li class="active"><a data-toggle="tab" href="#tab-description">Mô tả</a></li>
-                    <li><a data-toggle="tab" href="#tab-review">Bình luận (0)</a></li>
-                </ul>
-                <div class="tab-content">
-                    <div id="tab-description" class="tab-pane active">
-                        <p>
-                            - Chất Liệu: Kaki Dù
-                            - Độ Co Giãn: Không
-                            - Form Áo: Slim Fit
-                            - Cổ Áo: Bomber
-                            - Tay Áo: Dài
-                            - Phong Cách: Basic
-                            - Chi Tiết: Phối Túi
-                        </p>
-                        <p>
-                            a
-                        </p>
-                    </div>
-                    <div id="tab-review" class="tab-pane">
-                        <form id="form-review" class="form-horizontal">
-                            <div id="review">
-                                <p>There are no reviews for this product.</p>
-                            </div>
-                            <h2>Write a review</h2>
-                            <div class="form-group required">
-                                <div class="col-sm-12">
-                                    <label for="input-name" class="control-label">Your Name</label>
-                                    <input type="text" class="form-control" id="input-name" value="" name="name">
+                <div class="product-tab-part">
+                    <ul class="nav nav-tabs">
+                        <li class="active"><a data-toggle="tab" href="#tab-description">Mô tả</a></li>
+                        <li><a data-toggle="tab" href="#tab-review">Bình luận (0)</a></li>
+                    </ul>
+                    <div class="tab-content">
+                        <div id="tab-description" class="tab-pane active">
+                            <p>
+                                - Chất Liệu: Kaki Dù
+                                - Độ Co Giãn: Không
+                                - Form Áo: Slim Fit
+                                - Cổ Áo: Bomber
+                                - Tay Áo: Dài
+                                - Phong Cách: Basic
+                                - Chi Tiết: Phối Túi
+                            </p>
+                            <p>
+                                a
+                            </p>
+                        </div>
+                        <div id="tab-review" class="tab-pane">
+                            <form id="form-review" class="form-horizontal">
+                                <div id="review">
+                                    <p>There are no reviews for this product.</p>
                                 </div>
-                            </div>
-                            <div class="form-group required">
-                                <div class="col-sm-12">
-                                    <label for="input-review" class="control-label">Your Review</label>
-                                    <textarea class="form-control" id="input-review" rows="5" name="text"></textarea>
-                                    <div class="help-block"><span class="text-danger">Note:</span> HTML is not translated!</div>
+                                <h2>Write a review</h2>
+                                <div class="form-group required">
+                                    <div class="col-sm-12">
+                                        <label for="input-name" class="control-label">Your Name</label>
+                                        <input type="text" class="form-control" id="input-name" value="" name="name">
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="form-group required">
-                                <div class="col-sm-12">
-                                    <label class="control-label">Rating</label>
-                                    &nbsp;&nbsp;&nbsp; Bad&nbsp;
-                                    <input type="radio" value="1" name="rating">
-                                    &nbsp;
-                                    <input type="radio" value="2" name="rating">
-                                    &nbsp;
-                                    <input type="radio" value="3" name="rating">
-                                    &nbsp;
-                                    <input type="radio" value="4" name="rating">
-                                    &nbsp;
-                                    <input type="radio" value="5" name="rating">
-                                    &nbsp;Good
+                                <div class="form-group required">
+                                    <div class="col-sm-12">
+                                        <label for="input-review" class="control-label">Your Review</label>
+                                        <textarea class="form-control" id="input-review" rows="5" name="text"></textarea>
+                                        <div class="help-block"><span class="text-danger">Note:</span> HTML is not translated!</div>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="buttons clearfix">
-                                <div class="pull-right">
-                                    <button class="btn btn-primary" data-loading-text="Loading..." id="button-review" type="button">Continue</button>
+                                <div class="form-group required">
+                                    <div class="col-sm-12">
+                                        <label class="control-label">Rating</label>
+                                        &nbsp;&nbsp;&nbsp; Bad&nbsp;
+                                        <input type="radio" value="1" name="rating">
+                                        &nbsp;
+                                        <input type="radio" value="2" name="rating">
+                                        &nbsp;
+                                        <input type="radio" value="3" name="rating">
+                                        &nbsp;
+                                        <input type="radio" value="4" name="rating">
+                                        &nbsp;
+                                        <input type="radio" value="5" name="rating">
+                                        &nbsp;Good
+                                    </div>
                                 </div>
-                            </div>
-                        </form>
+                                <div class="buttons clearfix">
+                                    <div class="pull-right">
+                                        <button class="btn btn-primary" data-loading-text="Loading..." id="button-review" type="button">Continue</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
-            </div>
 
+            </div>
         </div>
-    </div>
 
     <div class="row featured-block">
         <div class="main-head-block">
