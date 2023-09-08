@@ -11,5 +11,6 @@ namespace FashionShop.Models.Domain
         public string FullName { get; set; }
         public IEnumerable<Order> Orders { get; set; }
         public IEnumerable<Comment> Comments { get; set; }
+        public IEnumerable<FavoriteProduct> FavoriteProducts { get; set; }
     }
 }

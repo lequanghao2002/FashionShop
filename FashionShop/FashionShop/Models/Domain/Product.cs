@@ -47,5 +47,7 @@ namespace FashionShop.Models.Domain
 
         public IEnumerable<OrderDetail> OrderDetails { get; set; }
         public IEnumerable<Comment> Comments { get; set; }
+        public IEnumerable<FavoriteProduct> FavoriteProducts { get; set; }
+
     }
 }

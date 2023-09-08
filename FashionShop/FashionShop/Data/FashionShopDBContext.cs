@@ -24,18 +24,20 @@ namespace FashionShop.Data
         public DbSet<Voucher> Vouchers { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<IdentityRole> Roles { get; set; }
+        public DbSet<FavoriteProduct> FavoriteProducts { get; set; }
 
         protected override async void OnModelCreating(ModelBuilder modelBuilder)
         {
-            {
-                modelBuilder.Entity<User>().ToTable("users");
-            }
-
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<OrderDetail>(entity =>
             {
                 entity.HasKey(e => new { e.OrderID, e.ProductID });
+            });
+
+            modelBuilder.Entity<FavoriteProduct>(entity =>
+            {
+                entity.HasKey(e => new { e.UserID, e.ProductID });
             });
 
             modelBuilder.Entity<Voucher>(entity =>
