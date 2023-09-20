@@ -1,6 +1,6 @@
 ﻿namespace FashionShop.Models.DTO.OrderDTO
 {
-    public class GetOrder
+    public class GetOrderDTO
     {
        
         public int ID { get; set; }

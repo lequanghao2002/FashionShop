@@ -44,5 +44,7 @@ namespace FashionShop.Models.Domain
         public DateTime? UpdatedDate { get; set; }
 
         public string? UpdatedBy { get; set; }
+
+        public IEnumerable<Order> Orders { get; set; }
     }
 }

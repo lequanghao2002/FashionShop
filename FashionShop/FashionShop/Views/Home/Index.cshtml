@@ -1,4 +1,5 @@
 ﻿@using FashionShop.Models.DTO.ProductDTO;
+@using System.Globalization;
 @model List<GetProductDTO>
 @{
     ViewData["Title"] = "Trang chủ";
@@ -20,6 +21,12 @@
 
             @foreach (var pro in Model)
             {
+                decimal price = Convert.ToDecimal(@pro.Price);
+                decimal discount = Convert.ToDecimal(@pro.Discount);
+                decimal discountedPrice = price - (price * discount / 100);
+                string formattedPrice = price.ToString("N0") + "đ";
+                string formattedPriceHasDiscount = discountedPrice.ToString("N0") + "đ";
+
                 if(pro.Discount > 0)
                 {
                     <div class="col-md-2 col-sm-6 col-xs-6 mb-30 width-100">
@@ -28,10 +35,10 @@
                                 <div class="button-block">
                                     @*<a> <i class="fa fa-heart"></i></a>*@
                                     @*<a><i class="fa fa-random" aria-hidden="true"></i></a>*@
-                                    <a href="#"><i class="fa fa-shopping-cart"></i></a>
+                                    <a href="javascript:void(0);" class="btnAddToCart" data-id="@pro.ID"><i class="fa fa-shopping-cart"></i></a>
                                 </div>
                                 <div class="price-view-block">
-                                    <span class="price-left">@pro.Discount %</span>
+                                    <span class="price-left">@pro.Discount%</span>
                                 </div>
 
                                 <div class="image-block">
@@ -45,14 +52,14 @@
                                     <p class="m-0">
                                         @pro.Name
                                     </p>
+
+                                    <span style="text-decoration: line-through; font-size: 80%; margin-right: 5px">
+                                        @formattedPrice
+                                    </span>
+
                                     <span>
-                                      @Html.Raw(@pro.Price - (@pro.Price * @pro.Discount/100))
+                                        @formattedPriceHasDiscount
                                     </span>
-
-                                    <span style="text-decoration: line-through; font-size: 80%">
-                                        @pro.Price
-                                    </span>
-
                                 </div>
                                 <div class="effect-shadow">
                                     <a href="~/Product/Detail/@pro.ID" style="display: block; width: 100%; height: 100%;"></a>
@@ -69,7 +76,7 @@
                                 <div class="button-block">
                                     @*<a> <i class="fa fa-heart"></i></a>*@
                                     @*<a><i class="fa fa-random" aria-hidden="true"></i></a>*@
-                                    <a href="#"><i class="fa fa-shopping-cart"></i></a>
+                                    <a href="javascript:void(0);" class="btnAddToCart" data-id="@pro.ID"><i class="fa fa-shopping-cart"></i></a>
                                 </div>
                                 <div class="image-block">
                                     <a href="single-product.html" style="cursor: pointer">
@@ -81,7 +88,7 @@
                                         @pro.Name
                                     </p>
                                     <span>
-                                        @pro.Price
+                                        @formattedPrice
                                     </span>
                                 </div>
                                 <div class="effect-shadow">

@@ -1,6 +1,12 @@
-﻿@{
+﻿@model FashionShop.Models.Domain.User
+
+@{
     ViewData["Title"] = "CheckOut";
     Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section script {
+    <script src="~/assets/customer/js/controller/checkoutcontroller.js"></script>
 }
 
 <div class="full-banner" style="height: 135px">
@@ -18,56 +24,88 @@
                     <div class="col-sm-8">
                         <div class="well">
                             <h3>Vui lòng điền thông tin giao hàng</h3>
-                            <form method="post">
+                            @using (Html.BeginForm("CheckOut", "ShoppingCart", FormMethod.Post))
+                            {
+                                @Html.AntiForgeryToken();
                                 <div class="form-group">
                                     <label for="input-fullname" class="control-label">Họ và tên</label>
-                                    <input type="text" class="form-control" id="input-fullname" placeholder="Nhập họ và tên" value="" name="fullname">
+                                    <input type="text" class="form-control" id="input-fullname" placeholder="Nhập họ và tên" value="@Model.FullName" name="FullName">
+                                    <input type="hidden" class="form-control" value="@Model.Id" name="UserID">
+                                    <input type="hidden" id="voucherID" class="form-control" value="" name="VoucherID">
+                                    <input type="hidden" id="deliveryFee" class="form-control" value="" name="DeliveryFee">
+                                    @if (ViewBag.errorFullName != null)
+                                    {
+                                        <span style="color: red">@ViewBag.errorFullName</span>
+                                    }
                                 </div>
+
                                 <div class="form-group">
                                     <label for="input-email" class="control-label">E-Mail</label>
-                                    <input type="text" class="form-control" id="input-email" value="haolq2002@gmail.com" name="email" disabled>
+                                    <input type="email" class="form-control" id="input-email" value="@Model.Email" disabled>
+                                    <input type="hidden" value="@Model.Email" name="Email">
                                 </div>
+
                                 <div class="form-group">
                                     <label for="input-phonenumber" class="control-label">Số điện thoại</label>
-                                    <input type="number" class="form-control" id="input-phonenumber" placeholder="Nhập số điện thoại" value="" name="phonenumber">
+                                    <input type="number" class="form-control" id="input-phonenumber" placeholder="Nhập số điện thoại" value="@Model.PhoneNumber" name="PhoneNumber">
+                                    @if (ViewBag.errorPhoneNumber != null)
+                                    {
+                                        <span style="color: red">@ViewBag.errorPhoneNumber</span>
+                                    }
                                 </div>
+
                                 <div class="form-group row">
                                     <div class="col-sm-4">
-                                        <label for="input-shipping-country" class="control-label">Tỉnh / thành</label>
-                                        <select class="form-control" id="input-shipping-country" name="country_id">
-                                            <option value=""> --- Chọn tỉnh / thành --- </option>
-                                            <option value="1">Hồ Chí Minh</option>
-                                            <option value="2">Hà Nội</option>
-                                        </select>
+                                        <label for="input-shipping-country" class="control-label">Tỉnh / Thành</label>
+
+                                        @Html.DropDownList("ProvinceID", new SelectList(new string[] {}), htmlAttributes: new {@class = "form-control", @id = "ddlProvince"})
+                                    
+                                        @if(ViewBag.errorProvinceID != null)
+                                        {
+                                            <span style="color: red">@ViewBag.errorProvinceID</span>
+                                        }
                                     </div>
+
                                     <div class="col-sm-4">
-                                        <label for="input-shipping-country" class=" control-label">Quận / huyện</label>
-                                        <select class="form-control" id="input-shipping-country" name="country_id">
-                                            <option value=""> --- Chọn quận / huyện --- </option>
-                                            <option value="1">India</option>
-                                        </select>
+                                        <label for="input-shipping-country" class=" control-label">Quận / Huyện</label>
+
+                                        @Html.DropDownList("DistrictID", new SelectList(new string[] {}), htmlAttributes: new {@class = "form-control", @id = "ddlDistrict"})
+                                    
+                                        @if(ViewBag.errorDistrictID != null)
+                                        {
+                                                    <span style="color: red">@ViewBag.errorDistrictID</span>
+                                        }
                                     </div>
+
                                     <div class="col-sm-4">
-                                        <label for="input-shipping-country" class="control-label">Phường / xã</label>
-                                        <select class="form-control" id="input-shipping-country" name="country_id">
-                                            <option value=""> --- Chọn phường / xã --- </option>
-                                            <option value="1">India</option>
-                                        </select>
+                                        <label for="input-shipping-country" class="control-label">Phường / Xã</label>
+
+                                        @Html.DropDownList("WardID", new SelectList(new string[] {}), htmlAttributes: new {@class = "form-control", @id = "ddlWard"})
+                                    
+                                        @if(ViewBag.errorWardID != null)
+                                        {
+                                            <span style="color: red">@ViewBag.errorWardID</span>
+                                        }
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="input-address" class="control-label">Địa chỉ giao hàng</label>
-                                    <input type="text" class="form-control" id="input-address" placeholder="Nhập địa chỉ giao hàng" value="" name="address">
+                                    <input type="text" class="form-control" id="input-address" placeholder="Nhập địa chỉ giao hàng" value="" name="Address">
+
+                                    @if (ViewBag.errorAddress != null)
+                                    {
+                                        <span style="color: red">@ViewBag.errorAddress</span>
+                                    }
                                 </div>
                                 <div class="form-group">
                                     <label for="input-content" class="control-label">Nội dung đơn hàng</label>
-                                    <textarea class="form-control" id="input-content" placeholder="Nhập nội dung đơn hàng" value="" name="content" style="height: 100px;"></textarea>
+                                    <textarea class="form-control" id="input-content" placeholder="Nhập nội dung đơn hàng" value="" name="Note" style="height: 100px;"></textarea>
                                 </div>
                                 <div class="form-group" style="text-align: end;">
                                     <input type="submit" class="btn btn-primary" value="Đặt hàng" style="width:100%; ">
-                                    <a href="~/ShoppingCart/Index">Quay lại giỏ hàng</a>
+                                    <a href="/ShoppingCart">Quay lại giỏ hàng</a>
                                 </div>
-                            </form>
+                            }
                         </div>
                     </div>
 
@@ -81,16 +119,19 @@
                                         </a>
                                     </h4>
                                 </div>
+
                                 <div style="height: 0px;" aria-expanded="false" id="collapse-coupon" class="panel-collapse collapse">
                                     <div class="panel-body">
                                         <div class="input-group">
-                                            <input type="text" name="coupon" value="" placeholder="Nhập mã giảm giá ở đây" id="input-coupon" class="form-control">
+                                            <input type="text" name="coupon" value="" placeholder="Nhập mã giảm giá ở đây" id="txtDiscountCode" class="form-control">
                                             <span class="input-group-btn">
-                                                <input type="button" value="Sử dụng" id="button-coupon" class="btn btn-primary">
+                                                <input type="button" value="Sử dụng" id="btnCheckVoucher" class="btn btn-primary">
                                             </span>
                                         </div>
-
                                     </div>
+                                </div>
+
+                                <div id="msgVoucher">
                                 </div>
                             </div>
                         </div>
@@ -100,20 +141,23 @@
                             <table class="table">
                                 <tbody>
                                     <tr>
-                                        <td class="cart-table-total-label"><strong>Tạm tính: </strong></td>
-                                        <td class="text-right cart-table-total">300.000đ</td>
+                                        <td class="cart-table-total-label"><strong>Tổng tiền hàng: </strong></td>
+                                        <td id="txtTotalMoney" class="text-right cart-table-total"></td>
                                     </tr>
-                                    <tr>
-                                        <td class="cart-table-total-label"><strong>Giảm giá: </strong></td>
-                                        <td class="text-right cart-table-total">20.000đ</td>
-                                    </tr>
+
                                     <tr>
                                         <td class="cart-table-total-label"><strong>Phí vận chuyển: </strong></td>
-                                        <td class="text-right cart-table-total">20.000đ</td>
+                                        <td id="txtDeliveryFee" class="text-right cart-table-total">20.000đ</td>
                                     </tr>
+
                                     <tr>
-                                        <td class="cart-table-total-label"><strong>Tổng cộng:</strong></td>
-                                        <td class="text-right cart-table-total">300.000đ</td>
+                                        <td class="cart-table-total-label"><strong>Voucher giảm giá: </strong></td>
+                                        <td id="txtVoucher" class="text-right cart-table-total">- 0đ</td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td class="cart-table-total-label"><strong>Tổng thanh toán: </strong></td>
+                                        <td id="txtTotalPayment" class="text-right cart-table-total"></td>
                                     </tr>
                                 </tbody>
                             </table>

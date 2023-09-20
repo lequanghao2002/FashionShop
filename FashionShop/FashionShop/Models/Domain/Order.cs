@@ -18,6 +18,10 @@ namespace FashionShop.Models.Domain
 
         [Required]
         public string PhoneNumber { get; set; }
+        
+        public int ProvinceID { get; set; }
+        public int DistrictID { get; set; }
+        public int WardID { get; set; }
 
         [Required]
         public string Address { get; set; }
@@ -27,11 +31,17 @@ namespace FashionShop.Models.Domain
         [Column(TypeName = "datetime")]
         public DateTime OrderDate { get; set; }
 
-        public bool Status { get; set; }
+        public double DeliveryFee { get; set; }
+
+        public int Status { get; set; }
 
         public string UserID { get; set; }
         [ForeignKey("UserID")]
         public User User { get; set; }
+
+        public int? VoucherID { get; set; }
+        [ForeignKey("VoucherID")]
+        public Voucher? Voucher { get; set; }
 
         public IEnumerable<OrderDetail> OrderDetails { get; set; }
     }

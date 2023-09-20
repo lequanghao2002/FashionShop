@@ -1,6 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using FashionShop.Models.DTO.UserDTO;
-using FashionShop.Models.Domain;
 
 namespace FashionShop.Models.DTO.UserDTO
 {
@@ -13,7 +11,7 @@ namespace FashionShop.Models.DTO.UserDTO
         [EmailAddress(ErrorMessage = "Địa chỉ email không đúng")]
         public string Email { get; set; }
 
-        [Required(ErrorMessage = "Vui lòng nhập so dien thoai")]
+        [Required(ErrorMessage = "Vui lòng nhập số điện thoại")]
         public string PhoneNumber { get; set; }
 
 

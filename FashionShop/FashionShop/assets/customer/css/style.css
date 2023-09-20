@@ -1059,11 +1059,13 @@ button {
     color: #e94f37;
 }
 
-.product_menu {
+.product_menu,
+.account_menu {
     position: relative;
 }
 
-.product_menu:hover > .product_item {
+.product_menu:hover > .product_item,
+.account_menu:hover > .account_item {
     display: block;
 }
 
@@ -1078,13 +1080,35 @@ button {
     left: 8px;
 }
 
-.product_item li {
+.account_item {
+    background: #fff;
+    position: absolute;
+    z-index: 999;
+    display: none;
+    padding: 0;
+    width: 180px;
+    border-top: 2px solid;
+    left: 8px;
+}
+
+.product_item li,
+.account_item li{
     padding: 10px 10px;
     border-bottom: 1px solid #ccc;
 }
 
-.product_item li a {
+.product_item li a,
+.account_item li a{
     color: #000;
+}
+
+.validation-summary-errors ul {
+    padding-left: 0;
+    color: red;
+}
+
+#information p {
+    padding: 5px 0;
 }
 
 @media (min-width: 768px) and (max-width: 1024px) {
