@@ -90,6 +90,7 @@ public class ProductRepository : IProductRepository
         {
             ID = pro.ID,
             Name = pro.Name,
+            CategoryID = pro.CategoryID,
             Describe = pro.Describe,
             Image = pro.Image,
             Price = pro.Price,

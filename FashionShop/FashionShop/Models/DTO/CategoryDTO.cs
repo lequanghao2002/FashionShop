@@ -13,7 +13,8 @@ namespace FashionShop.Models.DTO
     }
     public class CategoryByIdDTO
     {
-        public string Name { get; set; }
+        public string Name { get; set; } 
+       
     }
     public class AddCategoryRequestDTO
     {

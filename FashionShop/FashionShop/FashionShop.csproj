@@ -46,6 +46,7 @@
     <Folder Include="assets\admin\libs\bootbox\.git\objects\info\" />
     <Folder Include="assets\admin\libs\bootbox\.git\refs\tags\" />
     <Folder Include="UploadFiles\" />
+    <Folder Include="Views\Product\" />
   </ItemGroup>
 
   <ItemGroup>

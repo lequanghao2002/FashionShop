@@ -5,10 +5,10 @@ using Newtonsoft.Json;
 
 namespace FashionShop.Controllers
 {
-    public class ProductController : Controller
+    public class AoKhoacController : Controller
     {
         public readonly IProductRepository _productRepository;
-        public ProductController(IProductRepository productRepository)
+        public AoKhoacController(IProductRepository productRepository)
         {
             _productRepository = productRepository;
         }
@@ -25,6 +25,6 @@ namespace FashionShop.Controllers
             @ViewBag.listImg = JsonConvert.DeserializeObject<List<string>>(product.ListImages); /// ????? WTF
             return View(product);
         }
-        
+
     }
 }
