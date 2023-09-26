@@ -24,9 +24,9 @@
                 <table class="table table-bordered table-striped table-hover">
                     <thead>
                         <tr class="table-dark">
-                            <th>Mã đơn hàng</th>
+                            <th>ID</th>
                             <th>Ngày đặt hàng</th>
-                            <th>Tên người nhận</th>
+                            <th>Người nhận</th>
                             <th>Số điện thoại</th>
                             <th>Địa chỉ giao hàng</th>
                             <th>Tổng thanh toán</th>
@@ -59,7 +59,7 @@
 
                             <tr>
                                 <td class="">
-                                    <a href="~/Account/OrderDetail/@item.ID">@item.ID</a>
+                                    <a class="btn-black" href="~/Account/OrderDetail/@item.ID">@item.ID</a>
                                 </td>
                                 <td>@item.OrderDate.ToString("dd/MM/yyyy HH:mm:ss")</td>
                                 <td>@item.FullName</td>

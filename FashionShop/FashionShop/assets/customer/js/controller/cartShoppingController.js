@@ -38,7 +38,7 @@
 
             $('#tempTotalMoney').text(numeral(cart.getTempTotalMoney()).format('0,0') + '₫');
 
-        });
+        })
         $('.txtQuantity').off('change').on('change', function () {
             var quantity = parseInt($(this).val());
             var productId = parseInt($(this).data('id'));
@@ -112,6 +112,8 @@
             success: function (res) {
                 if (res.status) {
                     cart.loadData();
+
+                    $('.txtQuantity').trigger('keyup');
                 }
             }
         });
@@ -172,6 +174,7 @@
                     }
 
                     $('.cartLength').text(data.length);
+
 
                     cart.registerEvent();
                 }

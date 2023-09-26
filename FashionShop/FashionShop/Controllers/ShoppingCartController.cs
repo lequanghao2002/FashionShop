@@ -1,6 +1,8 @@
-﻿using FashionShop.Helper;
+﻿using Blogger_Common;
+using FashionShop.Helper;
 using FashionShop.Models.Domain;
 using FashionShop.Models.DTO.OrderDTO;
+using FashionShop.Models.DTO.UserDTO;
 using FashionShop.Models.ViewModel;
 using FashionShop.Repositories;
 using Grpc.Core;
@@ -8,6 +10,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Security.Policy;
 using System.Xml.Linq;
 
@@ -237,17 +240,97 @@ namespace FashionShop.Controllers
                 }
             }
 
+            // Tự gán lại giá trị khi nhập sai
             string userSession = HttpContext.Session.GetString(CommonConstants.SessionUser);
             var user = JsonConvert.DeserializeObject<User>(userSession);
 
-            return View(user);
+            return View();
         }
 
-        public IActionResult OrderSuccess()
+        public async Task<IActionResult> OrderSuccess()
         {
             HttpContext.Session.Remove(CommonConstants.SessionCart);
 
-            return View();
+            var sessionUser = HttpContext.Session.GetString(CommonConstants.SessionUser);
+            var user = JsonConvert.DeserializeObject<User>(sessionUser);
+
+            var order = await _orderRepository.GetNewByUserID(user.Id);
+
+            // Gửi đơn hàng đến email của khách hàng khi vừa đặt hàng thành công
+            var html = "";
+            double totalMoney = 0;
+
+            foreach (var item in order.OrderDetails)
+            {
+                html += "<tr>";
+
+                var productName = item.Product.Name;
+                var quantity = item.Quantity;
+                if (item.Product.Discount > 0)
+                {
+                    var price = item.Product.Price - (item.Product.Price * item.Product.Discount / 100);
+                    totalMoney += price * quantity;
+
+                    html += "<td style=\"border: 1px solid black; padding: 8px; text-align: center;\">" + productName + "</td>"
+                    + "<td style=\"border: 1px solid black; padding: 8px; text-align: center;\">" + price.ToString("C0", new CultureInfo("vi-VN")) + "</td>\r\n"
+                    + "<td style=\"border: 1px solid black; padding: 8px; text-align: center;\">" + quantity + "</td>\r\n"
+                    + "<td style=\"border: 1px solid black; padding: 8px; text-align: right;\">" + (price * quantity).ToString("C0", new CultureInfo("vi-VN")) + "</td>";
+                }
+                else
+                {
+                    var price = item.Product.Price;
+                    totalMoney += price * quantity;
+
+                    html += "<td style=\"border: 1px solid black; padding: 8px; text-align: center;\">" + productName + "</td>"
+                   + "<td style=\"border: 1px solid black; padding: 8px; text-align: center;\">" + price.ToString("C0", new CultureInfo("vi-VN")) + "</td>\r\n"
+                   + "<td style=\"border: 1px solid black; padding: 8px; text-align: center;\">" + quantity + "</td>\r\n"
+                   + "<td style=\"border: 1px solid black; padding: 8px; text-align: right;\">" + (price * quantity).ToString("C0", new CultureInfo("vi-VN")) + "</td>";
+                }
+
+                html += "</tr>";
+            }
+
+            double totalPayment = totalMoney + order.DeliveryFee;
+
+            string template = System.IO.File.ReadAllText("assets/customer/template/order.html");
+
+            template = template.Replace("{{orderShopping}}", html);
+            template = template.Replace("{{totalMoney}}", totalMoney.ToString("C0", new CultureInfo("vi-VN")));
+            template = template.Replace("{{deliveryFee}}", order.DeliveryFee.ToString("C0", new CultureInfo("vi-VN")));
+            double voucherValue = 0;
+            if (order.Voucher != null)
+            {
+                if (order.Voucher.DiscountAmount == true)
+                {
+                    voucherValue = order.Voucher.DiscountValue;
+                }
+                else
+                {
+                    voucherValue = totalMoney * order.Voucher.DiscountValue / 100;
+                }
+
+                template = template.Replace("{{voucher}}", voucherValue.ToString("C0", new CultureInfo("vi-VN")));
+                totalPayment -= voucherValue;
+            }
+            else
+            {
+                template = template.Replace("{{voucher}}", "0");
+            }
+            template = template.Replace("{{totalPayment}}", totalPayment.ToString("C0", new CultureInfo("vi-VN")));
+
+            template = template.Replace("{{fullName}}", order.FullName);
+            template = template.Replace("{{email}}", order.Email);
+            template = template.Replace("{{phoneNumber}}", order.PhoneNumber);
+
+            template = template.Replace("{{province}}", order.ProvinceID.ToString());
+            template = template.Replace("{{district}}", order.DistrictID.ToString());
+            template = template.Replace("{{ward}}", order.WardID.ToString());
+            template = template.Replace("{{address}}", order.Address);
+            template = template.Replace("{{note}}", order.Note);
+
+            EmailService.SendMail("FashionShop", "Đặt hàng thành công", template, user.Email);
+
+            return View(order);
         }
 
         public JsonResult LoadProvince()

@@ -109,7 +109,7 @@ namespace FashionShop.Controllers
                     template = template.Replace("{{userName}}", registerRequestDTO.Email);
                     template = template.Replace("{{linkLogin}}", registerRequestDTO.Email);
 
-                    EmailService.SendMail("Blog IT", "Đăng ký tài khoản Blog IT", template, registerRequestDTO.Email);
+                    EmailService.SendMail("FashionShop", "Đăng ký tài khoản thành công", template, registerRequestDTO.Email);
                 }
             }
             return View();

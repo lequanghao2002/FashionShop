@@ -14,6 +14,7 @@ namespace FashionShop.Repositories
         public Task<List<GetOrderDTO>> GetAll(string? searchBySdt);
         public Task<GetOrderByUserIdDTO> GetById(int id);
         public Task<List<GetOrderByUserIdDTO>> GetByUserID(string userID);
+        public Task<GetOrderByUserIdDTO> GetNewByUserID(string userID);
         public Task<CreateOrderDTO> Create(CreateOrderDTO createOrderDTO);
         public Task<bool> Cancel(int id);
     }
@@ -71,7 +72,7 @@ namespace FashionShop.Repositories
                 UserID = order.UserID,
 
                 OrderDetails = order.OrderDetails.ToList()
-            }).Where(order => order.UserID == userID).ToListAsync();
+            }).Where(order => order.UserID == userID).OrderByDescending(o => o.OrderDate).ToListAsync();
 
             
             return orderByUserIdDTO;
@@ -110,6 +111,40 @@ namespace FashionShop.Repositories
             }).SingleOrDefaultAsync(o => o.ID == id);
 
             return orderByIdDTO;
+        }
+
+        public async Task<GetOrderByUserIdDTO> GetNewByUserID(string id)
+        {
+            var orderByUserIdDTO = await _fashionShopDBContext.Orders.Select(order => new GetOrderByUserIdDTO
+            {
+                ID = order.ID,
+                Email = order.Email,
+                FullName = order.FullName,
+                PhoneNumber = order.PhoneNumber,
+                ProvinceID = order.ProvinceID,
+                DistrictID = order.DistrictID,
+                WardID = order.WardID,
+                Address = order.Address,
+                DeliveryFee = order.DeliveryFee,
+                OrderDate = order.OrderDate,
+                Note = order.Note,
+                Status = order.Status,
+
+                Voucher = order.Voucher,
+                UserID = order.UserID,
+
+                OrderDetails = order.OrderDetails.Select(od => new OrderDetail()
+                {
+                    ProductID = od.ProductID,
+                    Product = _fashionShopDBContext.Products.SingleOrDefault(p => p.ID == od.ProductID),
+                    OrderID = od.OrderID,
+                    Price = od.Price,
+                    Quantity = od.Quantity
+
+                }).ToList(),
+            }).Where(o => o.UserID == id).OrderByDescending(o => o.OrderDate).FirstOrDefaultAsync();
+
+            return orderByUserIdDTO;
         }
 
         public async Task<CreateOrderDTO> Create(CreateOrderDTO createOrderDTO)

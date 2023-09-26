@@ -8,6 +8,7 @@ License URI: http://www.themevault.net/license*/
 @import url('https://fonts.googleapis.com/css?family=Lato:300,300i,400,400i,700,700i');
 body{
     font-family: 'Montserrat', sans-serif;
+    font-size: 15px;
 }
 a{
     transition: all 0.3s ease 0s;
@@ -1109,6 +1110,13 @@ button {
 
 #information p {
     padding: 5px 0;
+}
+
+.btn-black {
+    background-color: #000;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 8px;
 }
 
 @media (min-width: 768px) and (max-width: 1024px) {

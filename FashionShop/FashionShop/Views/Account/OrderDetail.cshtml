@@ -18,6 +18,9 @@
         <ul class="breadcrumb">
             <li><a href="~/Home"><i class="fa fa-home"></i></a></li>
             <li><a>Chi tiết đơn hàng</a></li>
+            <li style="float: right;">
+                <a href="~/Account/OrderList">Quay lại</a>
+            </li>
         </ul>
 
         <div class="row featured-block">
@@ -26,7 +29,7 @@
             </div>
 
             <div class="post-item row">
-                <div class="col-md-5">
+                <div class="col-md-4">
                     <h3>Thông tin giao hàng</h3>
                     <p>Mã đơn hàng: @Model.ID</p>
                     <p>Tên người nhận: @Model.FullName</p>
@@ -48,16 +51,16 @@
                     }
                 </div>
 
-                <div class="col-md-7" >
+                <div class="col-md-8">
                     <h3>Thông tin đơn hàng</h3>
-                    <table class="table table-bordered table-striped table-hover">
+                    <table class="table table-bordered table-striped table-hover text-center">
                         <thead>
-                            <tr class="table-dark">
-                                <th>Hình ảnh</th>
-                                <th>Tên sản phẩm</th>
-                                <th>Giá</th>
-                                <th>Số lượng</th>
-                                <th>Tổng cộng</th>
+                            <tr class="table-dark" style="font-weight: bold">
+                                <td>Hình ảnh</td>
+                                <td>Tên sản phẩm</td>
+                                <td>Giá</td>
+                                <td>Số lượng</td>
+                                <td>Tổng cộng</td>
                             </tr>
                         </thead>
                         <tbody>
@@ -66,13 +69,13 @@
                                 double price = 0;
 
                                 <tr>
-                                    <td><img src="~/@item.Product.Image" style="width: 80px" /></td>
+                                    <td><img src="~/@item.Product.Image" style="height: 80px" /></td>
                                     <td>@item.Product.Name</td>
                                     @if (item.Product.Discount > 0)
                                     {
                                         price = item.Product.Price - (item.Product.Price * item.Product.Discount / 100);
                                         <td>
-                                            <span style="text-decoration: line-through; font-size: 80%">@item.Product.Price</span>
+                                            <span style="text-decoration: line-through; font-size: 80%">@item.Product.Price.ToString("C0", new CultureInfo("vi-VN"))</span>
                                             <span>@price.ToString("C0", new CultureInfo("vi-VN"))</span>
                                         </td>
                                     }
