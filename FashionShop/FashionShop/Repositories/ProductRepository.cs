@@ -20,6 +20,7 @@ public interface IProductRepository
 
     public List<GetProductDTO> GetAll();
     public Task<GetProductByIdDTO> GetById(int idProduct);
+    public Task<List<GetProductByIdDTO>> GetByCategoryId(int idCategory);
     public GetProductByIdDTO GetId(int id);
     public Task<CreateProductDTO> Create(CreateProductDTO createProductDTO);
 
@@ -121,6 +122,30 @@ public class ProductRepository : IProductRepository
         }).FirstOrDefaultAsync(p => p.ID == idProduct);
 
         return productDomain;
+    }
+
+    public async Task<List<GetProductByIdDTO>> GetByCategoryId(int idCategory)
+    {
+        var listProductByIdCategory = await _fashionShopDBContext.Products.Select(product => new GetProductByIdDTO
+        {
+            ID = product.ID,
+            Name = product.Name,
+            CategoryID = product.CategoryID,
+            CategoryName = product.Category.Name,
+            Quantity = product.Quantity,
+            Describe = product.Describe,
+            Image = product.Image,
+            ListImages = product.ListImages,
+            Price = product.Price,
+            Discount = product.Discount,
+            CreatedDate = product.CreatedDate,
+            CreatedBy = product.CreatedBy,
+            UpdatedDate = product.UpdatedDate,
+            UpdatedBy = product.UpdatedBy,
+            Status = product.Status,
+        }).Where(p => p.CategoryID == idCategory).OrderByDescending(p => p.CreatedDate).ToListAsync();
+
+        return listProductByIdCategory;
     }
     public  GetProductByIdDTO GetId(int id) 
     {
