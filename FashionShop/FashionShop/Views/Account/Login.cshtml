@@ -19,7 +19,11 @@
                     <div class="well">
                         <h3>Đăng nhập</h3>
                         <p><strong>Vui lòng đăng nhập để sử dụng dịch vụ</strong></p>
-                        <form method="post">
+                        @using (Html.BeginForm("Login", "Account", new { returnUrl = ViewBag.ReturnUrl }, FormMethod.Post))
+                        {
+                            @Html.AntiForgeryToken()
+                            @Html.ValidationSummary(false, "", new {@class = "text-danger"})
+
                             <div class="form-group">
                                 <label for="input-email" class="control-label">E-Mail</label>
                                 <input type="text" class="form-control" id="input-email" placeholder="Nhập E-Mail" value="" name="email">
@@ -33,7 +37,7 @@
                                 <input type="submit" class="btn btn-primary" value="Đăng nhập" style="width:100%;">
                                 <a href="~/Account/Register">Chưa có tài khoản, đăng ký</a>
                             </div>
-                        </form>
+                        }
                     </div>
                 </div>
             </div>

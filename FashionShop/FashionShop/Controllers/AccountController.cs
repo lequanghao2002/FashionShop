@@ -1,22 +1,13 @@
-﻿using FashionShop.Data;
-using FashionShop.Models.Domain;
+﻿using FashionShop.Models.Domain;
 using FashionShop.Models.DTO.UserDTO;
 using FashionShop.Repositories;
-using Grpc.Core;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using FashionShop.Models;
-using Microsoft.Owin.Security;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using System;
-using System.Web;
-using static Microsoft.AspNetCore.Razor.Language.TagHelperMetadata;
-using System.Security.Claims;
-using System.Security.Cryptography.X509Certificates;
+
+using Blogger_Common;
+using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json;
+using FashionShop.Helper;
 
 namespace FashionShop.Controllers
 {
@@ -25,122 +16,140 @@ namespace FashionShop.Controllers
     {
         private readonly UserManager<User> _userManager;
         private readonly IUserRepository _userRepository;
+        private readonly IOrderRepository _orderRepository;
 
-        public AccountController(UserManager<User> userManager, IUserRepository userRepository )
+        public AccountController(UserManager<User> userManager, IUserRepository userRepository, IOrderRepository orderRepository)
         {
-            this._userManager = userManager;
-            _userRepository = userRepository;
+            _userManager = userManager;
+            _userRepository = userRepository; 
+            _orderRepository = orderRepository;
         }
 
-        public ActionResult Login( string returnUrl)
+        public IActionResult Login()
         {
-            ViewBag.ReturnUrl = returnUrl;
+            // Lấy đường dẫn của trang trước đó (referrer)
+            string referrerUrl = HttpContext.Request.Headers["Referer"].ToString();
+
+            ViewBag.ReturnUrl = referrerUrl;
             return View();
         }
 
         [HttpPost]
-        public async Task<ActionResult> Login(LoginRequestDTO loginRequestDTO)
+        public async Task<IActionResult> Login(LoginRequestDTO loginRequestDTO, string returnUrl)
         {
-           if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                var checkUser = await _userManager.FindByEmailAsync(loginRequestDTO.Email);
-                if (checkUser == null)
+                var user = await _userManager.FindByEmailAsync(loginRequestDTO.Email);
+
+                var checkPasswordResult = await _userManager.CheckPasswordAsync(user, loginRequestDTO.Password);
+
+                if (user != null && checkPasswordResult == true)
                 {
-                    ModelState.AddModelError("Email", "Email này đã tồn tại");
-                    return View();
-                }
-                if (checkUser != null)
-                {
-                    var checkPassword = await _userManager.CheckPasswordAsync(checkUser, loginRequestDTO.Password);
-                    if (checkPassword)
+                    if(user.LockoutEnabled == true)
                     {
-                        if (checkUser.LockoutEnabled == false)
-                        {
-                            HttpContext.Session.SetString("UserName", checkUser.Email);
-                            ViewData["mssLogin"] = "Đăng nhập thành công!";
-                            return RedirectToAction("Index", "Home");
-                        }
-                        else
-                        {
-                            ViewData["ErrorLogin"] = "tài khoản của bạn hiện đang bị khóa tạm thời.";
-                        }
+                        ModelState.AddModelError("", "Tài khoản của bạn đã bị khóa.");
                     }
                     else
                     {
-                        ModelState.AddModelError("", "Hãy kiểm tra lại mật khẩu hoặc Email!!");
+                        // Serialize đối tượng User thành JSON và lưu vào session
+                        string userJson = JsonConvert.SerializeObject(user);
+                        HttpContext.Session.SetString(CommonConstants.SessionUser, userJson);
+
+                        return Redirect(returnUrl);
                     }
                 }
                 else
                 {
-                    ModelState.AddModelError("", "Hãy điền đầy đủ thông tin email và mật khẩu!!");
+                    ModelState.AddModelError("", "Tên đăng nhập hoặc mật khẩu không đúng.");
                 }
             }
-           //ViewBag.ReturnUrl = returnUrl;
+            ViewBag.ReturnUrl = returnUrl;
             return View();
         }
 
-        
+
         public IActionResult Logout()
         {
-            HttpContext.Session.Remove("UserName");
+            HttpContext.Session.Remove(CommonConstants.SessionUser);
             return RedirectToAction("Index", "Home");
         }
-        
- 
 
         [HttpGet]
-        public ActionResult Register()
+        public IActionResult Register()
         {
             return View();
         }
 
 
         [HttpPost]
-        public async Task<ActionResult> Register(RegisterAdminRequestDTO registerAdminRequestDTO)
+        public async Task<IActionResult> Register(RegisterRequestDTO registerRequestDTO)
         {
             if (ModelState.IsValid)
             {
-                var customerByEmail = await _userManager.FindByEmailAsync(registerAdminRequestDTO.Email);
+                var customerByEmail = await _userManager.FindByEmailAsync(registerRequestDTO.Email);
                 if (customerByEmail != null)
                 {
                     ModelState.AddModelError("Email", "Email này đã tồn tại");
                     return View();
                 }
-                
-                if (registerAdminRequestDTO.Password != registerAdminRequestDTO.RePassword)
+
+                if (registerRequestDTO.Password != registerRequestDTO.RePassword)
                 {
-                    ModelState.AddModelError("Password", "Mat khau khong giong nhau");
+                    ModelState.AddModelError("Password", "Mật khẩu không trùng khớp với nhau");
                     return View();
                 }
 
-                var CustomerRegister = await _userRepository.RegisterAccountCustomer(registerAdminRequestDTO);
+                var CustomerRegister = await _userRepository.RegisterAccountCustomer(registerRequestDTO);
 
-                if(CustomerRegister == true)
+                if (CustomerRegister == true)
                 {
                     ViewData["SuccessMsg"] = " Đăng ký thành công";
+
+                    string template = System.IO.File.ReadAllText("assets/customer/template/register.html");
+                    template = template.Replace("{{userName}}", registerRequestDTO.Email);
+                    template = template.Replace("{{linkLogin}}", registerRequestDTO.Email);
+
+                    EmailService.SendMail("FashionShop", "Đăng ký tài khoản thành công", template, registerRequestDTO.Email);
                 }
-                else
-                {
-
-                }
-                //var CustomerRegister = new User
-                //{
-                //    FullName = registerRequestDTO.FullName,
-                //    UserName = registerRequestDTO.Email,
-                //    Email = registerRequestDTO.Email,
-                //    PhoneNumber = registerRequestDTO.PhoneNumber,
-                //};
-
-                //var result = await _userManager.CreateAsync(CustomerRegister, registerRequestDTO.Password);
-
-                //if (result.Succeeded)
-                //{
-                //    await _userManager.AddToRoleAsync(CustomerRegister, "khách hàng");
-                //}
-                //ViewData["SuccessMsg"] = " Đăng ký thành công";
-
-
             }
+            return View();
+        }
+    
+        public IActionResult Information()
+        {
+            var userSession = HttpContext.Session.GetString(CommonConstants.SessionUser);
+
+            var user = JsonConvert.DeserializeObject<User>(userSession);
+
+            return View(user);
+        }
+
+        public async Task<IActionResult> OrderList()
+        {
+            var userSession = HttpContext.Session.GetString(CommonConstants.SessionUser);
+            var user = JsonConvert.DeserializeObject<User>(userSession);
+
+            var order = await _orderRepository.GetByUserID(user.Id);
+
+            return View(order);
+        }
+
+        public async Task<IActionResult> OrderDetail(int id)
+        {
+            var orderDetail = await _orderRepository.GetById(id);
+
+            return View(orderDetail);
+        }
+
+        public async Task<IActionResult> OrderCancel(int id)
+        {
+            var orderCancel = await _orderRepository.Cancel(id);
+
+            if(orderCancel == true)
+            {
+                return RedirectToAction("OrderList");
+            }
+
             return View();
         }
     }

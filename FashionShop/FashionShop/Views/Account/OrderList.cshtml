@@ -1,0 +1,102 @@
+﻿@using System.Globalization;
+@model List<FashionShop.Models.DTO.OrderDTO.GetOrderByUserIdDTO>
+@{
+    ViewData["Title"] = "OrderList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="full-banner" style="height: 135px">
+</div>
+
+<div class="main-content">
+    <div class="container">
+        <ul class="breadcrumb">
+            <li><a href="~/Home"><i class="fa fa-home"></i></a></li>
+            <li><a>Danh sách đơn hàng</a></li>
+        </ul>
+
+        <div class="row featured-block">
+            <div class="main-head-block" style="margin-top: 0">
+                <h2>Danh sách đơn hàng</h2>
+            </div>
+
+            <div class="post-item row">
+                <table class="table table-bordered table-striped table-hover">
+                    <thead>
+                        <tr class="table-dark">
+                            <th>ID</th>
+                            <th>Ngày đặt hàng</th>
+                            <th>Người nhận</th>
+                            <th>Số điện thoại</th>
+                            <th>Địa chỉ giao hàng</th>
+                            <th>Tổng thanh toán</th>
+                            <th>Trạng thái</th>
+                            <th>Thao tác</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach(var item in Model)
+                        {
+                            double totalPayment = 0;
+                            foreach (var item2 in item.OrderDetails)
+                            {
+                                totalPayment += item2.Price * item2.Quantity;
+                            }
+
+                            if(item.Voucher != null)
+                            {
+                                if(item.Voucher.DiscountAmount == true)
+                                {
+                                    totalPayment -= item.Voucher.DiscountValue;
+                                }     
+                                else
+                                {
+                                    totalPayment = totalPayment - (totalPayment * item.Voucher.DiscountValue / 100);
+                                }
+                            }
+
+                            totalPayment += item.DeliveryFee;
+
+                            <tr>
+                                <td class="">
+                                    <a class="btn-black" href="~/Account/OrderDetail/@item.ID">@item.ID</a>
+                                </td>
+                                <td>@item.OrderDate.ToString("dd/MM/yyyy HH:mm:ss")</td>
+                                <td>@item.FullName</td>
+                                <td>@item.PhoneNumber</td>
+                                <td>@item.Address</td>
+                                <td>@totalPayment.ToString("C0", new CultureInfo("vi-VN"))</td>
+                                @if (item.Status == 1)
+                                {
+                                    <td>Chờ xác nhận</td>
+                                    <td>
+                                        <a href="~/Account/OrderCancel/@item.ID" class="btn-danger" style="padding: 5px;border-radius: 10px;">Hủy hàng</a>
+                                    </td>
+                                }
+                                else if (item.Status == 2)
+                                {
+                                    <td>Đang giao hàng</td>
+                                    <td>
+                                        @*<button class="btn-danger" disabled>Hủy hàng</button>*@
+                                    </td>
+                                }
+                                else
+                                {
+                                    <td>Đã hủy</td>
+                                    <td>
+                                        @*<button class="btn-danger" disabled>Hủy hàng</button>*@
+                                    </td>
+                                }
+
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+
+                <div class="spacer" style="height: 20px"></div>
+            </div>
+        </div>
+    </div>
+</div>
+

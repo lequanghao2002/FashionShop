@@ -10,6 +10,7 @@ namespace FashionShop.Repositories
     {
         public Task<List<GetVoucherDTO>> GetAll();
         public Task<GetVoucherDTO> GetById(int id);
+        public Task<GetVoucherDTO> GetByDiscountCode(string discountCode);
         public Task<CreateVoucherDTO> Create(CreateVoucherDTO createVoucherDTO);
         public Task<UpdateVoucherDTO> Update(UpdateVoucherDTO updateVoucherDTO, int id);
         public Task<bool> Delete(int id);
@@ -67,6 +68,30 @@ namespace FashionShop.Repositories
                 UpdatedDate = voucher.UpdatedDate,
                 UpdatedBy = voucher.UpdatedBy,
             }).FirstOrDefaultAsync(v => v.ID == id);
+
+            return voucherDTO;
+        }
+
+        public async Task<GetVoucherDTO> GetByDiscountCode(string discountCode)
+        {
+            var voucherDTO = await _fashionShopDBContext.Vouchers.Select(voucher => new GetVoucherDTO
+            {
+                ID = voucher.ID,
+                DiscountCode = voucher.DiscountCode,
+                DiscountAmount = voucher.DiscountAmount,
+                DiscountPercentage = voucher.DiscountPercentage,
+                DiscountValue = voucher.DiscountValue,
+                MinimumValue = voucher.MinimumValue,
+                Quantity = voucher.Quantity,
+                StartDate = voucher.StartDate,
+                EndDate = voucher.EndDate,
+                Describe = voucher.Describe,
+                Status = voucher.Status,
+                CreatedDate = voucher.CreatedDate,
+                CreatedBy = voucher.CreatedBy,
+                UpdatedDate = voucher.UpdatedDate,
+                UpdatedBy = voucher.UpdatedBy,
+            }).FirstOrDefaultAsync(v => v.DiscountCode == discountCode && v.Status == true);
 
             return voucherDTO;
         }

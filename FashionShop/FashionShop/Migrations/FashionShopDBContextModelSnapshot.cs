@@ -141,6 +141,12 @@ namespace FashionShop.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<double>("DeliveryFee")
+                        .HasColumnType("float");
+
+                    b.Property<int>("DistrictID")
+                        .HasColumnType("int");
+
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -159,16 +165,27 @@ namespace FashionShop.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("Status")
-                        .HasColumnType("bit");
+                    b.Property<int>("ProvinceID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
 
                     b.Property<string>("UserID")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<int?>("VoucherID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("WardID")
+                        .HasColumnType("int");
+
                     b.HasKey("ID");
 
                     b.HasIndex("UserID");
+
+                    b.HasIndex("VoucherID");
 
                     b.ToTable("Orders");
                 });
@@ -626,7 +643,13 @@ namespace FashionShop.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("FashionShop.Models.Domain.Voucher", "Voucher")
+                        .WithMany("Orders")
+                        .HasForeignKey("VoucherID");
+
                     b.Navigation("User");
+
+                    b.Navigation("Voucher");
                 });
 
             modelBuilder.Entity("FashionShop.Models.Domain.OrderDetail", b =>
@@ -727,6 +750,11 @@ namespace FashionShop.Migrations
                     b.Navigation("FavoriteProducts");
 
                     b.Navigation("OrderDetails");
+                });
+
+            modelBuilder.Entity("FashionShop.Models.Domain.Voucher", b =>
+                {
+                    b.Navigation("Orders");
                 });
 
             modelBuilder.Entity("FashionShop.Models.Domain.User", b =>

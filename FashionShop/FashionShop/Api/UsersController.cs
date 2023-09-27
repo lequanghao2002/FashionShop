@@ -51,7 +51,7 @@ namespace FashionShop.Api
         }
 
         [HttpPost("register-admin")]
-        public async Task<IActionResult> RegisterAdmin (RegisterAdminRequestDTO registerAdminRequestDTO)
+        public async Task<IActionResult> RegisterAdmin (RegisterRequestDTO registerAdminRequestDTO)
         {
             try
             {
@@ -83,7 +83,7 @@ namespace FashionShop.Api
         }
 
         [HttpPost("register-member")]
-        public async Task<IActionResult> RegisterMember(RegisterAdminRequestDTO registerAdminRequestDTO)
+        public async Task<IActionResult> RegisterMember(RegisterRequestDTO registerAdminRequestDTO)
         {
             try
             {

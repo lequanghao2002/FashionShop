@@ -13,79 +13,37 @@
             <li><a>Giỏ hàng</a></li>
         </ul>
         <div class="row set_color cart-table">
-            <div id="content" class="col-sm-12">
+            <div id="content" class="col-sm-12 cartContent">
                 <h1>Giỏ hàng</h1>
                 <form>
                     <div class="table-responsive  margin-top">
                         <table class="table">
-                            <thead>
+                            <thead style="font-size: 18px; font-weight:bold">
                                 <tr>
-                                    <td class="text-center">Hình ảnh</td>
-                                    <td class="text-left">Tên sản phẩm</td>
-                                    <td class="text-left">Số lượng</td>
-                                    <td class="text-right">Đơn giá</td>
-                                    <td class="text-right">Tổng cộng</td>
+                                    <td style="width: 10%" class="text-center"></td>
+                                    <td style="width: 10%" class="text-center">Hình ảnh</td>
+                                    <td style="width: 35%" class="text-center">Tên sản phẩm</td>
+                                    <td style="width: 15%" class="text-right">Đơn giá</td>
+                                    <td style="width: 15%" class="text-right">Số lượng</td>
+                                    <td style="width: 15%" class="text-right">Tổng cộng</td>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <tr>
-                                    <td class="text-center" style="vertical-align: middle!important;">
-                                        <a href="single-product.html">
-                                            <img style="width: 80px" src="~/UploadFiles/Images/Áo Khoác Bomber Basketball Vibe/img_7607_6f49eef2d183480e83e830c679c06b91_master.jpg" class="img-thumbnail">
-                                        </a>
-                                    </td>
-                                    <td class="text-left" style="vertical-align: middle!important;">
-                                        <a href="single-product.html">Sản phẩm 1</a>
-                                        <br>
-                                    </td>
-                                    <td class="text-left" style="vertical-align: middle!important;">
-                                        <div class="input-group btn-block" style="max-width: 200px;">
-                                            <input type="text" value="1" size="1" class="form-control">
-                                            <span class="input-group-btn">
-                                                <button type="submit" title="" class="btn btn-primary"><i class="fa fa-refresh"></i></button>
-                                                <button type="button" title="" class="btn btn-primary" style="margin-left: 1px"><i class="fa fa-times-circle"></i></button>
-                                            </span>
-                                        </div>
-                                    </td>
-                                    <td class="text-right" style="vertical-align: middle!important;">300.000đ</td>
-                                    <td class="text-right" style="vertical-align: middle!important;">300.000đ</td>
-                                </tr>
-                                <tr>
-                                    <td class="text-center" style="vertical-align: middle!important;">
-                                        <a href="single-product.html">
-                                            <img style="width: 80px" src="~/UploadFiles/Images/Áo Khoác Bomber Basketball Vibe/img_7607_6f49eef2d183480e83e830c679c06b91_master.jpg" class="img-thumbnail">
-                                        </a>
-                                    </td>
-                                    <td class="text-left" style="vertical-align: middle!important;">
-                                        <a href="single-product.html">Sản phẩm 1</a>
-                                        <br>
-                                    </td>
-                                    <td class="text-left" style="vertical-align: middle!important;">
-                                        <div class="input-group btn-block" style="max-width: 200px;">
-                                            <input type="text" value="1" size="1" class="form-control">
-                                            <span class="input-group-btn">
-                                                <button type="submit" title="" class="btn btn-primary"><i class="fa fa-refresh"></i></button>
-                                                <button type="button" title="" class="btn btn-primary" style="margin-left: 1px"><i class="fa fa-times-circle"></i></button>
-                                            </span>
-                                        </div>
-                                    </td>
-                                    <td class="text-right" style="vertical-align: middle!important;">300.000đ</td>
-                                    <td class="text-right" style="vertical-align: middle!important;">300.000đ</td>
-                                </tr>
+                            <tbody id="cartBody" style="font-size: 16px">
+                                
                             </tbody>
                         </table>
                     </div>
                 </form>
-                
+
                 <div class="row">
                     <div class="col-sm-4 col-sm-offset-8">
                         <table class="table">
                             <tbody>
-                                <tr>
-                                    <td class="text-right cart-table-total-label"><strong>Tạm tính: </strong></td>
-                                    <td class="text-right cart-table-total">300.000đ</td>
+                                <tr style="font-size:16px">
+                                    <td class="text-right cart-table-total-label" ><strong>Tạm tính: </strong></td>
+                                    <td id="tempTotalMoney" class="text-right cart-table-total"></td>
                                 </tr>
-                                
+
                             </tbody>
                         </table>
                     </div>
@@ -98,4 +56,33 @@
         </div>
     </div>
 </div>
+
+@section script{
+    <script id="tplCart">
+        <tr>
+            <td class="text-center" style="vertical-align: middle!important;">
+                <button type="button" title = "" class="btn btn-primary btnDeleteItem" data-id="{{ProductId}}" style = "margin-left: 1px"> 
+                <i class="fa fa-times-circle"></i></button >
+            </td>
+            <td class="text-center" style="vertical-align: middle!important;">
+                <a href="single-product.html">
+                    <img style="width: 80px" src="{{Image}}" class="img-thumbnail">
+                </a>
+            </td>
+            <td class="text-center" style="vertical-align: middle!important;">
+                <a href="single-product.html">{{Name}}</a>
+            </td>
+            <td class="text-right" style="vertical-align: middle!important;">
+                <span style="text-decoration: line-through; font-size: 80%">{{PriceInitial}}</span>
+                <span>{{PriceFormat}}₫</span>
+            </td>
+            <td class="text-right" style = "vertical-align: middle!important;" >
+                <div class="input-group btn-block" style="max-width: 100px; float: right;">
+                    <input type="number" id="quantityProduct_{{ProductId}}" data-id="{{ProductId}}" data-price="{{Price}}" value="{{Quantity}}" class="form-control txtQuantity" >
+                </div>
+            </td>
+            <td id="TotalMoney_{{ProductId}}" class="text-right" style ="vertical-align: middle!important;">{{TotalMoney}}₫</td>
+        </tr>
+    </script>
+}
 

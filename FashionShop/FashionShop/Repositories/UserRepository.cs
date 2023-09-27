@@ -14,11 +14,11 @@ namespace FashionShop.Repositories
     {
         public Task<List<GetUserDTO>> GetAllUser(string? searchByName, string? filterRole);
         public Task<GetUserDTO> GetUserById(string id);
-        public Task<bool> RegisterAccountAdmin(RegisterAdminRequestDTO registerAdminRequestDTO);
+        public Task<bool> RegisterAccountAdmin(RegisterRequestDTO registerRequestDTO);
 
-        public Task<bool> RegisterAccountMember(RegisterAdminRequestDTO registerAdminRequestDTO);
+        public Task<bool> RegisterAccountMember(RegisterRequestDTO registerRequestDTO);
 
-        public Task<bool> RegisterAccountCustomer(RegisterAdminRequestDTO registerAdminRequestDTO);
+        public Task<bool> RegisterAccountCustomer(RegisterRequestDTO registerRequestDTO);
 
         public Task<string> Login(LoginRequestDTO loginRequestDTO);
 
@@ -93,17 +93,17 @@ namespace FashionShop.Repositories
             return null;
         }
 
-        public async Task<bool> RegisterAccountAdmin(RegisterAdminRequestDTO registerAdminRequestDTO)
+        public async Task<bool> RegisterAccountAdmin(RegisterRequestDTO registerRequestDTO)
         {
             var admin = new User
             {
-                FullName = registerAdminRequestDTO.FullName,
-                UserName = registerAdminRequestDTO.Email,
-                Email = registerAdminRequestDTO.Email,
-                PhoneNumber = registerAdminRequestDTO.PhoneNumber,
+                FullName = registerRequestDTO.FullName,
+                UserName = registerRequestDTO.Email,
+                Email = registerRequestDTO.Email,
+                PhoneNumber = registerRequestDTO.PhoneNumber,
             };
 
-            var result = await _userManager.CreateAsync(admin, registerAdminRequestDTO.Password);
+            var result = await _userManager.CreateAsync(admin, registerRequestDTO.Password);
 
 
             if(result.Succeeded) {
@@ -120,17 +120,17 @@ namespace FashionShop.Repositories
             return false;
         }
 
-        public async Task<bool> RegisterAccountMember(RegisterAdminRequestDTO registerAdminRequestDTO)
+        public async Task<bool> RegisterAccountMember(RegisterRequestDTO registerRequestDTO)
         {
             var admin = new User
             {
-                FullName = registerAdminRequestDTO.FullName,
-                UserName = registerAdminRequestDTO.Email,
-                Email = registerAdminRequestDTO.Email,
-                PhoneNumber = registerAdminRequestDTO.PhoneNumber,
+                FullName = registerRequestDTO.FullName,
+                UserName = registerRequestDTO.Email,
+                Email = registerRequestDTO.Email,
+                PhoneNumber = registerRequestDTO.PhoneNumber,
             };
 
-            var result = await _userManager.CreateAsync(admin, registerAdminRequestDTO.Password);
+            var result = await _userManager.CreateAsync(admin, registerRequestDTO.Password);
 
             if (result.Succeeded)
             {
@@ -147,17 +147,17 @@ namespace FashionShop.Repositories
             return false;
         }
 
-        public async Task<bool> RegisterAccountCustomer(RegisterAdminRequestDTO registerAdminRequestDTO)
+        public async Task<bool> RegisterAccountCustomer(RegisterRequestDTO registerRequestDTO)
         {
             var admin = new User
             {
-                FullName = registerAdminRequestDTO.FullName,
-                UserName = registerAdminRequestDTO.Email,
-                Email = registerAdminRequestDTO.Email,
-                PhoneNumber = registerAdminRequestDTO.PhoneNumber,
+                FullName = registerRequestDTO.FullName,
+                UserName = registerRequestDTO.Email,
+                Email = registerRequestDTO.Email,
+                PhoneNumber = registerRequestDTO.PhoneNumber,
             };
 
-            var result = await _userManager.CreateAsync(admin, registerAdminRequestDTO.Password);
+            var result = await _userManager.CreateAsync(admin, registerRequestDTO.Password);
 
             if (result.Succeeded)
             {
