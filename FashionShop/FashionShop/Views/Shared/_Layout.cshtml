@@ -1,8 +1,11 @@
 @using FashionShop.Helper;
 @using FashionShop.Models.Domain;
 @using FashionShop.Models.ViewModel;
+@using Newtonsoft.Json;                
+@using FashionShop.Data;
+@using FashionShop.Repositories;
 @using Microsoft.AspNetCore.Http;
-@using Newtonsoft.Json;
+@using Microsoft.EntityFrameworkCore;
 @inject IHttpContextAccessor HttpContextAccessor
 @{
     Layout = null;
@@ -12,6 +15,19 @@
     {
         user = JsonConvert.DeserializeObject<User>(userJson);
     }
+
+    //Kết nối db để hiển thị tất cả danh sách category
+    string connectionString = "Data Source=sql.bsite.net\\MSSQL2016;Initial Catalog=lequanghao_FashionShop; User ID=lequanghao_FashionShop;Password=123456;TrustServerCertificate=True";
+    
+    DbContextOptions<FashionShopDBContext> options;
+    options = new DbContextOptionsBuilder<FashionShopDBContext>()
+                .UseSqlServer(connectionString)
+                .Options;
+
+    FashionShopDBContext fashionShopDbContext = new FashionShopDBContext(options);
+    ICategoryRepository _categoryRepository = new CategoryRepository(fashionShopDbContext);
+
+    var allCategory = _categoryRepository.GetAllCategory();
 }
 
 <!DOCTYPE html>
@@ -116,26 +132,9 @@
                                                 <a href="javascript:void(0)">
                                                     Sản phẩm<span class="fa fa-angle-down"></span>
                                                 </a>
-                                                <ul class="product_item">
-                                                    <li>
-                                                        <a href="~/Product">Áo Khoác</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="~/Product">Áo Thun</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="~/Product">Áo Sơ Mi</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="~/Product">Quần Short</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="~/Product">Quần Tây</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="~/Product">Quần Jean</a>
-                                                    </li>
-                                                </ul>
+
+                                                @Html.Partial("_PartialViewCategory", allCategory)
+
                                              </li>
                                             <li><a href="~/Post">Bài viết</a></li>
                                             <li><a href="~/Contact">Liên hệ</a></li> 

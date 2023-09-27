@@ -1,4 +1,5 @@
 ﻿using FashionShop.Models;
+using FashionShop.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Razor.Language.Intermediate;
 using Newtonsoft.Json;
@@ -8,14 +9,19 @@ namespace FashionShop.Controllers
     public class ProductController : Controller
     {
         public readonly IProductRepository _productRepository;
-        public ProductController(IProductRepository productRepository)
+        public readonly ICategoryRepository _categoryRepository;
+        public ProductController(IProductRepository productRepository, ICategoryRepository categoryRepository)
         {
             _productRepository = productRepository;
+            _categoryRepository = categoryRepository;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index(int idCategory)
         {
+            var listProductByCategory = await _productRepository.GetByCategoryId(idCategory);
 
-            return View();
+            ViewBag.NameCategory = _categoryRepository.GetCategoryById(idCategory);
+
+            return View(listProductByCategory);
         }
 
         public IActionResult Detail(int id)
