@@ -18,7 +18,8 @@ public interface IProductRepository
 {
     public Task<AdminPaginationSet<GetProductDTO>> GetAll(int page, int pageSize, int? searchByCategory, string? searchByName);
 
-    public List<GetProductDTO> GetAll();
+    public List<GetProductDTO> GetAll(string? keyword = null);
+    public List<SearchProductByNameDTO> GetAllByName(string keyword);
     public Task<GetProductByIdDTO> GetById(int idProduct);
     public Task<List<GetProductByIdDTO>> GetByCategoryId(int idCategory);
     public GetProductByIdDTO GetId(int id);
@@ -84,21 +85,57 @@ public class ProductRepository : IProductRepository
 
         return productPaginationSet;
     }
-    public  List<GetProductDTO> GetAll()
+    public  List<GetProductDTO> GetAll(string? keyword)
     {
-
-        var listProductDTO = _fashionShopDBContext.Products.Select(pro => new GetProductDTO
+        if(!string.IsNullOrEmpty(keyword))
         {
-            ID = pro.ID,
-            Name = pro.Name,
-            Describe = pro.Describe,
-            Image = pro.Image,
-            Price = pro.Price,
-            Discount = pro.Discount,
-            CreatedDate= pro.CreatedDate,
-            Status = pro.Status,
-        }).OrderByDescending(p => p.CreatedDate).Where(p => p.Status == true).ToList();
-        return listProductDTO;
+            var listProductDTO = _fashionShopDBContext.Products.Select(pro => new GetProductDTO
+            {
+                ID = pro.ID,
+                Name = pro.Name,
+                Describe = pro.Describe,
+                Image = pro.Image,
+                Price = pro.Price,
+                Discount = pro.Discount,
+                CreatedDate = pro.CreatedDate,
+                Status = pro.Status,
+            }).OrderByDescending(p => p.CreatedDate).Where(p => p.Status == true && p.Name.Contains(keyword)).ToList();
+            return listProductDTO;
+        }
+        else
+        {
+            var listProductDTO = _fashionShopDBContext.Products.Select(pro => new GetProductDTO
+            {
+                ID = pro.ID,
+                Name = pro.Name,
+                Describe = pro.Describe,
+                Image = pro.Image,
+                Price = pro.Price,
+                Discount = pro.Discount,
+                CreatedDate = pro.CreatedDate,
+                Status = pro.Status,
+            }).OrderByDescending(p => p.CreatedDate).Where(p => p.Status == true).ToList();
+            return listProductDTO;
+        }
+        
+    }
+    public List<SearchProductByNameDTO> GetAllByName(string keyword)
+    {
+        var listProductDomain = _fashionShopDBContext.Products
+            .Where(product => product.Status == true && product.Name
+            .Contains(keyword))
+            .Select(product => new SearchProductByNameDTO()
+        {
+            ID = product.ID,
+            Name = product.Name,
+            Image = product.Image,
+            Price = product.Price,
+            Discount = product.Discount,
+            CreatedDate = product.CreatedDate,
+            Status = product.Status
+        }).OrderByDescending(p => p.CreatedDate).ToList();
+
+        return listProductDomain;
     }
     public async Task<GetProductByIdDTO> GetById(int idProduct)
     {

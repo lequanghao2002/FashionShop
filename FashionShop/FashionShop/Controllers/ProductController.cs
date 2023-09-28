@@ -30,6 +30,8 @@ namespace FashionShop.Controllers
             @ViewBag.listImg = JsonConvert.DeserializeObject<List<string>>(product.ListImages);
             return View(product);
         }
+
         
+
     }
 }
