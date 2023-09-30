@@ -8,6 +8,9 @@ using Blogger_Common;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using FashionShop.Helper;
+using FashionShop.Models.ViewModel;
+using FashionShop.Models.DTO.FavoriteProductDTO;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace FashionShop.Controllers
 {
@@ -17,12 +20,14 @@ namespace FashionShop.Controllers
         private readonly UserManager<User> _userManager;
         private readonly IUserRepository _userRepository;
         private readonly IOrderRepository _orderRepository;
+        private readonly IFavoriteProductRepository _favoriteProductRepository;
 
-        public AccountController(UserManager<User> userManager, IUserRepository userRepository, IOrderRepository orderRepository)
+        public AccountController(UserManager<User> userManager, IUserRepository userRepository, IOrderRepository orderRepository, IFavoriteProductRepository favoriteProductRepository)
         {
             _userManager = userManager;
             _userRepository = userRepository; 
             _orderRepository = orderRepository;
+            _favoriteProductRepository = favoriteProductRepository;
         }
 
         public IActionResult Login()
@@ -141,16 +146,86 @@ namespace FashionShop.Controllers
             return View(orderDetail);
         }
 
-        public async Task<IActionResult> OrderCancel(int id)
+        public async Task<JsonResult> OrderCancel(int id)
         {
             var orderCancel = await _orderRepository.Cancel(id);
 
             if(orderCancel == true)
             {
-                return RedirectToAction("OrderList");
+                return Json(new
+                {
+                    status = true
+                });
             }
 
-            return View();
+            return Json(new
+            {
+                status = false
+            });
         }
-    }
+
+        public async Task<IActionResult> FavoriteList()
+        {
+            var userSession = HttpContext.Session.GetString(CommonConstants.SessionUser);
+            var user = JsonConvert.DeserializeObject<User>(userSession);
+
+            var listFavoriteProduct = await _favoriteProductRepository.GetByUserID(user.Id);
+
+            return View(listFavoriteProduct);
+        }
+
+        [HttpPost]
+        public async Task<JsonResult> AddFavoriteProduct(CreateFavoriteProductDTO createFavoriteProductDTO)
+        {
+            var userSession = HttpContext.Session.GetString(CommonConstants.SessionUser);
+
+            if(userSession != null)
+            {
+                var user = JsonConvert.DeserializeObject<User>(userSession);
+
+                createFavoriteProductDTO.UserID = user.Id;
+
+                var favoriteProduct = await _favoriteProductRepository.Create(createFavoriteProductDTO);
+
+                if (favoriteProduct != null)
+                {
+                    return Json(new
+                    {
+                        status = true
+                    });
+                }
+            }
+
+            return Json(new
+            {
+                status = false
+            });
+        }
+
+        [HttpPost]
+        public async Task<JsonResult> DeleteFavoriteProduct(int productID)
+        {
+            var userSession = HttpContext.Session.GetString(CommonConstants.SessionUser);
+
+            if (userSession != null)
+            {
+                var user = JsonConvert.DeserializeObject<User>(userSession);
+
+                var favoriteProduct = await _favoriteProductRepository.Delete(productID, user.Id);
+
+                if (favoriteProduct != null)
+                {
+                    return Json(new
+                    {
+                        status = true
+                    });
+                }
+            }
+
+            return Json(new
+            {
+                status = false
+            });
+        }
+    } 
 }
