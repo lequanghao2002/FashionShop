@@ -23,23 +23,25 @@
             @foreach (var post in Model)
             {
                 <div class="post-item">
-                    <div class="row width-800 height-300">
-                        <div class="col-md-4">
+                    <div class="col-md-3 col-sm-4 col-xs-6 mb-30 col-xs-offset-1 width-300">
+                        <div style="text-align: center">
                             <div class="image-block">
                                 <a href="@Url.Action("Detail", "Post", new { id = post.ID })" style="cursor: pointer">
-                                    <img class="post-image" alt="i" src="@post.Image" style="width: 300px; height: 150px" />
+                                    <img class="post-image" alt="i" src="@post.Image" style="width: 250px; height: 125px" />
+                                </a>
+                            </div>
+                            <div class="title-block">
+                                <a href="@Url.Action("Detail", "Post", new { id = post.ID })" style="cursor: pointer">
+                                    <h4 class="post-title">
+                                        <b>@post.Title</b>
+                                    </h4>
                                 </a>
                             </div>
                         </div>
-                        <div class="col-md-8">
-                            <a href="@Url.Action("Detail", "Post", new { id = post.ID })" style="cursor: pointer">
-                                <h4 class="post-title">
-                                    <b>@post.Title</b>
-                                </h4>
-                            </a>
+                        <div class="effect-shadow">
+                            <a href="~/Post/Detail/@post.ID" style="display: block;  width: 100%; height: 100%;"></a>
                         </div>
                     </div>
-                    <div class="spacer" style="height: 20px"></div>
                 </div>
             }
         </div>
