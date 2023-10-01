@@ -188,7 +188,9 @@
                         <a href="#"><i class="fa fa-shopping-cart"></i></a>
                     </div>
                     <div class="price-view-block">
-                        <span class="price-left">10%</span>
+                        <span class="price-left">
+                            @discount%
+                            </span>
                     </div>
 
                     <div class="image-block">
@@ -201,15 +203,14 @@
                                 <p class="m-0">
                                     @item.Name
                                 </p>
-                                <span>
-                                @*@Html.Raw(@item.Price - (@item.Price * @item.Discount/100))*@
-                                @formattedPriceHasDiscount
-                                </span>
-
-                                <span style="text-decoration: line-through; font-size: 80%">
+                            <span style="text-decoration: line-through; font-size: 80%">
                                 @*@item.Price*@
                                 @formattedPrice
-                                </span>                         
+                            </span>
+                            <span>
+                                @*@Html.Raw(@item.Price - (@item.Price * @item.Discount/100))*@
+                                @formattedPriceHasDiscount
+                                </span>                        
                         </div>
                     <div class="effect-shadow">
                         <a href="~/Product/Detail" style="display: block; width: 100%; height: 100%;"></a>
