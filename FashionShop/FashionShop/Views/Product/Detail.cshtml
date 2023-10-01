@@ -172,7 +172,12 @@
             <h3>Danh sách sản phẩm tương tự</h3>
         </div>
         @foreach (var item in @ViewBag.SanPham)
-                             {
+        {
+            decimal price = Convert.ToDecimal(item.Price);
+            decimal discount = Convert.ToDecimal(item.Discount);
+            decimal discountedPrice = price - (price * discount / 100);
+            string formattedPrice = price.ToString("N0") + "đ";
+            string formattedPriceHasDiscount = discountedPrice.ToString("N0") + "đ";
         <div class="col-md-2 col-sm-6 col-xs-6 mb-30 width-100">
             
             <div class="product-thumb transition">
@@ -197,11 +202,13 @@
                                     @item.Name
                                 </p>
                                 <span>
-                                @Html.Raw(@item.Price - (@item.Price * @item.Discount/100))
+                                @*@Html.Raw(@item.Price - (@item.Price * @item.Discount/100))*@
+                                @formattedPriceHasDiscount
                                 </span>
 
                                 <span style="text-decoration: line-through; font-size: 80%">
-                                @item.Price
+                                @*@item.Price*@
+                                @formattedPrice
                                 </span>                         
                         </div>
                     <div class="effect-shadow">
