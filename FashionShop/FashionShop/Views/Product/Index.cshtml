@@ -18,6 +18,19 @@
             <div class="main-head-block" style="margin-top: 0">
                 <h2>Danh sách @ViewBag.NameCategory.Name</h2>
             </div>
+
+            <div style="padding: 0 0 25px 15px;">
+                <select id="orderBy" data-id="@ViewBag.IdCategory">
+                    <option value="">Sắp xếp</option>
+                    <option value="1" @Html.Raw(@ViewBag.IdOrderProduct == 1 ? "selected" : "")>Giá: Tăng dần</option>
+                    <option value="2" @Html.Raw(@ViewBag.IdOrderProduct == 2 ? "selected" : "")>Giá: Giảm dần</option>
+                    <option value="3" @Html.Raw(@ViewBag.IdOrderProduct == 3 ? "selected" : "")>Tên: A-Z</option>
+                    <option value="4" @Html.Raw(@ViewBag.IdOrderProduct == 4 ? "selected" : "")>Tên: Z-A</option>
+                    <option value="5" @Html.Raw(@ViewBag.IdOrderProduct == 5 ? "selected" : "")>Mới nhất</option>
+                    <option value="6" @Html.Raw(@ViewBag.IdOrderProduct == 6 ? "selected" : "")>Cũ nhất</option>
+                </select>
+            </div>
+
             
             @if(Model.Count > 0)
             {
@@ -32,7 +45,7 @@
                     if (pro.Discount > 0)
                     {
                         <div class="col-md-2 col-sm-6 col-xs-6 mb-30 width-100">
-                            <div class="product-thumb transition">
+                            <div class="product-thumb effect-shadow">
                                 <div class="product-view-block">
                                     <div class="button-block">
                                         @*<a> <i class="fa fa-heart"></i></a>*@
@@ -73,7 +86,7 @@
                     else
                     {
                         <div class="col-md-2 col-sm-6 col-xs-6 mb-30 width-100">
-                            <div class="product-thumb transition">
+                            <div class="product-thumb effect-shadow">
                                 <div class="product-view-block">
                                     <div class="button-block">
                                         @*<a> <i class="fa fa-heart"></i></a>*@
@@ -109,4 +122,3 @@
         </div>
     </div>
 </div>
-

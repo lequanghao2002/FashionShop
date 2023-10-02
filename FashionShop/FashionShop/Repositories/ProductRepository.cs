@@ -21,7 +21,7 @@ public interface IProductRepository
     public List<GetProductDTO> GetAll(string? keyword = null);
     public List<SearchProductByNameDTO> GetAllByName(string keyword);
     public Task<GetProductByIdDTO> GetById(int idProduct);
-    public Task<List<GetProductByIdDTO>> GetByCategoryId(int idCategory);
+    public Task<List<GetProductByIdDTO>> GetByCategoryId(int idCategory, int? idOrderProduct = null);
     public GetProductByIdDTO GetId(int id);
     public Task<CreateProductDTO> Create(CreateProductDTO createProductDTO);
 
@@ -161,9 +161,49 @@ public class ProductRepository : IProductRepository
         return productDomain;
     }
 
-    public async Task<List<GetProductByIdDTO>> GetByCategoryId(int idCategory)
+    public async Task<List<GetProductByIdDTO>> GetByCategoryId(int idCategory, int? idOrderProduct)
     {
-        var listProductByIdCategory = await _fashionShopDBContext.Products.Select(product => new GetProductByIdDTO
+        var listProductDomain = _fashionShopDBContext.Products.AsQueryable();
+
+        if (idOrderProduct != null)
+        {
+            switch(idOrderProduct)
+            {
+                case 1:
+                    {
+                        listProductDomain = listProductDomain.OrderBy(p => p.Price);
+                        break;
+                    }
+                case 2:
+                    {
+                        listProductDomain = listProductDomain.OrderByDescending(p => p.Price);
+                        break;
+                    }
+                case 3:
+                    {
+                        listProductDomain = listProductDomain.OrderBy(p => p.Name);
+                        break;
+                    }
+                case 4:
+                    {
+                        listProductDomain = listProductDomain.OrderByDescending(p => p.Name);
+                        break;
+                    }
+                case 5:
+                    {
+                        listProductDomain = listProductDomain.OrderByDescending(p => p.CreatedDate);
+                        break;
+                    }
+                case 6:
+                    {
+                        listProductDomain = listProductDomain.OrderBy(p => p.CreatedDate);
+                        break;
+                    }
+            }
+        }
+
+
+        var listProductDTO = await listProductDomain.Select(product => new GetProductByIdDTO
         {
             ID = product.ID,
             Name = product.Name,
@@ -180,9 +220,9 @@ public class ProductRepository : IProductRepository
             UpdatedDate = product.UpdatedDate,
             UpdatedBy = product.UpdatedBy,
             Status = product.Status,
-        }).Where(p => p.CategoryID == idCategory).OrderByDescending(p => p.CreatedDate).ToListAsync();
+        }).Where(p => p.Status == true && p.CategoryID == idCategory).ToListAsync();
 
-        return listProductByIdCategory;
+        return listProductDTO;
     }
     public  GetProductByIdDTO GetId(int id) 
     {

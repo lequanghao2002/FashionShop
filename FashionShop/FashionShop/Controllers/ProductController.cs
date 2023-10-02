@@ -15,11 +15,13 @@ namespace FashionShop.Controllers
             _productRepository = productRepository;
             _categoryRepository = categoryRepository;
         }
-        public async Task<IActionResult> Index(int idCategory)
+        public async Task<IActionResult> Index(int idCategory, int? idOrderProduct = null)
         {
-            var listProductByCategory = await _productRepository.GetByCategoryId(idCategory);
+            var listProductByCategory = await _productRepository.GetByCategoryId(idCategory, idOrderProduct);
 
             ViewBag.NameCategory = _categoryRepository.GetCategoryById(idCategory);
+            ViewBag.IdCategory = idCategory;
+            ViewBag.IdOrderProduct = idOrderProduct;
 
             return View(listProductByCategory);
         }
