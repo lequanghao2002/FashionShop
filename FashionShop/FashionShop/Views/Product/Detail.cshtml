@@ -1,4 +1,5 @@
 ﻿@using FashionShop.Models.DTO.ProductDTO;
+
 @model GetProductByIdDTO
 @{
     ViewData["Title"] = "Detail";
@@ -170,7 +171,15 @@
         <div class="main-head-block">
             <h3>Danh sách sản phẩm tương tự</h3>
         </div>
+        @foreach (var item in @ViewBag.SanPham)
+        {
+            decimal price = Convert.ToDecimal(item.Price);
+            decimal discount = Convert.ToDecimal(item.Discount);
+            decimal discountedPrice = price - (price * discount / 100);
+            string formattedPrice = price.ToString("N0") + "đ";
+            string formattedPriceHasDiscount = discountedPrice.ToString("N0") + "đ";
         <div class="col-md-2 col-sm-6 col-xs-6 mb-30 width-100">
+            
             <div class="product-thumb transition">
                 <div class="product-view-block">
                     <div class="button-block">
@@ -179,35 +188,37 @@
                         <a href="#"><i class="fa fa-shopping-cart"></i></a>
                     </div>
                     <div class="price-view-block">
-                        <span class="price-left">10%</span>
+                        <span class="price-left">
+                            @discount%
+                            </span>
                     </div>
 
                     <div class="image-block">
                         <a href="single-product.html" style="cursor: pointer">
-                            <img class="img-responsive" alt="i" src="~/UploadFiles/Images/Áo Khoác Bomber Basketball Vibe/img_7607_6f49eef2d183480e83e830c679c06b91_master.jpg">
+                                <img class="img-responsive" alt="i" src="~/@item.Image">
                         </a>
                     </div>
-
-                    <div style="margin: 0px 5px;text-align: center;">
-                        <p class="m-0">
-                            Áo Khoác Bomber Basketball Vibe
-                        </p>
-
-                        <span>
-                            270.000đ
-                        </span>
-
-                        <span style="text-decoration: line-through; font-size: 80%">
-                            300.000đ
-                        </span>
-
-                    </div>
+                        <div style="margin: 0px 5px;text-align: center;">
+                             
+                                <p class="m-0">
+                                    @item.Name
+                                </p>
+                            <span style="text-decoration: line-through; font-size: 80%">
+                                @*@item.Price*@
+                                @formattedPrice
+                            </span>
+                            <span>
+                                @*@Html.Raw(@item.Price - (@item.Price * @item.Discount/100))*@
+                                @formattedPriceHasDiscount
+                                </span>                        
+                        </div>
                     <div class="effect-shadow">
                         <a href="~/Product/Detail" style="display: block; width: 100%; height: 100%;"></a>
                     </div>
                 </div>
             </div>
         </div>
+        }
     </div>
 
 </div>
