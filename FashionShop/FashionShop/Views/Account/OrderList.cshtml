@@ -70,7 +70,7 @@
                                 {
                                     <td>Chờ xác nhận</td>
                                     <td>
-                                        <a href="~/Account/OrderCancel/@item.ID" class="btn-danger" style="padding: 5px;border-radius: 10px;">Hủy hàng</a>
+                                        <a class="btn-danger btnCancelOrder" data-id="@item.ID" style="padding: 5px;border-radius: 10px;">Hủy hàng</a>
                                     </td>
                                 }
                                 else if (item.Status == 2)

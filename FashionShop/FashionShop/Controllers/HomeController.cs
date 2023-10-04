@@ -20,5 +20,25 @@ namespace FashionShop.Controllers
 
             return View(product);
         }
+
+        public JsonResult GetListProductByName(string keyword)
+        {
+            var listProductByName = _productRepository.GetAllByName(keyword);
+
+            return Json(new
+            {
+                data = listProductByName,
+            });
+        }
+
+        [HttpPost]
+        public IActionResult SearchProductByName(string keyword)
+        {
+            ViewBag.keyword = keyword;
+
+            var listProductByName = _productRepository.GetAll(keyword);
+
+            return View(listProductByName);
+        }
     }
 }

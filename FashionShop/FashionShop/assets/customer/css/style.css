@@ -1119,6 +1119,14 @@ button {
     border-radius: 8px;
 }
 
+.result-product {
+    display: flex;
+}
+
+.list-result-product {
+    margin-left: 5px;
+}
+
 @media (min-width: 768px) and (max-width: 1024px) {
     .main-nav-block .navbar-nav > li > a{
         padding:10px;

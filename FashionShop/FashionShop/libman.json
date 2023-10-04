@@ -5,6 +5,10 @@
     {
       "library": "numeral.js@2.0.6",
       "destination": "assets/customer/lib/numeral"
+    },
+    {
+      "library": "jqueryui@1.13.2",
+      "destination": "assets/customer/lib/jquery-ui"
     }
   ]
 }
