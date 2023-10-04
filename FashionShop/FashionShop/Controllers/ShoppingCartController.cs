@@ -236,7 +236,20 @@ namespace FashionShop.Controllers
 
                 if (order != null)
                 {
-                    return RedirectToAction("OrderSuccess");
+                    // Giảm số lượng mã giảm giá trong csdl khi đặt hàng (nếu có)
+                    if (order.VoucherID != null)
+                    {
+                        var reduceQuantityVoucher = await _voucherRepository.ReduceQuantityVoucher((int)order.VoucherID);
+                    }
+
+                    // Giảm số lượng sản phẩm trong csdl khi đặt hàng
+                    var reduceQuantityProduct = await _productRepository.ReduceQuantityOrder(order.shoppingCarts!);
+
+                    if (reduceQuantityProduct == true) 
+                    {
+                        return RedirectToAction("OrderSuccess");
+                    }
+
                 }
             }
 
@@ -244,7 +257,7 @@ namespace FashionShop.Controllers
             string userSession = HttpContext.Session.GetString(CommonConstants.SessionUser);
             var user = JsonConvert.DeserializeObject<User>(userSession);
 
-            return View();
+            return View(user);
         }
 
         public async Task<IActionResult> OrderSuccess()

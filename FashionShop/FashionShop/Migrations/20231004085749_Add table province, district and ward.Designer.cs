@@ -4,6 +4,7 @@ using FashionShop.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FashionShop.Migrations
 {
     [DbContext(typeof(FashionShopDBContext))]
-    partial class FashionShopDBContextModelSnapshot : ModelSnapshot
+    [Migration("20231004085749_Add table province, district and ward")]
+    partial class Addtableprovincedistrictandward
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -36,7 +38,7 @@ namespace FashionShop.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Categories", (string)null);
+                    b.ToTable("Categories");
                 });
 
             modelBuilder.Entity("FashionShop.Models.Domain.Comment", b =>
@@ -73,7 +75,7 @@ namespace FashionShop.Migrations
 
                     b.HasIndex("UserID");
 
-                    b.ToTable("Comments", (string)null);
+                    b.ToTable("Comments");
                 });
 
             modelBuilder.Entity("FashionShop.Models.Domain.Contact", b =>
@@ -108,7 +110,7 @@ namespace FashionShop.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Contacts", (string)null);
+                    b.ToTable("Contacts");
                 });
 
             modelBuilder.Entity("FashionShop.Models.Domain.District", b =>
@@ -130,7 +132,7 @@ namespace FashionShop.Migrations
 
                     b.HasIndex("ProvinceID");
 
-                    b.ToTable("Districts", (string)null);
+                    b.ToTable("Districts");
                 });
 
             modelBuilder.Entity("FashionShop.Models.Domain.FavoriteProduct", b =>
@@ -148,7 +150,7 @@ namespace FashionShop.Migrations
 
                     b.HasIndex("ProductID");
 
-                    b.ToTable("FavoriteProducts", (string)null);
+                    b.ToTable("FavoriteProducts");
                 });
 
             modelBuilder.Entity("FashionShop.Models.Domain.Order", b =>
@@ -215,7 +217,7 @@ namespace FashionShop.Migrations
 
                     b.HasIndex("WardID");
 
-                    b.ToTable("Orders", (string)null);
+                    b.ToTable("Orders");
                 });
 
             modelBuilder.Entity("FashionShop.Models.Domain.OrderDetail", b =>
@@ -236,7 +238,7 @@ namespace FashionShop.Migrations
 
                     b.HasIndex("ProductID");
 
-                    b.ToTable("OrderDetails", (string)null);
+                    b.ToTable("OrderDetails");
                 });
 
             modelBuilder.Entity("FashionShop.Models.Domain.Post", b =>
@@ -264,7 +266,7 @@ namespace FashionShop.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Posts", (string)null);
+                    b.ToTable("Posts");
                 });
 
             modelBuilder.Entity("FashionShop.Models.Domain.Product", b =>
@@ -322,7 +324,7 @@ namespace FashionShop.Migrations
 
                     b.HasIndex("CategoryID");
 
-                    b.ToTable("Products", (string)null);
+                    b.ToTable("Products");
                 });
 
             modelBuilder.Entity("FashionShop.Models.Domain.Province", b =>
@@ -339,7 +341,7 @@ namespace FashionShop.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Provinces", (string)null);
+                    b.ToTable("Provinces");
                 });
 
             modelBuilder.Entity("FashionShop.Models.Domain.Voucher", b =>
@@ -399,7 +401,7 @@ namespace FashionShop.Migrations
                     b.HasIndex("DiscountCode")
                         .IsUnique();
 
-                    b.ToTable("Vouchers", (string)null);
+                    b.ToTable("Vouchers");
                 });
 
             modelBuilder.Entity("FashionShop.Models.Domain.Ward", b =>
@@ -426,7 +428,7 @@ namespace FashionShop.Migrations
 
                     b.HasIndex("ProvinceID");
 
-                    b.ToTable("Wards", (string)null);
+                    b.ToTable("Wards");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -664,7 +666,7 @@ namespace FashionShop.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.ToTable("Users", (string)null);
+                    b.ToTable("Users");
 
                     b.HasDiscriminator().HasValue("User");
                 });

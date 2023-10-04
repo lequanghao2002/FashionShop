@@ -20,8 +20,17 @@ namespace FashionShop.Models.Domain
         public string PhoneNumber { get; set; }
         
         public int ProvinceID { get; set; }
+        public Province Province { get; set; }
+
         public int DistrictID { get; set; }
+        [ForeignKey("DistrictID")]
+        public District District { get; set; }
+
+
         public int WardID { get; set; }
+        [ForeignKey("WardID")]
+        public Ward Ward { get; set; }
+
 
         [Required]
         public string Address { get; set; }

@@ -1533,6 +1533,7 @@
 			<Item id="7071103" type="ward" value="Xã Tân Thành"/>
 		</Item>
 	</Item>
+	
 	<Item id="715" type="province" value="Bình Thuận">
 		<Item id="71505" type="district" value="Huyện Bắc Bình">
 			<Item id="7150515" type="ward" value="Thị trấn Chợ Lầu"/>
@@ -2482,6 +2483,7 @@
 			<Item id="2231319" type="ward" value="Xã Tương Giang"/>
 		</Item>
 	</Item>
+	
 	<Item id="811" type="province" value="Bến Tre">
 		<Item id="81113" type="district" value="Huyện Ba Tri">
 			<Item id="8111319" type="ward" value="Thị trấn Ba Tri"/>
@@ -3595,6 +3597,7 @@
 			<Item id="2010109" type="ward" value="Xã Phương Độ"/>
 		</Item>
 	</Item>
+	
 	<Item id="111" type="province" value="Hà Nam">
 		<Item id="11111" type="district" value="Huyện Bình Lục">
 			<Item id="1111117" type="ward" value="Thị trấn Bình Mỹ"/>
@@ -4984,6 +4987,7 @@
 			<Item id="1030905" type="ward" value="Xã Bàng La"/>
 		</Item>
 	</Item>
+	
 	<Item id="816" type="province" value="Hậu Giang">
 		<Item id="81605" type="district" value="Huyện Châu Thành">
 			<Item id="8160503" type="ward" value="Thị trấn Ngã sáu"/>
@@ -5861,6 +5865,7 @@
 			<Item id="8010105" type="ward" value="Xã Nhơn Thạnh Trung"/>
 		</Item>
 	</Item>
+	
 	<Item id="205" type="province" value="Lào Cai">
 		<Item id="20507" type="district" value="Huyện Bát Xát">
 			<Item id="2050701" type="ward" value="Thị trấn Bát Xát"/>
@@ -7406,6 +7411,7 @@
 			<Item id="1170313" type="ward" value="Xã Đông Sơn"/>
 		</Item>
 	</Item>
+	
 	<Item id="705" type="province" value="Ninh Thuận">
 		<Item id="70509" type="district" value="Huyện Bác ái">
 			<Item id="7050901" type="ward" value="Xã Phước Bình"/>
@@ -8600,6 +8606,7 @@
 			<Item id="5050117" type="ward" value="Xã Nghĩa Dũng"/>
 		</Item>
 	</Item>
+	
 	<Item id="225" type="province" value="Quảng Ninh">
 		<Item id="22515" type="district" value="Huyện Ba Chẽ">
 			<Item id="2251501" type="ward" value="Thị trấn Ba Chẽ"/>
@@ -10340,6 +10347,7 @@
 			<Item id="1150129" type="ward" value="Xã Đông Thọ"/>
 		</Item>
 	</Item>
+	
 	<Item id="215" type="province" value="Thái Nguyên">
 		<Item id="21515" type="district" value="Huyện Phú Bình">
 			<Item id="2151501" type="ward" value="Thị trấn Hương Sơn"/>
@@ -11301,6 +11309,7 @@
 			<Item id="7090115" type="ward" value="Xã Tân Bình"/>
 		</Item>
 	</Item>
+	
 	<Item id="809" type="province" value="Vĩnh Long">
 		<Item id="80907" type="district" value="Huyện Bình Minh">
 			<Item id="8090703" type="ward" value="Thị trấn Cái Vồn"/>

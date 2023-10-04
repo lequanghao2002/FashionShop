@@ -21,13 +21,15 @@ namespace FashionShop.Controllers
         private readonly IUserRepository _userRepository;
         private readonly IOrderRepository _orderRepository;
         private readonly IFavoriteProductRepository _favoriteProductRepository;
+        private readonly IProductRepository _productRepository;
 
-        public AccountController(UserManager<User> userManager, IUserRepository userRepository, IOrderRepository orderRepository, IFavoriteProductRepository favoriteProductRepository)
+        public AccountController(UserManager<User> userManager, IUserRepository userRepository, IOrderRepository orderRepository, IFavoriteProductRepository favoriteProductRepository, IProductRepository productRepository)
         {
             _userManager = userManager;
             _userRepository = userRepository; 
             _orderRepository = orderRepository;
             _favoriteProductRepository = favoriteProductRepository;
+            _productRepository = productRepository;
         }
 
         public IActionResult Login()
@@ -150,12 +152,18 @@ namespace FashionShop.Controllers
         {
             var orderCancel = await _orderRepository.Cancel(id);
 
-            if(orderCancel == true)
+            if(orderCancel != null)
             {
-                return Json(new
+                // Tăng số lượng sản phẩm khi hủy hàng
+                var increaseQuantityProduct = await _productRepository.IncreaseQuantityOrder(orderCancel);
+
+                if (increaseQuantityProduct == true)
                 {
-                    status = true
-                });
+                    return Json(new
+                    {
+                        status = true
+                    });
+                }
             }
 
             return Json(new

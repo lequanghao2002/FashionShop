@@ -2,6 +2,7 @@
 using FashionShop.Helper;
 using FashionShop.Models.Domain;
 using FashionShop.Models.DTO.ProductDTO;
+using FashionShop.Models.ViewModel;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -27,13 +28,13 @@ public interface IProductRepository
 
     public Task<UpdateProductDTO> Update(UpdateProductDTO updateProductDTO, int id);
     public Task<bool> Delete(int id);
+    public Task<bool> ReduceQuantityOrder(List<ShoppingCartViewModel> listOrder);
+    public Task<bool> IncreaseQuantityOrder(List<ShoppingCartViewModel> listOrder);
 }
 
 public class ProductRepository : IProductRepository
 {
     private readonly FashionShopDBContext _fashionShopDBContext;
-    private readonly IEnumerable<object> listProductDomain;
-    private readonly IEnumerable<object> _IdentityDbContext;
 
     public ProductRepository(FashionShopDBContext fashionShopDBContext)
     {
@@ -317,5 +318,44 @@ public class ProductRepository : IProductRepository
         }
     }
 
+    public async Task<bool> ReduceQuantityOrder(List<ShoppingCartViewModel> listOrder)
+    {
+        foreach(var item in listOrder)
+        {
+            var productById = await _fashionShopDBContext.Products.SingleOrDefaultAsync(p => p.ID == item.ProductID);
+
+            if(productById != null)
+            {
+                productById.Quantity -= item.Quantity;
+                await _fashionShopDBContext.SaveChangesAsync();
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    public async Task<bool> IncreaseQuantityOrder(List<ShoppingCartViewModel> listOrder)
+    {
+        foreach (var item in listOrder)
+        {
+            var productById = await _fashionShopDBContext.Products.SingleOrDefaultAsync(p => p.ID == item.ProductID);
+
+            if (productById != null)
+            {
+                productById.Quantity += item.Quantity;
+                await _fashionShopDBContext.SaveChangesAsync();
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
 }
 
