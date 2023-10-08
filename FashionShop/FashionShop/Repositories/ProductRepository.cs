@@ -5,6 +5,7 @@ using FashionShop.Models.DTO.ProductDTO;
 using FashionShop.Models.ViewModel;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System;
@@ -24,8 +25,8 @@ public interface IProductRepository
     public Task<GetProductByIdDTO> GetById(int idProduct);
     public Task<List<GetProductByIdDTO>> GetByCategoryId(int idCategory, int? idOrderProduct = null);
     public GetProductByIdDTO GetId(int id);
+    public int GetQuantityById(int id);
     public Task<CreateProductDTO> Create(CreateProductDTO createProductDTO);
-
     public Task<UpdateProductDTO> Update(UpdateProductDTO updateProductDTO, int id);
     public Task<bool> Delete(int id);
     public Task<bool> ReduceQuantityOrder(List<ShoppingCartViewModel> listOrder);
@@ -249,6 +250,12 @@ public class ProductRepository : IProductRepository
         return productDomain;
     }
 
+    public int GetQuantityById(int id)
+    {
+        var quantity = _fashionShopDBContext.Products.SingleOrDefault(p => p.ID == id).Quantity;
+
+        return quantity;
+    }
 
     public async Task<CreateProductDTO> Create(CreateProductDTO createProductDTO)
     {

@@ -9,6 +9,7 @@ namespace FashionShop.Repositories
     public interface IDistrictRepository
     {
         public bool loadData();
+        public List<DistrictViewModel> getAll(int idProvince);
     }
     public class DistrictRepository : IDistrictRepository
     {
@@ -18,9 +19,23 @@ namespace FashionShop.Repositories
             _fashionShopDBContext = fashionShopDBContext;
         }
 
+        public List<DistrictViewModel> getAll(int idProvince)
+        {
+            var listDistrict = _fashionShopDBContext.Districts
+                .Where(d => d.ProvinceID == idProvince)
+                .Select(d => new DistrictViewModel
+            {
+                ID = d.ID,
+                Name = d.Name,
+                ProvinceID = d.ProvinceID
+            }).ToList();
+
+            return listDistrict;
+        }
+
         public bool loadData()
         {
-            var xmlDocument = XDocument.Load("assets/customer/data/test.xml");
+            var xmlDocument = XDocument.Load("assets/customer/data/test10.xml");
             var xmlElements = xmlDocument.Element("Root").Elements("Item").Where(x => x.Attribute("type").Value == "province");
 
 
@@ -42,9 +57,9 @@ namespace FashionShop.Repositories
 
                     foreach(var item3 in xmlElements3)
                     {
-                        var check = _fashionShopDBContext.Wards.Count(p => p.ID == int.Parse(item3.Attribute("id").Value));
-                        if (check == 0)
-                        {
+                        //var check = _fashionShopDBContext.Wards.Count(p => p.ID == int.Parse(item3.Attribute("id").Value));
+                        //if (check == 0)
+                        //{
                             var Ward = new Ward()
                             {
                                 ID = int.Parse(item3.Attribute("id").Value),
@@ -55,7 +70,7 @@ namespace FashionShop.Repositories
 
                             _fashionShopDBContext.Add(Ward);
                             _fashionShopDBContext.SaveChanges();
-                        }
+                        //}
                     }
                     
                 }
@@ -63,5 +78,7 @@ namespace FashionShop.Repositories
 
             return true;
         }
+        
+    
     }
 }
