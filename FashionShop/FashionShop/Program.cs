@@ -40,8 +40,16 @@ builder.Services.AddScoped<IRoleRepository, RoleRepository>();
 builder.Services.AddScoped<IVoucherRepository, VoucherRepository>();
 builder.Services.AddScoped<IFavoriteProductRepository, FavoriteProductRepository>();
 builder.Services.AddScoped<ICommentRepository, CommentRepository>();
+builder.Services.AddScoped<IProvinceRepository, ProvinceRepository>();
+builder.Services.AddScoped<IDistrictRepository, DistrictRepository>();
+builder.Services.AddScoped<IWardRepository, WardRepository>();
 
-builder.Services.AddNotyf(config => { config.DurationInSeconds = 10; config.IsDismissable = true; config.Position = NotyfPosition.TopCenter; });
+builder.Services.AddNotyf(
+    config => { 
+        config.DurationInSeconds = 10; 
+        config.IsDismissable = true; 
+        config.Position = NotyfPosition.TopRight; 
+});
 
 
 //Register service authentication

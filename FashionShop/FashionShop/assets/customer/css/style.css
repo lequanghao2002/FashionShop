@@ -1127,6 +1127,18 @@ button {
     margin-left: 5px;
 }
 
+.notyf {
+    margin-top: 25px;
+}
+
+.notyf__toast.notyf__toast--dismissible.notyf__toast--upper.text-dark .notyf__message {
+    color: #000;
+}
+
+.notyf__toast.notyf__toast--dismissible.notyf__toast--upper.text-dark .notyf__icon {
+    width: 0 !important;
+}
+
 @media (min-width: 768px) and (max-width: 1024px) {
     .main-nav-block .navbar-nav > li > a{
         padding:10px;

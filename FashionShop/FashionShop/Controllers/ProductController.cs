@@ -74,5 +74,16 @@ namespace FashionShop.Controllers
             }
         }
 
+        [HttpPost]
+        public JsonResult GetQuantityProductById(int id)
+        {
+            var quantity = _productRepository.GetQuantityById(id);
+             
+            return Json(new
+            {
+                data = quantity,
+                status = true,
+            });
+        }
     }
 }

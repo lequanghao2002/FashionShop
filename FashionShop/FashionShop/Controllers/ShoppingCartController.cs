@@ -1,4 +1,6 @@
-﻿using Blogger_Common;
+﻿using AspNetCoreHero.ToastNotification.Abstractions;
+using AspNetCoreHero.ToastNotification.Notyf;
+using Blogger_Common;
 using FashionShop.Helper;
 using FashionShop.Models.Domain;
 using FashionShop.Models.DTO.OrderDTO;
@@ -21,12 +23,20 @@ namespace FashionShop.Controllers
         private readonly IProductRepository _productRepository;
         private readonly IVoucherRepository _voucherRepository;
         private readonly IOrderRepository _orderRepository;
+        private readonly IProvinceRepository _provinceRepository;
+        private readonly IDistrictRepository _districtRepository;
+        private readonly IWardRepository _wardRepository;
+        private readonly INotyfService _notyfService;
 
-        public ShoppingCartController(IProductRepository productRepository, IVoucherRepository voucherRepository, IOrderRepository orderRepository)
+        public ShoppingCartController(IProductRepository productRepository, IVoucherRepository voucherRepository, IOrderRepository orderRepository, IProvinceRepository provinceRepository, IDistrictRepository districtRepository, IWardRepository wardRepository, INotyfService notyfService)
         {
             _productRepository = productRepository;
             _voucherRepository = voucherRepository;
             _orderRepository = orderRepository;
+            _provinceRepository = provinceRepository;
+            _districtRepository = districtRepository;
+            _wardRepository = wardRepository;
+            _notyfService = notyfService;
         }
         public IActionResult Index()
         {
@@ -67,7 +77,7 @@ namespace FashionShop.Controllers
         }
 
         [HttpPost]
-        public JsonResult Add(int productID)
+        public async Task<JsonResult> Add(int productID, int quantity)
         {
             var cartSession = HttpContext.Session.GetString(CommonConstants.SessionCart);
 
@@ -86,7 +96,7 @@ namespace FashionShop.Controllers
                 {
                     if (item.ProductID == productID)
                     {
-                        item.Quantity++;
+                        item.Quantity += quantity;
                     }
                 }
             }
@@ -94,13 +104,16 @@ namespace FashionShop.Controllers
             {
                 var newItem = new ShoppingCartViewModel();
                 newItem.ProductID = productID;
-                newItem.Quantity = 1;
+                newItem.Quantity = quantity;
                 newItem.Product = _productRepository.GetId(productID);
 
                 cart.Add(newItem);
             }
 
             HttpContext.Session.SetString(CommonConstants.SessionCart, JsonConvert.SerializeObject(cart));
+
+            var product = await _productRepository.GetById(productID);
+            _notyfService.Custom("<img style='height: 40px; padding-right: 10px;' src='/" + product.Image + "'/> Đã thêm vào giỏ hàng", 2, "white");
 
             return Json(new
             {
@@ -151,6 +164,7 @@ namespace FashionShop.Controllers
 
                 HttpContext.Session.SetString(CommonConstants.SessionCart, JsonConvert.SerializeObject(cart));
 
+                _notyfService.Success("Đã xóa khỏi giỏ hàng", 2);
                 return Json(new
                 {
                     status = true,
@@ -236,7 +250,20 @@ namespace FashionShop.Controllers
 
                 if (order != null)
                 {
-                    return RedirectToAction("OrderSuccess");
+                    // Giảm số lượng mã giảm giá trong csdl khi đặt hàng (nếu có)
+                    if (order.VoucherID != null)
+                    {
+                        var reduceQuantityVoucher = await _voucherRepository.ReduceQuantityVoucher((int)order.VoucherID);
+                    }
+
+                    // Giảm số lượng sản phẩm trong csdl khi đặt hàng
+                    var reduceQuantityProduct = await _productRepository.ReduceQuantityOrder(order.shoppingCarts!);
+
+                    if (reduceQuantityProduct == true) 
+                    {
+                        return RedirectToAction("OrderSuccess");
+                    }
+
                 }
             }
 
@@ -244,7 +271,7 @@ namespace FashionShop.Controllers
             string userSession = HttpContext.Session.GetString(CommonConstants.SessionUser);
             var user = JsonConvert.DeserializeObject<User>(userSession);
 
-            return View();
+            return View(user);
         }
 
         public async Task<IActionResult> OrderSuccess()
@@ -322,9 +349,9 @@ namespace FashionShop.Controllers
             template = template.Replace("{{email}}", order.Email);
             template = template.Replace("{{phoneNumber}}", order.PhoneNumber);
 
-            template = template.Replace("{{province}}", order.ProvinceID.ToString());
-            template = template.Replace("{{district}}", order.DistrictID.ToString());
-            template = template.Replace("{{ward}}", order.WardID.ToString());
+            template = template.Replace("{{province}}", order.ProvinceName.ToString());
+            template = template.Replace("{{district}}", order.DistrictName.ToString());
+            template = template.Replace("{{ward}}", order.WardName.ToString());
             template = template.Replace("{{address}}", order.Address);
             template = template.Replace("{{note}}", order.Note);
 
@@ -335,24 +362,7 @@ namespace FashionShop.Controllers
 
         public JsonResult LoadProvince()
         {
-            var xmlDocument = XDocument.Load("assets/customer/data/Provinces_Data.xml");
-
-            var xmlElements = xmlDocument.Element("Root").Elements("Item").Where(x => x.Attribute("type").Value == "province");
-
-            var listProvinces = new List<ProvinceViewModel>();
-            ProvinceViewModel provinceVM = null;
-
-            foreach (var item in xmlElements)
-            {
-                provinceVM = new ProvinceViewModel()
-                {
-                    ID = int.Parse(item.Attribute("id").Value),
-                    Name = item.Attribute("value").Value
-                };
-
-                listProvinces.Add(provinceVM);
-            }
-
+            var listProvinces = _provinceRepository.GetAll();
             return Json(new
             {
                 data = listProvinces.OrderBy(p => p.Name),
@@ -363,26 +373,7 @@ namespace FashionShop.Controllers
 
         public JsonResult LoadDistrict(int provinceID)
         {
-            var xmlDocument = XDocument.Load("assets/customer/data/Provinces_Data.xml");
-
-            var xmlElements = xmlDocument.Element("Root").Elements("Item")
-                .Single(x => x.Attribute("type").Value == "province" && int.Parse(x.Attribute("id").Value) == provinceID)
-                .Elements("Item").Where(x => x.Attribute("type").Value == "district");
-
-            var listDistricts = new List<DistrictViewModel>();
-            DistrictViewModel districtVM = null;
-
-            foreach (var item in xmlElements)
-            {
-                districtVM = new DistrictViewModel()
-                {
-                    ID = int.Parse(item.Attribute("id").Value),
-                    Name = item.Attribute("value").Value,
-                    ProvinceID = provinceID
-                };
-
-                listDistricts.Add(districtVM);
-            }
+            var listDistricts = _districtRepository.getAll(provinceID);
 
             return Json(new
             {
@@ -394,31 +385,8 @@ namespace FashionShop.Controllers
 
         public JsonResult LoadWard(int provinceID, int districtID)
         {
-            var xmlDocument = XDocument.Load("assets/customer/data/Provinces_Data.xml");
 
-            var xmlElements = xmlDocument.Element("Root")
-                .Elements("Item")
-                .Single(x => x.Attribute("type").Value == "province" && int.Parse(x.Attribute("id").Value) == provinceID)
-                .Elements("Item")
-                .Single(x => x.Attribute("type").Value == "district" && int.Parse(x.Attribute("id").Value) == districtID)
-                .Elements("Item")
-                .Where(x => x.Attribute("type").Value == "ward");
-
-            var listWards = new List<WardViewModel>();
-            WardViewModel wardVM = null;
-
-            foreach (var item in xmlElements)
-            {
-                wardVM = new WardViewModel()
-                {
-                    ID = int.Parse(item.Attribute("id").Value),
-                    Name = item.Attribute("value").Value,
-                    ProvinceID = provinceID,
-                    DistrictID = districtID,
-                };
-
-                listWards.Add(wardVM);
-            }
+            var listWards = _wardRepository.GetAll(provinceID, districtID);
 
             return Json(new
             {

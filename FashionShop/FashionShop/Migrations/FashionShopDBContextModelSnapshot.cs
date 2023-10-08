@@ -36,7 +36,7 @@ namespace FashionShop.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Categories");
+                    b.ToTable("Categories", (string)null);
                 });
 
             modelBuilder.Entity("FashionShop.Models.Domain.Comment", b =>
@@ -73,7 +73,7 @@ namespace FashionShop.Migrations
 
                     b.HasIndex("UserID");
 
-                    b.ToTable("Comments");
+                    b.ToTable("Comments", (string)null);
                 });
 
             modelBuilder.Entity("FashionShop.Models.Domain.Contact", b =>
@@ -108,7 +108,29 @@ namespace FashionShop.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Contacts");
+                    b.ToTable("Contacts", (string)null);
+                });
+
+            modelBuilder.Entity("FashionShop.Models.Domain.District", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ProvinceID")
+                        .HasColumnType("int");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("ProvinceID");
+
+                    b.ToTable("Districts", (string)null);
                 });
 
             modelBuilder.Entity("FashionShop.Models.Domain.FavoriteProduct", b =>
@@ -126,7 +148,7 @@ namespace FashionShop.Migrations
 
                     b.HasIndex("ProductID");
 
-                    b.ToTable("FavoriteProducts");
+                    b.ToTable("FavoriteProducts", (string)null);
                 });
 
             modelBuilder.Entity("FashionShop.Models.Domain.Order", b =>
@@ -183,11 +205,17 @@ namespace FashionShop.Migrations
 
                     b.HasKey("ID");
 
+                    b.HasIndex("DistrictID");
+
+                    b.HasIndex("ProvinceID");
+
                     b.HasIndex("UserID");
 
                     b.HasIndex("VoucherID");
 
-                    b.ToTable("Orders");
+                    b.HasIndex("WardID");
+
+                    b.ToTable("Orders", (string)null);
                 });
 
             modelBuilder.Entity("FashionShop.Models.Domain.OrderDetail", b =>
@@ -208,7 +236,7 @@ namespace FashionShop.Migrations
 
                     b.HasIndex("ProductID");
 
-                    b.ToTable("OrderDetails");
+                    b.ToTable("OrderDetails", (string)null);
                 });
 
             modelBuilder.Entity("FashionShop.Models.Domain.Post", b =>
@@ -236,7 +264,7 @@ namespace FashionShop.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Posts");
+                    b.ToTable("Posts", (string)null);
                 });
 
             modelBuilder.Entity("FashionShop.Models.Domain.Product", b =>
@@ -294,7 +322,24 @@ namespace FashionShop.Migrations
 
                     b.HasIndex("CategoryID");
 
-                    b.ToTable("Products");
+                    b.ToTable("Products", (string)null);
+                });
+
+            modelBuilder.Entity("FashionShop.Models.Domain.Province", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Provinces", (string)null);
                 });
 
             modelBuilder.Entity("FashionShop.Models.Domain.Voucher", b =>
@@ -354,7 +399,34 @@ namespace FashionShop.Migrations
                     b.HasIndex("DiscountCode")
                         .IsUnique();
 
-                    b.ToTable("Vouchers");
+                    b.ToTable("Vouchers", (string)null);
+                });
+
+            modelBuilder.Entity("FashionShop.Models.Domain.Ward", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
+
+                    b.Property<int>("DistrictID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ProvinceID")
+                        .HasColumnType("int");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("DistrictID");
+
+                    b.HasIndex("ProvinceID");
+
+                    b.ToTable("Wards", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -592,7 +664,7 @@ namespace FashionShop.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
 
                     b.HasDiscriminator().HasValue("User");
                 });
@@ -616,6 +688,17 @@ namespace FashionShop.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("FashionShop.Models.Domain.District", b =>
+                {
+                    b.HasOne("FashionShop.Models.Domain.Province", "Province")
+                        .WithMany("Districts")
+                        .HasForeignKey("ProvinceID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Province");
+                });
+
             modelBuilder.Entity("FashionShop.Models.Domain.FavoriteProduct", b =>
                 {
                     b.HasOne("FashionShop.Models.Domain.Product", "Product")
@@ -637,6 +720,18 @@ namespace FashionShop.Migrations
 
             modelBuilder.Entity("FashionShop.Models.Domain.Order", b =>
                 {
+                    b.HasOne("FashionShop.Models.Domain.District", "District")
+                        .WithMany("Orders")
+                        .HasForeignKey("DistrictID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("FashionShop.Models.Domain.Province", "Province")
+                        .WithMany("Orders")
+                        .HasForeignKey("ProvinceID")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
                     b.HasOne("FashionShop.Models.Domain.User", "User")
                         .WithMany("Orders")
                         .HasForeignKey("UserID")
@@ -647,9 +742,21 @@ namespace FashionShop.Migrations
                         .WithMany("Orders")
                         .HasForeignKey("VoucherID");
 
+                    b.HasOne("FashionShop.Models.Domain.Ward", "Ward")
+                        .WithMany("Orders")
+                        .HasForeignKey("WardID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("District");
+
+                    b.Navigation("Province");
+
                     b.Navigation("User");
 
                     b.Navigation("Voucher");
+
+                    b.Navigation("Ward");
                 });
 
             modelBuilder.Entity("FashionShop.Models.Domain.OrderDetail", b =>
@@ -680,6 +787,25 @@ namespace FashionShop.Migrations
                         .IsRequired();
 
                     b.Navigation("Category");
+                });
+
+            modelBuilder.Entity("FashionShop.Models.Domain.Ward", b =>
+                {
+                    b.HasOne("FashionShop.Models.Domain.District", "District")
+                        .WithMany("Wards")
+                        .HasForeignKey("DistrictID")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("FashionShop.Models.Domain.Province", "Province")
+                        .WithMany("Wards")
+                        .HasForeignKey("ProvinceID")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("District");
+
+                    b.Navigation("Province");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -738,6 +864,13 @@ namespace FashionShop.Migrations
                     b.Navigation("Products");
                 });
 
+            modelBuilder.Entity("FashionShop.Models.Domain.District", b =>
+                {
+                    b.Navigation("Orders");
+
+                    b.Navigation("Wards");
+                });
+
             modelBuilder.Entity("FashionShop.Models.Domain.Order", b =>
                 {
                     b.Navigation("OrderDetails");
@@ -752,7 +885,21 @@ namespace FashionShop.Migrations
                     b.Navigation("OrderDetails");
                 });
 
+            modelBuilder.Entity("FashionShop.Models.Domain.Province", b =>
+                {
+                    b.Navigation("Districts");
+
+                    b.Navigation("Orders");
+
+                    b.Navigation("Wards");
+                });
+
             modelBuilder.Entity("FashionShop.Models.Domain.Voucher", b =>
+                {
+                    b.Navigation("Orders");
+                });
+
+            modelBuilder.Entity("FashionShop.Models.Domain.Ward", b =>
                 {
                     b.Navigation("Orders");
                 });

@@ -6,9 +6,25 @@
         $('.btnCancelOrder').off('click').on('click', function (e) {
             e.preventDefault();
 
-            var productId = parseInt($(this).data('id'));
-
-            account.cancelOrder(productId);
+            Swal.fire({
+                title: 'Bạn có chắc muốn hủy đơn hàng?',
+                //text: "",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Có',
+                cancelButtonText: 'Không',
+                didOpen: () => {
+                    // Điều chỉnh kích thước font chữ trong hộp thông báo
+                    $('.swal2-actions').css('font-size', '12px');
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    var productId = parseInt($(this).data('id'));
+                    account.cancelOrder(productId);
+                }
+            })
         });
     },
     cancelOrder: function (productID) {

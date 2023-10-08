@@ -1,6 +1,7 @@
 ﻿using FashionShop.Data;
 using FashionShop.Models.Domain;
 using FashionShop.Models.DTO.VoucherDTO;
+using FashionShop.Models.ViewModel;
 using Microsoft.EntityFrameworkCore;
 using System.Xml.Linq;
 
@@ -14,6 +15,9 @@ namespace FashionShop.Repositories
         public Task<CreateVoucherDTO> Create(CreateVoucherDTO createVoucherDTO);
         public Task<UpdateVoucherDTO> Update(UpdateVoucherDTO updateVoucherDTO, int id);
         public Task<bool> Delete(int id);
+        public Task<bool> ReduceQuantityVoucher(int idVoucher);
+        public Task<bool> IncreaseQuantityVoucher(int idVoucher);
+
     }
     public class VoucherRepository : IVoucherRepository
     {
@@ -161,6 +165,41 @@ namespace FashionShop.Repositories
             }
 
             return false;
+        }
+
+        public async Task<bool> ReduceQuantityVoucher(int idVoucher)
+        {
+            var voucherById = await _fashionShopDBContext.Vouchers.SingleOrDefaultAsync(v => v.ID == idVoucher);
+
+            if (voucherById != null)
+            {
+                voucherById.Quantity -= 1;
+                await _fashionShopDBContext.SaveChangesAsync();
+
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public async Task<bool> IncreaseQuantityVoucher(int idVoucher)
+        {
+            var voucherById = await _fashionShopDBContext.Vouchers.SingleOrDefaultAsync(v => v.ID == idVoucher);
+
+            if (voucherById != null)
+            {
+                voucherById.Quantity += 1;
+                await _fashionShopDBContext.SaveChangesAsync();
+
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
         }
     }
 }

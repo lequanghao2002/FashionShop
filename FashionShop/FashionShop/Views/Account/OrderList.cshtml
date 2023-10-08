@@ -58,9 +58,7 @@
                             totalPayment += item.DeliveryFee;
 
                             <tr>
-                                <td class="">
-                                    <a class="btn-black" href="~/Account/OrderDetail/@item.ID">@item.ID</a>
-                                </td>
+                                <td>@item.ID</td>
                                 <td>@item.OrderDate.ToString("dd/MM/yyyy HH:mm:ss")</td>
                                 <td>@item.FullName</td>
                                 <td>@item.PhoneNumber</td>
@@ -70,13 +68,15 @@
                                 {
                                     <td>Chờ xác nhận</td>
                                     <td>
-                                        <a class="btn-danger btnCancelOrder" data-id="@item.ID" style="padding: 5px;border-radius: 10px;">Hủy hàng</a>
+                                        <a class="btn-success" href="~/Account/OrderDetail/@item.ID" style="padding: 5px;border-radius: 10px; margin-right: 5px">Xem</a>
+                                        <a class="btn-danger btnCancelOrder" data-id="@item.ID" style="padding: 5px;border-radius: 10px;">Hủy</a>
                                     </td>
                                 }
                                 else if (item.Status == 2)
                                 {
                                     <td>Đang giao hàng</td>
                                     <td>
+                                        <a class="btn-success" href="~/Account/OrderDetail/@item.ID" style="padding: 5px;border-radius: 10px; margin-right: 5px">Xem</a>
                                         @*<button class="btn-danger" disabled>Hủy hàng</button>*@
                                     </td>
                                 }
@@ -84,6 +84,7 @@
                                 {
                                     <td>Đã hủy</td>
                                     <td>
+                                        <a class="btn-success" href="~/Account/OrderDetail/@item.ID" style="padding: 5px;border-radius: 10px; margin-right: 5px">Xem</a>
                                         @*<button class="btn-danger" disabled>Hủy hàng</button>*@
                                     </td>
                                 }

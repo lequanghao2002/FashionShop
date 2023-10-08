@@ -2,6 +2,7 @@
 using FashionShop.Models.Domain;
 using FashionShop.Models.DTO.OrderDTO;
 using FashionShop.Models.DTO.UserDTO;
+using FashionShop.Models.ViewModel;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
@@ -16,7 +17,7 @@ namespace FashionShop.Repositories
         public Task<List<GetOrderByUserIdDTO>> GetByUserID(string userID);
         public Task<GetOrderByUserIdDTO> GetNewByUserID(string userID);
         public Task<CreateOrderDTO> Create(CreateOrderDTO createOrderDTO);
-        public Task<bool> Cancel(int id);
+        public Task<List<ShoppingCartViewModel>> Cancel(int id);
     }
 
     public class OrderRepository : IOrderRepository
@@ -59,9 +60,9 @@ namespace FashionShop.Repositories
                 ID = order.ID,
                 FullName = order.FullName,
                 PhoneNumber = order.PhoneNumber,
-                ProvinceID = order.ProvinceID,
-                DistrictID = order.DistrictID,
-                WardID = order.WardID,
+                ProvinceName = order.Province.Name,
+                DistrictName = order.District.Name,
+                WardName = order.Ward.Name,
                 Address = order.Address,
                 DeliveryFee = order.DeliveryFee,
                 OrderDate = order.OrderDate,
@@ -87,9 +88,9 @@ namespace FashionShop.Repositories
                 Email = order.Email,
                 FullName = order.FullName,
                 PhoneNumber = order.PhoneNumber,
-                ProvinceID = order.ProvinceID,
-                DistrictID = order.DistrictID,
-                WardID = order.WardID,
+                ProvinceName = order.Province.Name,
+                DistrictName = order.District.Name,
+                WardName = order.Ward.Name,
                 Address = order.Address,
                 DeliveryFee = order.DeliveryFee,
                 OrderDate = order.OrderDate,
@@ -121,9 +122,9 @@ namespace FashionShop.Repositories
                 Email = order.Email,
                 FullName = order.FullName,
                 PhoneNumber = order.PhoneNumber,
-                ProvinceID = order.ProvinceID,
-                DistrictID = order.DistrictID,
-                WardID = order.WardID,
+                ProvinceName = order.Province.Name,
+                DistrictName = order.District.Name,
+                WardName = order.Ward.Name,
                 Address = order.Address,
                 DeliveryFee = order.DeliveryFee,
                 OrderDate = order.OrderDate,
@@ -194,7 +195,7 @@ namespace FashionShop.Repositories
             return createOrderDTO;
         }
 
-        public async Task<bool> Cancel(int id)
+        public async Task<List<ShoppingCartViewModel>> Cancel(int id)
         {
             var orderById = await _fashionShopDBContext.Orders.SingleOrDefaultAsync(o => o.ID == id);
             
@@ -203,10 +204,25 @@ namespace FashionShop.Repositories
                 orderById.Status = 0;
                 await _fashionShopDBContext.SaveChangesAsync();
 
-                return true;
+                // Tăng số lượng voucher khi hủy hàng
+                if (orderById.VoucherID != null)
+                {
+                    var voucher = await _fashionShopDBContext.Vouchers.SingleOrDefaultAsync(v => v.ID == orderById.VoucherID);
+
+                    voucher!.Quantity += 1;
+                    await _fashionShopDBContext.SaveChangesAsync();
+                }
+
+                var listOrder = await _fashionShopDBContext.OrderDetails.Where(od => od.OrderID == orderById.ID).Select(o => new ShoppingCartViewModel
+                {
+                    ProductID = o.ProductID,
+                    Quantity = o.Quantity,
+                }).ToListAsync();
+
+                return listOrder;
             }
 
-            return false;
+            return null;
         }
 
     }

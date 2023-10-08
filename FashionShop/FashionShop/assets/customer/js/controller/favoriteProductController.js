@@ -26,10 +26,10 @@
             dataType: 'json',
             success: function (res) {
                 if (res.status) {
-                    alert('Đã thêm sản phẩm vào danh sách yêu thích');
+                    //alert('Đã thêm sản phẩm vào danh sách yêu thích');
                 }
                 else {
-                    alert('Vui lòng đăng nhập');
+                    //alert('Vui lòng đăng nhập');
                 }
             }
         });

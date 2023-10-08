@@ -2,6 +2,7 @@
 @using FashionShop.Models.DTO.ProductDTO;
 @using FashionShop.Models.Domain;
 @using Newtonsoft.Json;
+@using System.Web;
 @inject IHttpContextAccessor HttpContextAccessor
 
 @model GetProductByIdDTO
@@ -15,6 +16,8 @@
     {
         user = JsonConvert.DeserializeObject<User>(userJson);
     }
+
+    double priceHasDiscount;
 }
 
 <div class="full-banner" style="height: 135px">
@@ -35,6 +38,11 @@
                                 <img src="~/@Model.Image" class="changeimg">
                             </a>
                         </li>
+                        <li class="image-additional">
+                            <a class="thumbnail">
+                                <img class="galleryimg" src="~/@Model.Image" width="93" height="133">
+                            </a>
+                        </li>
                         @foreach (var img in @ViewBag.listImg)
                         {
                             <li class="image-additional">
@@ -44,8 +52,6 @@
                             </li>
 
                         }
-
-
 
                     </ul>
                 </div>
@@ -62,58 +68,62 @@
 
                     @if (@Model.Discount > 0)
                     {
-                        <h1>@Model.Name</h1>
+                        <h2>@Model.Name</h2>
 
                         <div class="price-section">
 
                             <span class="price-p" style="text-decoration: line-through; font-size: 20px; margin-right: 10px; color: #929292;">
-                                @Model.Price
+                                @Html.Raw(Model.Price.ToString("N0") + "đ")
                             </span>
 
                             <span class="price-p" style="font-size: 25px">
-                                @Html.Raw(Model.Price - (Model.Price * Model.Discount/100))
+                                @{
+                                    priceHasDiscount = Model.Price - (Model.Price * Model.Discount / 100);
+                                }
+                                @Html.Raw(priceHasDiscount.ToString("N0") + "đ")
                             </span>
 
                             <span class="price-left">@Model.Discount %</span>
 
                         </div>
                         <ul class="list-unstyled product-section" style="font-size: 25px">
-                            <li><span>Số lượng có sẵn:</span> @Model.Quantity</li>
+                            <li style="font-size: 20px !important"><span>Số lượng có sẵn:</span> @Model.Quantity</li>
                         </ul>
                     }
                     else
                     {
-                        <h1>@Model.Name</h1>
+                        <h2>@Model.Name</h2>
 
                         <div class="price-section">
 
                             <span class="price-p" style="font-size: 25px">
-                                @Model.Price
+                                @Html.Raw(Model.Price.ToString("N0") + "đ")
                             </span>
                         </div>
                         <ul class="list-unstyled product-section" style="font-size: 25px">
-                            <li><span>Số lượng có sẵn:</span> @Model.Quantity</li>
+                            <li style="font-size: 20px !important"><span>Số lượng có sẵn: </span> @Model.Quantity</li>
                         </ul>
                     }
 
                     <div id="product">
-                        <div class="row">
-                            <div class="form-group">
-                                <div class="col-sm-3">
-                                    <label for="input-quantity" class="control-label">Số lượng</label>
-                                </div>
-                                <div class="col-sm-9">
-                                    <input type="number" class="form-control" id="input-quantity" size="2" value="1" min="1" name="quantity">
-                                </div>
-                                <input type="hidden" value="49" name="product_id">
+                        <div class="row" style="display: flex; justify-content: end;">
+                            <div class="col-sm-3">
+                                <label for="input-quantity" class="control-label" style="line-height: 34px;">Số lượng</label>
                             </div>
-                            <div class="form-group">
-                                <div class="col-sm-3 margin-top product-button">
-                                    <button class="" type="button"><i class="fa fa-heart"></i></button>
-                                </div>
-                                <div class="col-sm-9">
-                                    <a class="margin-top btn btn-primary btn-lg btn-block btn-5 btn-5a icon-cart" id="button-cart" href="cart.html"><span>Thêm vào giỏ hàng</span></a>
-                                </div>
+                            <div class="col-sm-6">
+                                <input type="number" class="form-control" id="input-quantity" data-id="@Model.ID" size="2" value="1" min="1" name="quantity">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-3 margin-top product-button">
+                                <button class="btnAddProductFavorite" type="button" data-id="@Model.ID">
+                                    <i class="fa fa-heart"></i>
+                                </button>
+                            </div>
+                            <div class="col-sm-9">
+                                <a class="margin-top btn btn-primary btn-lg btn-block btn-5 btn-5a icon-cart btnAddToCartInDetail" data-id="@Model.ID" id="button-cart">
+                                    <span>Thêm vào giỏ hàng</span>
+                                </a>
                             </div>
                         </div>
                         <div class="clearfix margin-top"></div>
@@ -185,8 +195,8 @@
                             </div>
                         }
                     </div>
-                    <div id="tab-description" class="tab-pane ">
-                        @Model.Describe
+                    <div id="tab-description" class="tab-pane">
+                        @Html.Raw(HttpUtility.HtmlDecode(@Model.Describe))
                     </div>
                 </div>
             </div>

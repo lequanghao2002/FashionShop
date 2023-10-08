@@ -11,6 +11,8 @@ using FashionShop.Helper;
 using FashionShop.Models.ViewModel;
 using FashionShop.Models.DTO.FavoriteProductDTO;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.CodeAnalysis;
+using AspNetCoreHero.ToastNotification.Abstractions;
 
 namespace FashionShop.Controllers
 {
@@ -21,13 +23,18 @@ namespace FashionShop.Controllers
         private readonly IUserRepository _userRepository;
         private readonly IOrderRepository _orderRepository;
         private readonly IFavoriteProductRepository _favoriteProductRepository;
+        private readonly IProductRepository _productRepository;
+        private readonly INotyfService _notyfService;
 
-        public AccountController(UserManager<User> userManager, IUserRepository userRepository, IOrderRepository orderRepository, IFavoriteProductRepository favoriteProductRepository)
+
+        public AccountController(UserManager<User> userManager, IUserRepository userRepository, IOrderRepository orderRepository, IFavoriteProductRepository favoriteProductRepository, IProductRepository productRepository, INotyfService notyfService)
         {
             _userManager = userManager;
             _userRepository = userRepository; 
             _orderRepository = orderRepository;
             _favoriteProductRepository = favoriteProductRepository;
+            _productRepository = productRepository;
+            _notyfService = notyfService;
         }
 
         public IActionResult Login()
@@ -59,6 +66,8 @@ namespace FashionShop.Controllers
                         // Serialize đối tượng User thành JSON và lưu vào session
                         string userJson = JsonConvert.SerializeObject(user);
                         HttpContext.Session.SetString(CommonConstants.SessionUser, userJson);
+
+                        _notyfService.Success("Đăng nhập thành công", 2);
 
                         return Redirect(returnUrl);
                     }
@@ -150,12 +159,19 @@ namespace FashionShop.Controllers
         {
             var orderCancel = await _orderRepository.Cancel(id);
 
-            if(orderCancel == true)
+            if(orderCancel != null)
             {
-                return Json(new
+                // Tăng số lượng sản phẩm khi hủy hàng
+                var increaseQuantityProduct = await _productRepository.IncreaseQuantityOrder(orderCancel);
+
+                if (increaseQuantityProduct == true)
                 {
-                    status = true
-                });
+                    _notyfService.Success("Đã hủy đơn hàng", 2);
+                    return Json(new
+                    {
+                        status = true
+                    });
+                }
             }
 
             return Json(new
@@ -189,6 +205,10 @@ namespace FashionShop.Controllers
 
                 if (favoriteProduct != null)
                 {
+                    var product = await _productRepository.GetById(createFavoriteProductDTO.ProductID);
+
+                    _notyfService.Custom("<img style='height: 40px; padding-right: 10px;' src='" + product.Image + "'/> Đã thêm vào yêu thích", 2, "white");
+
                     return Json(new
                     {
                         status = true
@@ -196,6 +216,7 @@ namespace FashionShop.Controllers
                 }
             }
 
+            _notyfService.Error("Vui lòng đăng nhập", 2);
             return Json(new
             {
                 status = false
@@ -215,6 +236,7 @@ namespace FashionShop.Controllers
 
                 if (favoriteProduct != null)
                 {
+                    _notyfService.Success("Đã xóa khỏi yêu thích", 2);
                     return Json(new
                     {
                         status = true

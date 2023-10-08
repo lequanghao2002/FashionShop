@@ -7,7 +7,14 @@
         $('.btnAddToCart').off('click').on('click', function (e) {
             e.preventDefault();
             var productId = parseInt($(this).data('id'));
-            cart.addItem(productId);
+            cart.addItem(productId, 1);
+        });
+        $('.btnAddToCartInDetail').off('click').on('click', function (e) {
+            e.preventDefault();
+            var productId = parseInt($(this).data('id'));
+            var quantity = parseInt($('#input-quantity').val());
+
+            cart.addItem(productId, quantity);
         });
         $('.btnDeleteItem').off('click').on('click', function (e) {
             e.preventDefault();
@@ -15,60 +22,158 @@
             cart.deleteItem(productId);
         });
         $('.txtQuantity').off('keyup').on('keyup', function () {
+            var btn = $(this);
+
             var quantity = parseInt($(this).val());
             var productId = parseInt($(this).data('id'));
             var price = parseFloat($(this).data('price'));
 
-            if (quantity >= 1) {
-                cart.updateAll();
+            $.ajax({
+                url: '/Product/GetQuantityProductById',
+                data: {
+                    id: productId
+                },
+                type: 'POST',
+                dataType: 'json',
+                success: function (res) {
+                    if (res.status) {
+                        quantityProduct = res.data;
 
-                var quantityChange = parseInt($(this).val());
-                var totalMoney = quantityChange * price;
+                        if (quantity > quantityProduct) {
+                            $('#quantityProduct_' + productId).val(quantityProduct);
+                            var quantityChange = parseInt(btn.val());
+                            var totalMoney = quantityChange * price;
 
-                $('#TotalMoney_' + productId).text(numeral(totalMoney).format('0,0') + '₫');
-            }
-            else {
-                $('#quantityProduct_' + productId).val(1);
+                            $('#TotalMoney_' + productId).text(numeral(totalMoney).format('0,0') + '₫');
 
-                var quantityChange = parseInt($(this).val());
-                var totalMoney = quantityChange * price;
+                        }
+                        else if (quantity <= 0) {
+                            $('#quantityProduct_' + productId).val(1);
+                            var quantityChange = parseInt(btn.val());
+                            var totalMoney = quantityChange * price;
 
-                $('#TotalMoney_' + productId).text(numeral(totalMoney).format('0,0') + '₫');
-            }
+                            $('#TotalMoney_' + productId).text(numeral(totalMoney).format('0,0') + '₫');
+                        }
+                        else {
+                            cart.updateAll();
 
-            $('#tempTotalMoney').text(numeral(cart.getTempTotalMoney()).format('0,0') + '₫');
+                            var quantityChange = parseInt(btn.val());
+                            var totalMoney = quantityChange * price;
+
+                            $('#TotalMoney_' + productId).text(numeral(totalMoney).format('0,0') + '₫');
+                        }
+
+                        $('#tempTotalMoney').text(numeral(cart.getTempTotalMoney()).format('0,0') + '₫');
+                    }
+                }
+            });
+
+        });
+        $('.txtQuantity').off('change').on('change', function () {
+            var btn = $(this);
+
+            var quantity = parseInt($(this).val());
+            var productId = parseInt($(this).data('id'));
+            var price = parseFloat($(this).data('price'));
+
+            $.ajax({
+                url: '/Product/GetQuantityProductById',
+                data: {
+                    id: productId
+                },
+                type: 'POST',
+                dataType: 'json',
+                success: function (res) {
+                    if (res.status) {
+                        quantityProduct = res.data;
+
+                        if (quantity > quantityProduct) {
+                            $('#quantityProduct_' + productId).val(quantityProduct);
+                            var quantityChange = parseInt(btn.val());
+                            var totalMoney = quantityChange * price;
+
+                            $('#TotalMoney_' + productId).text(numeral(totalMoney).format('0,0') + '₫');
+
+                        }
+                        else if (quantity <= 0) {
+                            $('#quantityProduct_' + productId).val(1);
+                            var quantityChange = parseInt(btn.val());
+                            var totalMoney = quantityChange * price;
+
+                            $('#TotalMoney_' + productId).text(numeral(totalMoney).format('0,0') + '₫');
+                        }
+                        else {
+                            cart.updateAll();
+
+                            var quantityChange = parseInt(btn.val());
+                            var totalMoney = quantityChange * price;
+
+                            $('#TotalMoney_' + productId).text(numeral(totalMoney).format('0,0') + '₫');
+                        }
+
+                        $('#tempTotalMoney').text(numeral(cart.getTempTotalMoney()).format('0,0') + '₫');
+                    }
+                }
+            });        
+        });
+        $('#input-quantity').off('keyup').on('keyup', function () {
+            var quantity = parseInt($(this).val());
+            var productId = parseInt($(this).data('id'));
+
+            $.ajax({
+                url: '/Product/GetQuantityProductById',
+                data: {
+                    id: productId
+                },
+                type: 'POST',
+                dataType: 'json',
+                success: function (res) {
+                    if (res.status) {
+                        quantityProduct = res.data;
+
+                        if (quantity > quantityProduct) {
+                            $('#input-quantity').val(quantityProduct);
+                        }
+                        else if (quantity <= 0) {
+                            $('#input-quantity').val(1);
+                        }
+                    }
+                }
+            });
 
         })
-        $('.txtQuantity').off('change').on('change', function () {
+        $('#input-quantity').off('change').on('change', function () {
             var quantity = parseInt($(this).val());
             var productId = parseInt($(this).data('id'));
-            var price = parseFloat($(this).data('price'));
 
-            if (quantity >= 1) {
-                cart.updateAll();
+            $.ajax({
+                url: '/Product/GetQuantityProductById',
+                data: {
+                    id: productId
+                },
+                type: 'POST',
+                dataType: 'json',
+                success: function (res) {
+                    if (res.status) {
+                        quantityProduct = res.data;
 
-                var quantityChange = parseInt($(this).val());
-                var totalMoney = quantityChange * price;
-
-                $('#TotalMoney_' + productId).text(numeral(totalMoney).format('0,0') + '₫');
-            }
-            else {
-                $('#quantityProduct_' + productId).val(1);
-                var quantityChange = parseInt($(this).val());
-                var totalMoney = quantityChange * price;
-
-                $('#TotalMoney_' + productId).text(numeral(totalMoney).format('0,0') + '₫');
-            }
-
-            $('#tempTotalMoney').text(numeral(cart.getTempTotalMoney()).format('0,0') + '₫');
+                        if (quantity > quantityProduct) {
+                            $('#input-quantity').val(quantityProduct);
+                        }
+                        else if (quantity <= 0) {
+                            $('#input-quantity').val(1);
+                        }
+                    }
+                }
+            });
         });
-
     },
-    addItem: function (productID) {
+    addItem: function (productID, quantity) {
         $.ajax({
             url: '/ShoppingCart/Add',
             data: {
-                productID: productID
+                productID: productID,
+                quantity: quantity
             },
             type: 'POST',
             dataType: 'json',
@@ -181,6 +286,7 @@
             }
         })
     }
+
 }
 
 cart.init();

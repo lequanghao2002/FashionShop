@@ -2,8 +2,10 @@
 using FashionShop.Helper;
 using FashionShop.Models.Domain;
 using FashionShop.Models.DTO.ProductDTO;
+using FashionShop.Models.ViewModel;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System;
@@ -23,17 +25,17 @@ public interface IProductRepository
     public Task<GetProductByIdDTO> GetById(int idProduct);
     public Task<List<GetProductByIdDTO>> GetByCategoryId(int idCategory, int? idOrderProduct = null);
     public GetProductByIdDTO GetId(int id);
+    public int GetQuantityById(int id);
     public Task<CreateProductDTO> Create(CreateProductDTO createProductDTO);
-
     public Task<UpdateProductDTO> Update(UpdateProductDTO updateProductDTO, int id);
     public Task<bool> Delete(int id);
+    public Task<bool> ReduceQuantityOrder(List<ShoppingCartViewModel> listOrder);
+    public Task<bool> IncreaseQuantityOrder(List<ShoppingCartViewModel> listOrder);
 }
 
 public class ProductRepository : IProductRepository
 {
     private readonly FashionShopDBContext _fashionShopDBContext;
-    private readonly IEnumerable<object> listProductDomain;
-    private readonly IEnumerable<object> _IdentityDbContext;
 
     public ProductRepository(FashionShopDBContext fashionShopDBContext)
     {
@@ -248,6 +250,12 @@ public class ProductRepository : IProductRepository
         return productDomain;
     }
 
+    public int GetQuantityById(int id)
+    {
+        var quantity = _fashionShopDBContext.Products.SingleOrDefault(p => p.ID == id).Quantity;
+
+        return quantity;
+    }
 
     public async Task<CreateProductDTO> Create(CreateProductDTO createProductDTO)
     {
@@ -317,5 +325,44 @@ public class ProductRepository : IProductRepository
         }
     }
 
+    public async Task<bool> ReduceQuantityOrder(List<ShoppingCartViewModel> listOrder)
+    {
+        foreach(var item in listOrder)
+        {
+            var productById = await _fashionShopDBContext.Products.SingleOrDefaultAsync(p => p.ID == item.ProductID);
+
+            if(productById != null)
+            {
+                productById.Quantity -= item.Quantity;
+                await _fashionShopDBContext.SaveChangesAsync();
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    public async Task<bool> IncreaseQuantityOrder(List<ShoppingCartViewModel> listOrder)
+    {
+        foreach (var item in listOrder)
+        {
+            var productById = await _fashionShopDBContext.Products.SingleOrDefaultAsync(p => p.ID == item.ProductID);
+
+            if (productById != null)
+            {
+                productById.Quantity += item.Quantity;
+                await _fashionShopDBContext.SaveChangesAsync();
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
 }
 

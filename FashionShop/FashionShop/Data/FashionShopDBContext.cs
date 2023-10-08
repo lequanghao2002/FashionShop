@@ -25,6 +25,9 @@ namespace FashionShop.Data
         public DbSet<User> Users { get; set; }
         public DbSet<IdentityRole> Roles { get; set; }
         public DbSet<FavoriteProduct> FavoriteProducts { get; set; }
+        public DbSet<Province> Provinces { get; set; }
+        public DbSet<District> Districts { get; set; }
+        public DbSet<Ward> Wards { get; set; }
 
         protected override async void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -44,6 +47,24 @@ namespace FashionShop.Data
             {
                 entity.HasIndex(v => v.DiscountCode).IsUnique();
             });
+
+            modelBuilder.Entity<Order>()
+            .HasOne(o => o.Province)
+            .WithMany(p => p.Orders)
+            .HasForeignKey(o => o.ProvinceID)
+            .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<Ward>()
+            .HasOne(w => w.Province)
+            .WithMany(p => p.Wards)
+            .HasForeignKey(w => w.ProvinceID)
+            .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<Ward>()
+                .HasOne(w => w.District)
+                .WithMany(d => d.Wards)
+                .HasForeignKey(w => w.DistrictID)
+                .OnDelete(DeleteBehavior.NoAction);
 
             foreach (var entityType in modelBuilder.Model.GetEntityTypes())
             {
