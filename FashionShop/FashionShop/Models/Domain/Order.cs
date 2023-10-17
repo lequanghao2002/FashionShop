@@ -52,6 +52,8 @@ namespace FashionShop.Models.Domain
         [ForeignKey("VoucherID")]
         public Voucher? Voucher { get; set; }
 
+        public int TypePayment { get; set; }
+
         public IEnumerable<OrderDetail> OrderDetails { get; set; }
     }
 }

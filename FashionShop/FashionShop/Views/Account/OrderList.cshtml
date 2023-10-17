@@ -80,6 +80,14 @@
                                         @*<button class="btn-danger" disabled>Hủy hàng</button>*@
                                     </td>
                                 }
+                                else if (item.Status == 3)
+                                {
+                                    <td>Đã thanh toán</td>
+                                    <td>
+                                        <a class="btn-success" href="~/Account/OrderDetail/@item.ID" style="padding: 5px;border-radius: 10px; margin-right: 5px">Xem</a>
+                                        <a class="btn-danger btnCancelOrder" data-id="@item.ID" style="padding: 5px;border-radius: 10px;">Hủy</a>
+                                    </td>
+                                }
                                 else
                                 {
                                     <td>Đã hủy</td>

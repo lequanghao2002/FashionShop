@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using System.Globalization;
 
 namespace FashionShop.Repositories
 {
@@ -16,8 +17,10 @@ namespace FashionShop.Repositories
         public Task<GetOrderByUserIdDTO> GetById(int id);
         public Task<List<GetOrderByUserIdDTO>> GetByUserID(string userID);
         public Task<GetOrderByUserIdDTO> GetNewByUserID(string userID);
-        public Task<CreateOrderDTO> Create(CreateOrderDTO createOrderDTO);
+        public Task<GetOrderDTO> Create(CreateOrderDTO createOrderDTO);
         public Task<List<ShoppingCartViewModel>> Cancel(int id);
+        public double TotalPayment(GetOrderByUserIdDTO getOrderByUserIdDTO);
+        public bool PayOnline(int id);
     }
 
     public class OrderRepository : IOrderRepository
@@ -148,7 +151,7 @@ namespace FashionShop.Repositories
             return orderByUserIdDTO;
         }
 
-        public async Task<CreateOrderDTO> Create(CreateOrderDTO createOrderDTO)
+        public async Task<GetOrderDTO> Create(CreateOrderDTO createOrderDTO)
         {
             var orderDomain = new Order()
             {
@@ -161,6 +164,7 @@ namespace FashionShop.Repositories
                 Address = createOrderDTO.Address,
                 Note = createOrderDTO.Note,
                 DeliveryFee = createOrderDTO.DeliveryFee,
+                TypePayment = createOrderDTO.TypePayment,
                 OrderDate = DateTime.Now,
                 Status = 1,
 
@@ -192,7 +196,28 @@ namespace FashionShop.Repositories
                 await _fashionShopDBContext.SaveChangesAsync();
             }
 
-            return createOrderDTO;
+            var orderNew = new GetOrderDTO()
+            {
+                ID = orderDomain.ID,
+                FullName = createOrderDTO.FullName,
+                Email = createOrderDTO.Email,
+                PhoneNumber = createOrderDTO.PhoneNumber,
+                ProvinceID = createOrderDTO.ProvinceID,
+                DistrictID = createOrderDTO.DistrictID,
+                WardID = createOrderDTO.WardID,
+                Address = createOrderDTO.Address,
+                Note = createOrderDTO.Note,
+                DeliveryFee = createOrderDTO.DeliveryFee,
+                OrderDate = DateTime.Now,
+                TypePayment = createOrderDTO.TypePayment,
+                TypePaymentVN = createOrderDTO.TypePaymentVN,
+                shoppingCarts = createOrderDTO.shoppingCarts,
+
+                UserID = createOrderDTO.UserID,
+                VoucherID = createOrderDTO.VoucherID,
+            };
+                
+            return orderNew;
         }
 
         public async Task<List<ShoppingCartViewModel>> Cancel(int id)
@@ -223,6 +248,58 @@ namespace FashionShop.Repositories
             }
 
             return null;
+        }
+
+        public double TotalPayment(GetOrderByUserIdDTO getOrderByUserIdDTO)
+        {
+            double totalMoney = 0;
+
+            foreach (var item in getOrderByUserIdDTO.OrderDetails)
+            {
+                var quantity = item.Quantity;
+                if (item.Product.Discount > 0)
+                {
+                    var price = item.Product.Price - (item.Product.Price * item.Product.Discount / 100);
+                    totalMoney += price * quantity;
+                }
+                else
+                {
+                    var price = item.Product.Price;
+                    totalMoney += price * quantity;
+                }
+            }
+
+            double voucherValue = 0;
+
+            if (getOrderByUserIdDTO.Voucher != null)
+            {
+                if (getOrderByUserIdDTO.Voucher.DiscountAmount == true)
+                {
+                    voucherValue = getOrderByUserIdDTO.Voucher.DiscountValue;
+                }
+                else
+                {
+                    voucherValue = totalMoney * getOrderByUserIdDTO.Voucher.DiscountValue / 100;
+                }
+            }
+
+            double totalPayment = totalMoney + getOrderByUserIdDTO.DeliveryFee - voucherValue;
+
+            return totalPayment;
+        }
+
+        public bool PayOnline(int id)
+        {
+            var orderById = _fashionShopDBContext.Orders.SingleOrDefault(o => o.ID == id);
+
+            if(orderById != null)
+            {
+                orderById.Status = 3;
+                _fashionShopDBContext.SaveChanges();
+                return true;
+            }
+
+            return false;
         }
 
     }

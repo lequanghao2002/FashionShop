@@ -39,6 +39,15 @@
             $('#msgVoucher').html('');
 
         });
+        $('#drTypePayment').off('click').on('click', function (e) {
+            e.preventDefault();
+
+            var type = $(this).val();
+            $('#load_form_payment').hide();
+            if (type == "2") {
+                $('#load_form_payment').show();
+            }
+        });
     },
     loadProvince: function () {
         $.ajax({

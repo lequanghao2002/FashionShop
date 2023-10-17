@@ -26,5 +26,8 @@ namespace FashionShop.Models.DTO.OrderDTO
         public int? VoucherID { get; set; }
 
         public List<ShoppingCartViewModel>? shoppingCarts { get; set; }
+
+        public int TypePayment { get; set; }
+        public int TypePaymentVN { get; set; }
     }
 }
