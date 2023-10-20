@@ -31,21 +31,13 @@
                     <p>Địa chỉ giao hàng: @Model.Address</p>
                     <p>Nội dung đơn hàng: @Model.Note</p>
 
-                    @if (Model.Status == 1)
+                    @if (Model.TypePayment == 1)
                     {
-                        <p>Trạng thái đơn hàng: Chờ xác nhận</p>
+                        <p>Loại thanh toán: COD</p>
                     }
-                    else if (Model.Status == 2)
+                    else if (Model.TypePayment == 2)
                     {
-                        <p>Trạng thái đơn hàng: Đang giao hàng</p>
-                    }
-                    else if (Model.Status == 3)
-                    {
-                        <p>Trạng thái đơn hàng: Đã thanh toán</p>
-                    }
-                    else
-                    {
-                        <p>Trạng thái đơn hàng: Đã hủy</p>
+                        <p>Loại thanh toán: Chuyển khoản</p>
                     }
                 </div>
 

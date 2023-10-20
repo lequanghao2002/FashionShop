@@ -14,7 +14,7 @@
                 controller: 'orderListController'
             })
             .state('order_detail', {
-                url: '/order_detail',
+                url: '/order_detail/:id',
                 parent: 'base',
                 templateUrl: '/app/components/orders/orderDetailView.html',
                 controller: 'orderDetailController'

@@ -542,8 +542,6 @@ namespace FashionShop.Controllers
                             //db.Entry(itemOrder).State = System.Data.Entity.EntityState.Modified;
                             //db.SaveChanges();
 
-                            _orderRepository.PayOnline(idOrder);
-
                             //Thanh toan thanh cong
                             return RedirectToAction("OrderSuccess");
                         }

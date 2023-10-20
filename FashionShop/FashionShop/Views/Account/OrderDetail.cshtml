@@ -40,6 +40,15 @@
                     <p>Địa chỉ giao hàng: @Model.Address</p>
                     <p>Nội dung đơn hàng: @Model.Note</p>
 
+                    @if (Model.TypePayment == 1)
+                    {
+                        <p>Loại thanh toán: COD</p>
+                    }
+                    else if (Model.TypePayment == 2)
+                    {
+                        <p>Loại thanh toán: Chuyển khoản</p>
+                    }
+
                     @if (Model.Status == 1)
                     {
                         <p>Trạng thái đơn hàng: Chờ xác nhận</p>
@@ -50,7 +59,7 @@
                     }
                     else if (Model.Status == 3)
                     {
-                        <p>Trạng thái đơn hàng: Đã thanh toán</p>
+                        <p>Trạng thái đơn hàng: Giao hàng thành công</p>
                     }
                     else
                     {

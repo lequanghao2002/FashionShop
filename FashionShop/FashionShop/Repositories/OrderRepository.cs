@@ -1,6 +1,8 @@
 ﻿using FashionShop.Data;
+using FashionShop.Helper;
 using FashionShop.Models.Domain;
 using FashionShop.Models.DTO.OrderDTO;
+using FashionShop.Models.DTO.ProductDTO;
 using FashionShop.Models.DTO.UserDTO;
 using FashionShop.Models.ViewModel;
 using Microsoft.AspNetCore.Identity;
@@ -13,13 +15,14 @@ namespace FashionShop.Repositories
 {
     public interface IOrderRepository
     {
-        public Task<List<GetOrderDTO>> GetAll(string? searchBySdt);
+        public AdminPaginationSet<AdminGetOrderDTO> GetAll(int page, int pageSize, int? typePayment, int? searchByID, string? searchByName, string? searchBySDT);
         public Task<GetOrderByUserIdDTO> GetById(int id);
         public Task<List<GetOrderByUserIdDTO>> GetByUserID(string userID);
         public Task<GetOrderByUserIdDTO> GetNewByUserID(string userID);
         public Task<GetOrderDTO> Create(CreateOrderDTO createOrderDTO);
         public Task<List<ShoppingCartViewModel>> Cancel(int id);
         public double TotalPayment(GetOrderByUserIdDTO getOrderByUserIdDTO);
+        public double AdminTotalPayment(int id);
         public bool PayOnline(int id);
     }
 
@@ -32,16 +35,32 @@ namespace FashionShop.Repositories
             _fashionShopDBContext = fashionShopDBContext;
         }
 
-        public async Task<List<GetOrderDTO>> GetAll(string? searchBySdt)
+        public AdminPaginationSet<AdminGetOrderDTO> GetAll(int page, int pageSize, int? typePayment, int? searchByID, string? searchByName, string? searchBySDT)
         {
-            var listUsersDomain = _fashionShopDBContext.Orders.AsQueryable();
+            var listOrdersDomain = _fashionShopDBContext.Orders.AsQueryable();
 
-            if (!searchBySdt.IsNullOrEmpty())
+            if (typePayment != null)
             {
-                listUsersDomain = listUsersDomain.Where(u => u.PhoneNumber.Contains(searchBySdt));
+                listOrdersDomain =  listOrdersDomain.Where(o => o.TypePayment == typePayment);
             }
 
-            var listUsersDTO = await listUsersDomain.Select(order => new GetOrderDTO
+            if (searchByID != null)
+            {
+                listOrdersDomain = listOrdersDomain.Where(u => u.ID == searchByID);
+            }
+
+            if (searchByName != null)
+            {
+                listOrdersDomain = listOrdersDomain.Where(u => u.FullName.Contains(searchByName));
+            }
+
+            if (searchBySDT != null)
+            {
+                listOrdersDomain = listOrdersDomain.Where(u => u.PhoneNumber.Contains(searchBySDT));
+            }
+
+
+            var listOrdersDTO = listOrdersDomain.Select(order => new AdminGetOrderDTO
             {
                 ID = order.ID,
                 FullName = order.FullName,
@@ -49,11 +68,26 @@ namespace FashionShop.Repositories
                 PhoneNumber = order.PhoneNumber,
                 Address = order.Address,
                 OrderDate = order.OrderDate,
-                Note = order.Note,
-                
-            }).OrderByDescending(u => u.ID).ToListAsync();
+                TypePayment = order.TypePayment,
+                Status = order.Status,
 
-            return listUsersDTO;
+                DeliveryFee = order.DeliveryFee,
+                Voucher = order.Voucher,
+                OrderDetails = order.OrderDetails.ToList()
+            }).OrderByDescending(u => u.ID).ToList();
+
+            var totalCount = listOrdersDTO.Count();
+            var listOrderPagination = listOrdersDTO.Skip(page * pageSize).Take(pageSize);
+
+            AdminPaginationSet<AdminGetOrderDTO> orderPaginationSet = new AdminPaginationSet<AdminGetOrderDTO>()
+            {
+                List = listOrderPagination,
+                Page = page,
+                TotalCount = totalCount,
+                PagesCount = (int)Math.Ceiling((decimal)totalCount / pageSize),
+            };
+
+            return orderPaginationSet;
         }
 
         public async Task<List<GetOrderByUserIdDTO>> GetByUserID(string userID)
@@ -71,6 +105,7 @@ namespace FashionShop.Repositories
                 OrderDate = order.OrderDate,
                 Note = order.Note,
                 Status = order.Status,
+                TypePayment = order.TypePayment,
 
                 Voucher = order.Voucher,
                 UserID = order.UserID,
@@ -99,6 +134,7 @@ namespace FashionShop.Repositories
                 OrderDate = order.OrderDate,
                 Note = order.Note,
                 Status = order.Status,
+                TypePayment = order.TypePayment,
 
                 Voucher = order.Voucher,
                 UserID = order.UserID,
@@ -284,6 +320,60 @@ namespace FashionShop.Repositories
             }
 
             double totalPayment = totalMoney + getOrderByUserIdDTO.DeliveryFee - voucherValue;
+
+            return totalPayment;
+        }
+
+        public double AdminTotalPayment(int id)
+        {
+            var order = _fashionShopDBContext.Orders.Select(order => new GetOrderByUserIdDTO
+            {
+                ID = order.ID,
+                Voucher = order.Voucher,
+                DeliveryFee = order.DeliveryFee,
+
+                OrderDetails = order.OrderDetails.Select(od => new OrderDetail()
+                {
+                    ProductID = od.ProductID,
+                    Product = _fashionShopDBContext.Products.SingleOrDefault(p => p.ID == od.ProductID),
+                    OrderID = od.OrderID,
+                    Price = od.Price,
+                    Quantity = od.Quantity
+
+                }).ToList(),
+            }).SingleOrDefault(o => o.ID == id);
+
+            double totalMoney = 0;
+            foreach (var item in order.OrderDetails)
+            {
+                var quantity = item.Quantity;
+                if (item.Product.Discount > 0)
+                {
+                    var price = item.Product.Price - (item.Product.Price * item.Product.Discount / 100);
+                    totalMoney += price * quantity;
+                }
+                else
+                {
+                    var price = item.Product.Price;
+                    totalMoney += price * quantity;
+                }
+            }
+
+            double voucherValue = 0;
+
+            if (order.Voucher != null)
+            {
+                if (order.Voucher.DiscountAmount == true)
+                {
+                    voucherValue = order.Voucher.DiscountValue;
+                }
+                else
+                {
+                    voucherValue = totalMoney * order.Voucher.DiscountValue / 100;
+                }
+            }
+
+            double totalPayment = totalMoney + order.DeliveryFee - voucherValue;
 
             return totalPayment;
         }

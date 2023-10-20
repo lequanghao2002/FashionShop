@@ -9,7 +9,7 @@
         $scope.listProducts = [];
 
         $scope.page = 0;
-        $scope.pageSize = 5;
+        $scope.pageSize = 6;
         $scope.pagesCount = 0;
         $scope.totalCount = 0;
         $scope.num = 0;
