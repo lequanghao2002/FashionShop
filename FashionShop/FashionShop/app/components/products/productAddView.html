@@ -32,22 +32,28 @@
             </div>
 
             <div class="row">
-                <div class="form-group col-4">
+                <div class="form-group col-3">
+                    <label for="purchasePrice">Giá nhập (₫)</label>
+                    <input type="number" name="purchasePrice" class="form-control" id="purchasePrice" placeholder="Vui lòng nhập giá" required ng-model="product.purchasePrice">
+                    <span class="text-danger" ng-show="frmAddProduct.purchasePrice.$invalid">Giá nhập không được để trống</span>
+                </div>
+
+                <div class="form-group col-3">
+                    <label for="Price">Giá bán (₫)</label>
+                    <input type="number" name="Price" class="form-control" id="Price" placeholder="Vui lòng nhập giá" required ng-model="product.price">
+                    <span class="text-danger" ng-show="frmAddProduct.Price.$invalid">Giá bán không được để trống</span>
+                </div>
+
+                <div class="form-group col-3">
+                    <label for="discount">Giảm giá (%)</label>
+                    <input type="number" name="discount" class="form-control" id="discount" placeholder="Vui lòng nhập giảm giá" required ng-model="product.discount">
+                    <span class="text-danger" ng-show="frmAddProduct.discount.$invalid">Giảm giá không được để trống</span>
+                </div>
+
+                <div class="form-group col-3">
                     <label for="quantity">Số lượng</label>
                     <input type="number" name="quantity" class="form-control" id="quantity" placeholder="Vui lòng nhập số lượng" required ng-model="product.quantity">
                     <span class="text-danger" ng-show="frmAddProduct.quantity.$invalid">Số lượng không được để trống</span>
-                </div>
-
-                <div class="form-group col-4">
-                    <label for="Price">Giá (₫)</label>
-                    <input type="number" name="Price" class="form-control" id="Price" placeholder="Vui lòng nhập giá" required ng-model="product.price">
-                    <span class="text-danger" ng-show="frmAddProduct.Price.$invalid">Giá không được để trống</span>
-                </div>
-
-                <div class="form-group col-4">
-                    <label for="discount">Giảm giá (%)</label>
-                    <input type="number" name="discount" class="form-control" id="discount" placeholder="Vui lòng nhập giảm giá" required ng-model="product.Discount">
-                    <span class="text-danger" ng-show="frmAddProduct.discount.$invalid">Giảm giá không được để trống</span>
                 </div>
             </div>
 

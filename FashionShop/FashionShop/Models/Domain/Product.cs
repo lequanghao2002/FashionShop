@@ -32,6 +32,7 @@ namespace FashionShop.Models.Domain
 
         [Required]
         public double Price { get; set; }
+        public double PurchasePrice { get; set; }
 
         public double Discount { get; set; }
 

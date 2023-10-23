@@ -16,14 +16,8 @@
                 $scope.totalMoney = 0;
                 $scope.order.orderDetails.forEach((item, index) => {
                     $scope.quantity = item.quantity;
-                    if (item.product.discount > 0) {
-                        $scope.price = item.product.price - (item.product.price * item.product.discount / 100);
-                        $scope.totalMoney += $scope.price * $scope.quantity;
-                    }
-                    else {
-                        $scope.price = item.product.price;
-                        $scope.totalMoney += $scope.price * $scope.quantity;
-                    }
+                    $scope.price = item.price;
+                    $scope.totalMoney += $scope.price * $scope.quantity;
                 });
 
                 $scope.voucherValue = 0;

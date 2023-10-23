@@ -52,10 +52,14 @@
                     <td>{{order.status | statusOrder}}</td>
                     <td>
                         <!--<button class="btn btn-sm btn-success" ng-show="order.status == 1">
-                            Xác nhận
-                        </button>-->
+        Xác nhận
+    </button>-->
                         <button class="btn btn-sm btn-info" ui-sref="order_detail({id:order.id})">
                             Xem chi tiết
+                        </button>
+
+                        <button class="btn btn-sm btn-default mt-1" ng-click="exportToExcel(order.id)">
+                            Xuất hóa đơn
                         </button>
                     </td>
 

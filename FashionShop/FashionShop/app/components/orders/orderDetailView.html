@@ -39,15 +39,9 @@
                             <tr ng-repeat="item in order.orderDetails">
                                 <td><img ng-src="{{item.product.image}}" style="height: 80px" /></td>
                                 <td>{{item.product.name}}</td>
-                                <td class="align-middle" ng-if="item.product.discount > 0">
-                                    <span style="text-decoration: line-through; font-size: 80%">{{item.product.price | formatCurrencyVND}}</span>
-                                    <span style="margin: 0 5px">{{item.product.price - (item.product.price * item.product.discount/100) | formatCurrencyVND}}</span>
-                                </td>
-                                <td ng-if="item.product.discount <= 0">
-                                    {{item.product.price | formatCurrencyVND}}
-                                </td>
+                                <td>{{item.price | formatCurrencyVND}}</td>
                                 <td>{{item.quantity}}</td>
-                                <td>{{item.product.price * item.quantity | formatCurrencyVND}}</td>
+                                <td>{{item.price * item.quantity | formatCurrencyVND}}</td>
                             </tr>
 
                         </tbody>

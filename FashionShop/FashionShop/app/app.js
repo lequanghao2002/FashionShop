@@ -13,7 +13,8 @@
             'FashionShopAdmin',
             'FashionShopMember',
             'FashionShopCustomer',
-            'FashionShopVoucher'
+            'FashionShopVoucher',
+            'FashionShopStatistic'
         ]).config(config);
 
     config.$inject = ['$stateProvider', '$urlRouterProvider'];

@@ -11,6 +11,7 @@
         public string Image { get; set; }
         public string? ListImages { get; set; }
         public double Price { get; set; }
+        public double PurchasePrice { get; set; }
         public double Discount { get; set; }
         public DateTime CreatedDate { get; set; }
         public string CreatedBy { get; set; }

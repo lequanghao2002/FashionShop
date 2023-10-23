@@ -7,6 +7,7 @@ using FashionShop.Models.DTO.UserDTO;
 using FashionShop.Models.ViewModel;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.CodeAnalysis;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Globalization;
@@ -169,6 +170,7 @@ namespace FashionShop.Repositories
                 OrderDate = order.OrderDate,
                 Note = order.Note,
                 Status = order.Status,
+                TypePayment = order.TypePayment,
 
                 Voucher = order.Voucher,
                 UserID = order.UserID,
@@ -292,17 +294,7 @@ namespace FashionShop.Repositories
 
             foreach (var item in getOrderByUserIdDTO.OrderDetails)
             {
-                var quantity = item.Quantity;
-                if (item.Product.Discount > 0)
-                {
-                    var price = item.Product.Price - (item.Product.Price * item.Product.Discount / 100);
-                    totalMoney += price * quantity;
-                }
-                else
-                {
-                    var price = item.Product.Price;
-                    totalMoney += price * quantity;
-                }
+                totalMoney += item.Price * item.Quantity;
             }
 
             double voucherValue = 0;
@@ -346,17 +338,7 @@ namespace FashionShop.Repositories
             double totalMoney = 0;
             foreach (var item in order.OrderDetails)
             {
-                var quantity = item.Quantity;
-                if (item.Product.Discount > 0)
-                {
-                    var price = item.Product.Price - (item.Product.Price * item.Product.Discount / 100);
-                    totalMoney += price * quantity;
-                }
-                else
-                {
-                    var price = item.Product.Price;
-                    totalMoney += price * quantity;
-                }
+                totalMoney += item.Price * item.Quantity;
             }
 
             double voucherValue = 0;
@@ -391,6 +373,5 @@ namespace FashionShop.Repositories
 
             return false;
         }
-
     }
 }

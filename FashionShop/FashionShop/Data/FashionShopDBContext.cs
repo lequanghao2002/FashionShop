@@ -4,6 +4,7 @@ using FashionShop.Models.DTO.ProductDTO;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using FashionShop.Models.ViewModel;
 
 namespace FashionShop.Data
 {
@@ -28,6 +29,7 @@ namespace FashionShop.Data
         public DbSet<Province> Provinces { get; set; }
         public DbSet<District> Districts { get; set; }
         public DbSet<Ward> Wards { get; set; }
+        public DbSet<RevenueStatisticViewModel> RevenueStatisticViewModel { get; set; }
 
         protected override async void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -36,7 +38,7 @@ namespace FashionShop.Data
             modelBuilder.Entity<OrderDetail>(entity =>
             {
                 entity.HasKey(e => new { e.OrderID, e.ProductID });
-            });
+            });           
 
             modelBuilder.Entity<FavoriteProduct>(entity =>
             {
@@ -65,6 +67,11 @@ namespace FashionShop.Data
                 .WithMany(d => d.Wards)
                 .HasForeignKey(w => w.DistrictID)
                 .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<RevenueStatisticViewModel>(entity =>
+            {
+                entity.HasNoKey();
+            });
 
             foreach (var entityType in modelBuilder.Model.GetEntityTypes())
             {

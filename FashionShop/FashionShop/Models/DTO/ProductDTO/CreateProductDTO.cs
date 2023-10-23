@@ -27,9 +27,13 @@ namespace FashionShop.Models.DTO.ProductDTO
 
         public string? ListImages { get; set; }
 
-        [Required(ErrorMessage = "Vui lòng điền giá tiền")]
-        [Range(1, float.MaxValue, ErrorMessage = "Giá tiền phải nhiều hơn 0")]
+        [Required(ErrorMessage = "Vui lòng điền giá bán")]
+        [Range(1, double.MaxValue, ErrorMessage = "Giá bán phải nhiều hơn 0")]
         public double Price { get; set; }
+
+        [Required(ErrorMessage = "Vui lòng điền giá nhập")]
+        [Range(1, double.MaxValue, ErrorMessage = "Giá nhập phải nhiều hơn 0")]
+        public double PurchasePrice { get; set; }
 
         [Range(0, 100, ErrorMessage = "Giảm giá phải nằm từ 0 đến 100")]
         public double Discount { get; set; }

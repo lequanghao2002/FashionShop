@@ -152,6 +152,7 @@ public class ProductRepository : IProductRepository
             Image = product.Image,
             ListImages = product.ListImages,
             Price = product.Price,
+            PurchasePrice = product.PurchasePrice,
             Discount = product.Discount,
             CreatedDate = product.CreatedDate,
             CreatedBy = product.CreatedBy,
@@ -268,6 +269,7 @@ public class ProductRepository : IProductRepository
             Image = createProductDTO.Image,
             ListImages = createProductDTO.ListImages,
             Price = createProductDTO.Price,
+            PurchasePrice = createProductDTO.PurchasePrice,
             Discount = createProductDTO.Discount,
             Status = createProductDTO.Status,
 
@@ -293,6 +295,7 @@ public class ProductRepository : IProductRepository
             productDomain.Image = updateProductDTO.Image;
             productDomain.ListImages = updateProductDTO.ListImages;
             productDomain.Price = updateProductDTO.Price;
+            productDomain.PurchasePrice = updateProductDTO.PurchasePrice;
             productDomain.Discount = updateProductDTO.Discount;
             productDomain.Status = updateProductDTO.Status;
 

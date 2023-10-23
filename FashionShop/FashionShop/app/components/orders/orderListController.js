@@ -81,6 +81,10 @@
         //        })
         //    });
         //};
+
+        $scope.exportToExcel = function (id) {
+            window.location.href = "/api/Orders/export-excel/" + id;
+        }
     };
        
 

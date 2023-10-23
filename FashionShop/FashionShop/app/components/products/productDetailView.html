@@ -30,15 +30,17 @@
 
                     <h4 style="padding: 10px">Số lượng: {{product.quantity}}</h4>
 
+                    <h4 style="padding: 10px">Giá nhập: {{product.purchasePrice}}</h4>
+
                     <h4 style="padding: 10px" ng-if="product.discount > 0">
-                        Giá:
+                        Giá bán:
                         <span style="text-decoration: line-through; font-size: 80%">{{product.price | formatCurrencyVND}}</span>
                         <span style="margin: 0 5px">{{product.price - (product.price * product.discount/100) | formatCurrencyVND}}</span>
                         <span class="badge bg-gradient-warning">Giảm {{product.discount}}%</span>
                     </h4>
 
                     <h4 style="padding: 10px" ng-if="product.discount <= 0">
-                        Giá:
+                        Giá bán:
                         <span style="margin: 0 5px">{{product.price | formatCurrencyVND}}</span>
                     </h4>
 
