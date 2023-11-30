@@ -40,15 +40,51 @@
                 $scope.chartdata = chartData;
                 $scope.labels = labels;
 
-                console.log($scope.labels);
-                console.log($scope.chartdata);
-
             }, () => {
-                alert('Get data failed');
-            });
+                notificationService.displayError('Lấy dữ liệu thất bại');
+            });         
         }
         $scope.getStatistic();
 
+        $scope.getCountOrder = getCountOrder;
+        function getCountOrder() {
+            apiService.get('/api/Orders/get-count-order', null, (result) => {
+                $scope.countOrder = result.data;
+            }, () => {
+                notificationService.displayError('Lấy số lượng đơn hàng thất bại');
+            });
+        }
+        $scope.getCountOrder();
+
+        $scope.getCountProduct = getCountProduct;
+        function getCountProduct() {
+            apiService.get('/api/Products/get-count-product', null, (result) => {
+                $scope.countProduct = result.data;
+            }, () => {
+                notificationService.displayError('Lấy số lượng sản phẩm thất bại');
+            });
+        }
+        $scope.getCountProduct();
+
+        $scope.getCountCustomer = getCountCustomer;
+        function getCountCustomer() {
+            apiService.get('/api/Users/get-count-customer', null, (result) => {
+                $scope.countCustomer = result.data;
+            }, () => {
+                notificationService.displayError('Lấy số lượng khách hàng thất bại');
+            });
+        }
+        $scope.getCountCustomer();
+
+        $scope.getCountVoucher = getCountVoucher;
+        function getCountVoucher() {
+            apiService.get('/api/Vouchers/get-count-voucher', null, (result) => {
+                $scope.countVoucher = result.data;
+            }, () => {
+                notificationService.displayError('Lấy số lượng giảm giá thất bại');
+            });
+        }
+        $scope.getCountVoucher();
 
     };
 })(angular.module('FashionShopStatistic'));

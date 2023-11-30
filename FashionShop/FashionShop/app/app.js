@@ -15,7 +15,9 @@
             'FashionShopCustomer',
             'FashionShopVoucher',
             'FashionShopStatistic'
-        ]).config(config);
+        ])
+        .config(config)
+        .config(configAuthentication);
 
     config.$inject = ['$stateProvider', '$urlRouterProvider'];
 
@@ -25,6 +27,11 @@
                 url: '',
                 templateUrl: '/app/shared/views/baseView.html',
                 abstract: true
+            })
+            .state('login', {
+                url: '/login',
+                templateUrl: '/app/components/login/loginView.html',
+                controller: 'loginController'
             })
             .state('home', {
                 // Đường dẫn vào view
@@ -37,6 +44,35 @@
                 controller: 'homeController'
             });
 
-        $urlRouterProvider.otherwise('/admin');
+        $urlRouterProvider.otherwise('/login');
+    }
+
+    function configAuthentication($httpProvider) {
+        $httpProvider.interceptors.push(function ($q, $location) {
+            return {
+                request: function (config) {
+
+                    return config;
+                },
+                requestError: function (rejection) {
+
+                    return $q.reject(rejection);
+                },
+                response: function (response) {
+                    if (response.status == "401") {
+                        $location.path('/login');
+                    }
+
+                    return response;
+                },
+                responseError: function (rejection) {
+
+                    if (rejection.status == "401") {
+                        $location.path('/login');
+                    }
+                    return $q.reject(rejection);
+                }
+            };
+        });
     }
 })();

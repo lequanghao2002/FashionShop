@@ -30,7 +30,7 @@
 
                     <h4 style="padding: 10px">Số lượng: {{product.quantity}}</h4>
 
-                    <h4 style="padding: 10px">Giá nhập: {{product.purchasePrice}}</h4>
+                    <h4 style="padding: 10px">Giá nhập: {{product.purchasePrice | formatCurrencyVND}}</h4>
 
                     <h4 style="padding: 10px" ng-if="product.discount > 0">
                         Giá bán:

@@ -2,6 +2,7 @@
 using FashionShop.Models.Domain;
 using FashionShop.Models.DTO.ProductDTO;
 using FashionShop.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
@@ -20,6 +21,7 @@ namespace FashionShop.Api
         }
 
         [HttpGet("get-list-products")]
+        [AuthorizeRoles("Quản trị viên", "Nhân viên")]
         public async Task<IActionResult> GetListProducts(int page = 0, int pageSize = 6, int? searchByCategory = null, string? searchByName = null)
         {
             try
@@ -35,6 +37,7 @@ namespace FashionShop.Api
         }
 
         [HttpGet("get-product-by-id/{id}")]
+        [AuthorizeRoles("Quản trị viên", "Nhân viên")]
         public async Task<IActionResult> GetProductById(int id)
         {
             try
@@ -58,6 +61,7 @@ namespace FashionShop.Api
         }
 
         [HttpPost("create-product")]
+        [AuthorizeRoles("Quản trị viên", "Nhân viên")]
         public async Task<IActionResult> CreateProduct(CreateProductDTO createProductDTO)
         {
             try
@@ -81,6 +85,7 @@ namespace FashionShop.Api
         }
 
         [HttpPut("update-product/{id}")]
+        [AuthorizeRoles("Quản trị viên", "Nhân viên")]
         public async Task<IActionResult> UpdateProduct(UpdateProductDTO updateProductDTO, int id)
         {
             try
@@ -102,6 +107,7 @@ namespace FashionShop.Api
         }
 
         [HttpDelete("delete-product/{id}")]
+        [AuthorizeRoles("Quản trị viên")]
         public async Task<IActionResult> DeleleProduct(int id)
         {
             try
@@ -119,6 +125,22 @@ namespace FashionShop.Api
             catch
             {
                 return BadRequest("Xóa sản phẩm không thành công");
+            }
+        }
+
+        [HttpGet("get-count-product")]
+        [AuthorizeRoles("Quản trị viên", "Nhân viên")]
+        public async Task<IActionResult> GetCountProduct()
+        {
+            try
+            {
+                var count = await _productRepository.Count();
+
+                return Ok(count);
+            }
+            catch
+            {
+                return BadRequest("Lỗi");
             }
         }
     }

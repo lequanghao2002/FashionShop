@@ -20,6 +20,7 @@ namespace FashionShop.Api
         }
 
         [HttpGet("get-list-vouchers")]
+        [AuthorizeRoles("Quản trị viên", "Nhân viên")]
         public async Task<IActionResult> GetListVouchers()
         {
             try
@@ -35,6 +36,7 @@ namespace FashionShop.Api
         }
 
         [HttpGet("get-voucher-by-id/{id}")]
+        [AuthorizeRoles("Quản trị viên", "Nhân viên")]
         public async Task<IActionResult> GetVoucherById(int id)
         {
             try
@@ -58,6 +60,7 @@ namespace FashionShop.Api
         }
 
         [HttpPost("create-voucher")]
+        [AuthorizeRoles("Quản trị viên", "Nhân viên")]
         public async Task<IActionResult> CreateVoucher(CreateVoucherDTO createVoucherDTO)
         {
             try
@@ -96,6 +99,7 @@ namespace FashionShop.Api
         }
 
         [HttpPut("update-voucher/{id}")]
+        [AuthorizeRoles("Quản trị viên", "Nhân viên")]
         public async Task<IActionResult> UpdateProduct(UpdateVoucherDTO updateVoucherDTO, int id)
         {
             try
@@ -132,6 +136,7 @@ namespace FashionShop.Api
         }
 
         [HttpDelete("delete-voucher/{id}")]
+        [AuthorizeRoles("Quản trị viên")]
         public async Task<IActionResult> DeleleVoucher(int id)
         {
             try
@@ -149,6 +154,22 @@ namespace FashionShop.Api
             catch
             {
                 return BadRequest("Xóa voucher không thành công");
+            }
+        }
+
+        [HttpGet("get-count-voucher")]
+        [AuthorizeRoles("Quản trị viên", "Nhân viên")]
+        public async Task<IActionResult> GetCountVoucher()
+        {
+            try
+            {
+                var count = await _voucherRepository.Count();
+
+                return Ok(count);
+            }
+            catch
+            {
+                return BadRequest("Lỗi");
             }
         }
     }

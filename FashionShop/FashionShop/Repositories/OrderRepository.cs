@@ -25,6 +25,7 @@ namespace FashionShop.Repositories
         public double TotalPayment(GetOrderByUserIdDTO getOrderByUserIdDTO);
         public double AdminTotalPayment(int id);
         public bool PayOnline(int id);
+        public Task<int> Count();
     }
 
     public class OrderRepository : IOrderRepository
@@ -372,6 +373,12 @@ namespace FashionShop.Repositories
             }
 
             return false;
+        }
+
+        public async Task<int> Count()
+        {
+            var countOrder = await _fashionShopDBContext.Orders.CountAsync();
+            return countOrder;
         }
     }
 }

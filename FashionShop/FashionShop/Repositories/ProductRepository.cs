@@ -31,6 +31,7 @@ public interface IProductRepository
     public Task<bool> Delete(int id);
     public Task<bool> ReduceQuantityOrder(List<ShoppingCartViewModel> listOrder);
     public Task<bool> IncreaseQuantityOrder(List<ShoppingCartViewModel> listOrder);
+    public Task<int> Count();
 }
 
 public class ProductRepository : IProductRepository
@@ -366,6 +367,12 @@ public class ProductRepository : IProductRepository
         }
 
         return true;
+    }
+
+    public async Task<int> Count()
+    {
+        var countProduct = await _fashionShopDBContext.Products.CountAsync();
+        return countProduct;
     }
 }
 

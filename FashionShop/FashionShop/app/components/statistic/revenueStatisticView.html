@@ -1,5 +1,5 @@
 ﻿<div class="card-header">
-    <h3 class="card-title" style="font-size:30px">Doanh thu</h3>
+    <h3 class="card-title" style="font-size:30px">Thống kê</h3>
 </div>
 
 <!-- Main content -->
@@ -11,14 +11,14 @@
                 <!-- small box -->
                 <div class="small-box bg-info">
                     <div class="inner">
-                        <h3>150</h3>
+                        <h3>{{countOrder}} </h3>
 
-                        <p>New Orders</p>
+                        <p>Đơn hàng</p>
                     </div>
                     <div class="icon">
-                        <i class="ion ion-bag"></i>
+                        <i class="fa-solid fa-cart-shopping"></i>
                     </div>
-                    <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    <a ui-sref="order_list" class="small-box-footer">Xem thêm<i class="fas fa-arrow-circle-right"></i></a>
                 </div>
             </div>
             <!-- ./col -->
@@ -26,14 +26,14 @@
                 <!-- small box -->
                 <div class="small-box bg-success">
                     <div class="inner">
-                        <h3>53<sup style="font-size: 20px">%</sup></h3>
+                        <h3>{{countProduct}}</h3>
 
-                        <p>Bounce Rate</p>
+                        <p>Sản phẩm</p>
                     </div>
                     <div class="icon">
-                        <i class="ion ion-stats-bars"></i>
+                        <i class="fa-solid fa-shirt"></i>
                     </div>
-                    <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    <a ui-sref="product_list" class="small-box-footer">Xem thêm <i class="fas fa-arrow-circle-right"></i></a>
                 </div>
             </div>
             <!-- ./col -->
@@ -41,14 +41,14 @@
                 <!-- small box -->
                 <div class="small-box bg-warning">
                     <div class="inner">
-                        <h3>44</h3>
+                        <h3>{{countCustomer}}</h3>
 
-                        <p>User Registrations</p>
+                        <p>Khách hàng</p>
                     </div>
                     <div class="icon">
-                        <i class="ion ion-person-add"></i>
+                        <i class="fa-solid fa-users"></i>
                     </div>
-                    <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    <a ui-sref="customer_list" class="small-box-footer">Xem thêm <i class="fas fa-arrow-circle-right"></i></a>
                 </div>
             </div>
             <!-- ./col -->
@@ -56,14 +56,14 @@
                 <!-- small box -->
                 <div class="small-box bg-danger">
                     <div class="inner">
-                        <h3>65</h3>
+                        <h3>{{countVoucher}}</h3>
 
-                        <p>Unique Visitors</p>
+                        <p>Mã giảm giá</p>
                     </div>
                     <div class="icon">
-                        <i class="ion ion-pie-graph"></i>
+                        <i class="fa-solid fa-ticket-simple"></i>
                     </div>
-                    <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    <a ui-sref="voucher_list" class="small-box-footer">Xem thêm <i class="fas fa-arrow-circle-right"></i></a>
                 </div>
             </div>
             <!-- ./col -->
@@ -78,9 +78,9 @@
                     <div class="card-header">
                         <h3 class="card-title">
                             <i class="fas fa-chart-pie mr-1"></i>
-                            Sales
+                            Bảng thống kê đơn hàng theo ngày
                         </h3>
-                        <div class="card-tools">
+                        <!--<div class="card-tools">
                             <ul class="nav nav-pills ml-auto">
                                 <li class="nav-item">
                                     <a class="nav-link active" href="#revenue-chart" data-toggle="tab">Area</a>
@@ -89,7 +89,7 @@
                                     <a class="nav-link" href="#sales-chart" data-toggle="tab">Donut</a>
                                 </li>
                             </ul>
-                        </div>
+                        </div>-->
                     </div><!-- /.card-header -->
                     <div class="card-body">
                         <div class="tab-content no-padding">

@@ -26,6 +26,8 @@ namespace FashionShop.Repositories
         public Task<bool> AccountUnlock(string idAccount);
         public Task<UpdateUserDTO> Update(UpdateUserDTO updateUserDTO, string id);
         public Task<bool> Delete(string id);
+
+        public Task<int> Count();
     }
     public class UserRepository : IUserRepository
     {
@@ -185,7 +187,7 @@ namespace FashionShop.Repositories
                 if (checkPassword)
                 {
                     var roles = await _userManager.GetRolesAsync(checkUser);
-                    if(roles != null) 
+                    if(roles != null && !roles.Contains("Khách hàng")) 
                     {
                         var jwtToken = _tokenRepository.CreateJWTToken(checkUser, roles.ToList());
 
@@ -261,6 +263,12 @@ namespace FashionShop.Repositories
             {
                 return false;
             }
+        }
+
+        public async Task<int> Count()
+        {
+            var countCustomer = await _fashionShopDBContext.UserRoles.Where(ur => ur.RoleId == "9cd0f7a2-741d-405a-a8a3-a34b22da200c").ToListAsync();
+            return countCustomer.Count();
         }
     }
 }

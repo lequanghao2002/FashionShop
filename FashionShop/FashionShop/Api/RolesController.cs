@@ -16,6 +16,7 @@ namespace FashionShop.Api
         }
 
         [HttpGet("get-list-roles")]
+        [AuthorizeRoles("Quản trị viên", "Nhân viên")]
         public async Task<IActionResult> GetListRoles()
         {
             try
@@ -30,6 +31,7 @@ namespace FashionShop.Api
         }
 
         [HttpGet("get-role-by-id/{id}")]
+        [AuthorizeRoles("Quản trị viên", "Nhân viên")]
         public async Task<IActionResult> GetRoleById(string id)
         {
             try
@@ -51,6 +53,7 @@ namespace FashionShop.Api
         }
 
         [HttpPost("create-role")]
+        [AuthorizeRoles("Quản trị viên", "Nhân viên")]
         public async Task<IActionResult> CreateRole(CreateRoleDTO createRoleDTO)
         {
             try
@@ -65,6 +68,7 @@ namespace FashionShop.Api
         }
 
         [HttpPut("update-role/{id}")]
+        [AuthorizeRoles("Quản trị viên", "Nhân viên")]
         public async Task<IActionResult> Updaterole(CreateRoleDTO createRoleDTO, string id)
         {
             try
@@ -86,6 +90,7 @@ namespace FashionShop.Api
         }
 
         [HttpDelete("delete-role/{id}")]
+        [AuthorizeRoles("Quản trị viên")]
         public async Task<IActionResult> DeleteRole(string id)
         {
             try

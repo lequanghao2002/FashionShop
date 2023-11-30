@@ -39,7 +39,7 @@
                     <img src="/Assets/Admin/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
                 </div>
                 <div class="info">
-                    <a href="javasript:void(0)" class="d-block">{{authentication.userName}}</a>
+                    <a href="javasript:void(0)" class="d-block">{{authentication.email}}</a>
                 </div>
             </div>
 
@@ -143,8 +143,8 @@
                         </a>
                     </li>
 
-                    <li class="nav-item">
-                        <a class="nav-link" style="cursor: pointer">
+                    <li class="nav-item" ng-click="logOut()">
+                        <a class="nav-link"  style="cursor: pointer">
                             <i class="fa-solid fa-arrow-right-from-bracket"></i>
                             <p>
                                 Đăng xuất

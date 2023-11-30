@@ -27,6 +27,7 @@ namespace FashionShop.Api
         }
 
         [HttpGet("get-list-orders")]
+        [AuthorizeRoles("Quản trị viên", "Nhân viên")]
         public IActionResult GetAll(int page = 0, int pageSize = 6, int? typePayment = null, int? searchByID = null, string? searchByName = null, string? searchBySDT = null)
         {
             try
@@ -42,6 +43,7 @@ namespace FashionShop.Api
         }
 
         [HttpGet("get-totalPayment-by-id/{id}")]
+        [AuthorizeRoles("Quản trị viên", "Nhân viên")]
         public IActionResult TotalPayment(int id)
         {
             try
@@ -57,6 +59,7 @@ namespace FashionShop.Api
         }
 
         [HttpGet("get-order-by-id/{id}")]
+        [AuthorizeRoles("Quản trị viên", "Nhân viên")]
         public async Task<IActionResult> GetOrderById(int id)
         {
             try
@@ -222,6 +225,22 @@ namespace FashionShop.Api
                 var bytes = package.GetAsByteArray();
 
                 return File(bytes, contentType, $"HoaDon-{order.ID}.{fileExtension}");
+            }
+        }
+
+        [HttpGet("get-count-order")]
+        [AuthorizeRoles("Quản trị viên", "Nhân viên")]
+        public async Task<IActionResult> GetCountOrder()
+        {
+            try
+            {
+                var count = await _orderRepository.Count();
+
+                return Ok(count);
+            }
+            catch
+            {
+                return BadRequest("Lỗi");
             }
         }
     }

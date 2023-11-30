@@ -8,6 +8,7 @@ namespace FashionShop.Api
 {
     [Route("api/[controller]")]
     [ApiController]
+    [AuthorizeRoles("Quản trị viên", "Nhân viên")]
     public class StatisticsController : ControllerBase
     {
         private readonly IStatisticRepository _statisticRepository;

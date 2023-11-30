@@ -22,11 +22,11 @@
 
                 $scope.voucherValue = 0;
                 if ($scope.order.voucher != null) {
-                    if (order.voucher.discountAmount == true) {
-                        $scope.voucherValue = order.voucher.discountValue;
+                    if ($scope.order.voucher.discountAmount == true) {
+                        $scope.voucherValue = $scope.order.voucher.discountValue;
                     }
                     else {
-                        $scope.voucherValue = totalMoney * order.voucher.discountValue / 100;
+                        $scope.voucherValue = totalMoney * $scope.order.voucher.discountValue / 100;
                     }
                 }
 

@@ -10,6 +10,7 @@ namespace FashionShop.Api
 {
     [Route("api/[controller]")]
     [ApiController]
+    [AuthorizeRoles("Quản trị viên", "Nhân viên")]
     public class ContactsController : ControllerBase
     {
         private readonly IContactRepository _icontactRepository;

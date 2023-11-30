@@ -21,6 +21,7 @@ namespace FashionShop.Api
         }
 
         [HttpGet("get-list-users")]
+        [AuthorizeRoles("Quản trị viên", "Nhân viên")]
         public async Task<IActionResult> GetListUsers(string? searchByName, string? filterRole)
         {
             try
@@ -36,6 +37,7 @@ namespace FashionShop.Api
         }
 
         [HttpGet("get-user-by-id/{id}")]
+        [AuthorizeRoles("Quản trị viên", "Nhân viên")]
         public async Task<IActionResult> GetUserById(string id)
         {
             try
@@ -51,6 +53,7 @@ namespace FashionShop.Api
         }
 
         [HttpPost("register-admin")]
+        [AuthorizeRoles("Quản trị viên")]
         public async Task<IActionResult> RegisterAdmin (RegisterRequestDTO registerAdminRequestDTO)
         {
             try
@@ -83,6 +86,7 @@ namespace FashionShop.Api
         }
 
         [HttpPost("register-member")]
+        [AuthorizeRoles("Quản trị viên")]
         public async Task<IActionResult> RegisterMember(RegisterRequestDTO registerAdminRequestDTO)
         {
             try
@@ -137,6 +141,7 @@ namespace FashionShop.Api
         }
 
         [HttpPut("account-lock/{idAccount}")]
+        [AuthorizeRoles("Quản trị viên")]
         public async Task<IActionResult> AccountLock(string idAccount)
         {
             try
@@ -158,6 +163,7 @@ namespace FashionShop.Api
         }
 
         [HttpPut("account-unlock/{idAccount}")]
+        [AuthorizeRoles("Quản trị viên")]
         public async Task<IActionResult> AccountUnLock(string idAccount)
         {
             try
@@ -179,6 +185,7 @@ namespace FashionShop.Api
         }
 
         [HttpPut("update-user/{id}")]
+        [AuthorizeRoles("Quản trị viên")]
         public async Task<IActionResult> UpdateUser(UpdateUserDTO updateUserDTO, string id)
         {
             try
@@ -209,6 +216,7 @@ namespace FashionShop.Api
         }
 
         [HttpDelete("delete-user/{id}")]
+        [AuthorizeRoles("Quản trị viên")]
         public async Task<IActionResult> DeleleUser(string id)
         {
             try
@@ -226,6 +234,22 @@ namespace FashionShop.Api
             catch
             {
                 return BadRequest("Xóa người dùng không thành công");
+            }
+        }
+
+        [HttpGet("get-count-customer")]
+        [AuthorizeRoles("Quản trị viên", "Nhân viên")]
+        public async Task<IActionResult> GetCountCustomer()
+        {
+            try
+            {
+                var count = await _userRepository.Count();
+
+                return Ok(count);
+            }
+            catch
+            {
+                return BadRequest("Lỗi");
             }
         }
     }

@@ -17,6 +17,7 @@ namespace FashionShop.Repositories
         public Task<bool> Delete(int id);
         public Task<bool> ReduceQuantityVoucher(int idVoucher);
         public Task<bool> IncreaseQuantityVoucher(int idVoucher);
+        public Task<int> Count();
 
     }
     public class VoucherRepository : IVoucherRepository
@@ -200,6 +201,12 @@ namespace FashionShop.Repositories
                 return false;
             }
 
+        }
+
+        public async Task<int> Count()
+        {
+            var countVoucher = await _fashionShopDBContext.Vouchers.CountAsync();
+            return countVoucher;
         }
     }
 }
